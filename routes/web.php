@@ -28,6 +28,9 @@ Route::get('/storage', function () {
 });
 
 
+// landing Page
+Route::get('/homepage', [HomeController::class, 'landingPage'])->name('landing');
+
 //UI Pages Routs
 Route::get('/', [HomeController::class, 'uisheet'])->name('uisheet');
 
@@ -49,17 +52,32 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/table-calon-pemilih', [HomeController::class, 'tableCalonPemilih'])->name('table-calon-pemilih');
     Route::get('/input-calon-pemilih', [HomeController::class, 'inputCalonPemilih'])->name('input-calon-pemilih');
     Route::post('/form-input-calon-pemilih', [HomeController::class, 'formInputCalonPemilih'])->name('form-input-calon-pemilih');
-    // import dengan excel
     Route::post('/import-calon-pemilih', [HomeController::class, 'importExcelCalonPemilih'])->name('import-calon-pemilih');
 
     // koordinator
     Route::get('/koordinator', [HomeController::class, 'koordinator'])->name('koordinator');
+    Route::get('/table-koordinator', [HomeController::class, 'tableKoordinator'])->name('table-koordinator');
+    Route::get('/input-koordinator', [HomeController::class, 'inputKoordinator'])->name('input-koordinator');
+    Route::post('/form-input-koordinator', [HomeController::class, 'formInputKoordinator'])->name('form-input-koordinator');
+
     // pemilih
     Route::get('/pemilih', [HomeController::class, 'pemilih'])->name('pemilih');
+    Route::get('/table-pemilih', [HomeController::class, 'tablePemilih'])->name('table-pemilih');
+    Route::get('/input-pemilih', [HomeController::class, 'inputPemilih'])->name('input-pemilih');
+    Route::post('/form-input-pemilih', [HomeController::class, 'formInputPemilih'])->name('form-input-pemilih');
+
     // kelurahan
     Route::get('/kelurahan', [HomeController::class, 'kelurahan'])->name('kelurahan');
+    Route::get('/table-kelurahan', [HomeController::class, 'tableKelurahan'])->name('table-kelurahan');
+    Route::get('/input-kelurahan', [HomeController::class, 'inputKelurahan'])->name('input-kelurahan');
+    Route::post('/form-input-kelurahan', [HomeController::class, 'inputFormKelurahan'])->name('form-input-kelurahan');
+
     // kecamatan
     Route::get('/kecamatan', [HomeController::class, 'kecamatan'])->name('kecamatan');
+    Route::get('/table-kecamatan', [HomeController::class, 'tableKecamatan'])->name('table-kecamatan');
+    Route::get('/input-kecamatan', [HomeController::class, 'inputKecamatan'])->name('input-kecamatan');
+    Route::post('/form-input-kecamatan', [HomeController::class, 'inputFormKecamatan'])->name('form-input-kecamatan');
+
     // saksi
     Route::get('/saksi', [HomeController::class, 'saksi'])->name('saksi');
     // realcount

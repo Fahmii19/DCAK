@@ -5,15 +5,23 @@ namespace App\Http\Controllers;
 // import model CalonPemilih
 use App\Models\CalonPemilih;
 use Yajra\DataTables\Facades\DataTables;
-
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CalonPemilihImport;
+use App\Models\Pemilih;
+use App\Models\Koordinator;
+use App\Models\Kelurahan;
+use App\Models\Kecamatan;
 
 
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    // Landing Page
+    public function landingPage(Request $request)
+    {
+        return view('landing-page.home');
+    }
 
     // Calon Pemilih
     public function calonPemilih(Request $request)
@@ -27,7 +35,6 @@ class HomeController extends Controller
         return DataTables::of($calonPemilih)->make(true);
     }
 
-    // input calon pemilih
     public function inputCalonPemilih(Request $request)
     {
         return view('dcak.calon-pemilih.input');
@@ -47,7 +54,6 @@ class HomeController extends Controller
         return redirect()->route('calon-pemilih')->with('success', 'Data calon pemilih berhasil disimpan.');
     }
 
-    // Import data dari Excel
     public function importExcelCalonPemilih(Request $request)
     {
         $request->validate([
@@ -64,6 +70,117 @@ class HomeController extends Controller
         }
     }
 
+    // Function Koordinator
+    function koordinator(Request $request)
+    {
+        return view('dcak.koordinator.index');
+    }
+
+    function tableKoordinator()
+    {
+        $koordinator = Koordinator::select(['id', 'nama_koordinator']);
+        return DataTables::of($koordinator)->make(true);
+    }
+
+    function inputKoordinator(Request $request)
+    {
+        return view('dcak.koordinator.input');
+    }
+
+    function formInputKoordinator(Request $request)
+    {
+        $koordinator = new Koordinator();
+        $koordinator->nama_koordinator = $request->nama_koordinator;
+        $koordinator->save();
+
+        return redirect()->route('koordinator')->with('success', 'Data koordinator berhasil disimpan.');
+    }
+
+    // Function Pemilih
+
+    function pemilih(Request $request)
+    {
+        return view('dcak.pemilih.index');
+    }
+
+    function tablePemilih()
+    {
+        $Pemilih = Pemilih::select(['id_pemilih', 'nik', 'nama_pemilih', 'no_hp', 'rt', 'rw', 'tps']);
+        return DataTables::of($Pemilih)->make(true);
+    }
+
+    function inputPemilih(Request $request)
+    {
+        return view('dcak.pemilih.input');
+    }
+
+    function formInputPemilih(Request $request)
+    {
+        $Pemilih = new Pemilih();
+        $Pemilih->nik = $request->nik;
+        $Pemilih->nama_pemilih = $request->nama_pemilih;
+        $Pemilih->no_hp = $request->no_hp;
+        $Pemilih->rt = $request->rt;
+        $Pemilih->rw = $request->rw;
+        $Pemilih->tps = $request->tps;
+        $Pemilih->save();
+
+        return redirect()->route('pemilih')->with('success', 'Data pemilih berhasil disimpan.');
+    }
+
+
+    // Function Kelurahan
+    function kelurahan(Request $request)
+    {
+        return view('dcak.kelurahan.index');
+    }
+
+    function tableKelurahan()
+    {
+        $kelurahan = Kelurahan::select(['id', 'nama_kelurahan']);
+        return DataTables::of($kelurahan)->make(true);
+    }
+
+    // input kelurahan
+    function inputKelurahan(Request $request)
+    {
+        return view('dcak.kelurahan.input');
+    }
+
+    function inputFormKelurahan(Request $request)
+    {
+        $kelurahan = new Kelurahan();
+        $kelurahan->nama_kelurahan = $request->nama_kelurahan;
+        $kelurahan->save();
+
+        return redirect()->route('kelurahan')->with('success', 'Data kelurahan berhasil disimpan.');
+    }
+
+    // Function Kecamatan
+    function kecamatan(Request $request)
+    {
+        return view('dcak.kecamatan.index');
+    }
+
+    function tableKecamatan()
+    {
+        $kecamatan = Kecamatan::select(['id_kecamatan', 'nama_kecamatan']);
+        return DataTables::of($kecamatan)->make(true);
+    }
+
+    function inputKecamatan(Request $request)
+    {
+        return view('dcak.kecamatan.input');
+    }
+
+    function inputFormKecamatan(Request $request)
+    {
+        $kecamatan = new Kecamatan();
+        $kecamatan->nama_kecamatan = $request->nama_kecamatan;
+        $kecamatan->save();
+
+        return redirect()->route('kecamatan')->with('success', 'Data kecamatan berhasil disimpan.');
+    }
 
     /*
      * Dashboard Pages Routs
