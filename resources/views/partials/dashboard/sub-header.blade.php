@@ -6,6 +6,6 @@
     margin-top: 14vh;
 ">
 
-        <img style="object-fit: fill;" src="{{asset('images/dashboard/dashboard7.jpg')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100">
+        <img style="object-fit: fill;" src="{{asset('images/dashboard/bg-menu-utama.jpg')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100">
     </div>
 </div>

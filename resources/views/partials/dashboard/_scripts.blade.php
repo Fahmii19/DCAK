@@ -4,11 +4,11 @@
 <script src="{{ asset('vendor/datatables/buttons.server-side.js')}}"></script>
 @endif
 @if(in_array('chart',$assets ?? []))
-    <!-- apexchart JavaScript -->
-    <script src="{{asset('js/charts/apexcharts.js') }}"></script>
-    <!-- widgetchart JavaScript -->
-    <script src="{{asset('js/charts/widgetcharts.js') }}"></script>
-    <script src="{{asset('js/charts/dashboard.js') }}"></script>
+<!-- apexchart JavaScript -->
+<script src="{{asset('js/charts/apexcharts.js') }}"></script>
+<!-- widgetchart JavaScript -->
+<script src="{{asset('js/charts/widgetcharts.js') }}"></script>
+<script src="{{asset('js/charts/dashboard.js') }}"></script>
 @endif
 
 <!-- mapchart JavaScript -->

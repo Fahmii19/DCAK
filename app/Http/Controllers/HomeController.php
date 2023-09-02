@@ -2,10 +2,69 @@
 
 namespace App\Http\Controllers;
 
+// import model CalonPemilih
+use App\Models\CalonPemilih;
+use Yajra\DataTables\Facades\DataTables;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CalonPemilihImport;
+
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+    // Calon Pemilih
+    public function calonPemilih(Request $request)
+    {
+        return view('dcak.calon-pemilih.index');
+    }
+
+    public function tableCalonPemilih()
+    {
+        $calonPemilih = CalonPemilih::select(['id_pemilih', 'nik', 'nama_pemilih', 'no_hp', 'rt', 'rw', 'tps']);
+        return DataTables::of($calonPemilih)->make(true);
+    }
+
+    // input calon pemilih
+    public function inputCalonPemilih(Request $request)
+    {
+        return view('dcak.calon-pemilih.input');
+    }
+
+    public function formInputCalonPemilih(Request $request)
+    {
+        $calonPemilih = new CalonPemilih();
+        $calonPemilih->nik = $request->nik;
+        $calonPemilih->nama_pemilih = $request->nama_pemilih;
+        $calonPemilih->no_hp = $request->no_hp;
+        $calonPemilih->rt = $request->rt;
+        $calonPemilih->rw = $request->rw;
+        $calonPemilih->tps = $request->tps;
+        $calonPemilih->save();
+
+        return redirect()->route('calon-pemilih')->with('success', 'Data calon pemilih berhasil disimpan.');
+    }
+
+    // Import data dari Excel
+    public function importExcelCalonPemilih(Request $request)
+    {
+        $request->validate([
+            'excel_file' => 'required|mimes:xls,xlsx',
+        ]);
+
+        $file = $request->file('excel_file');
+
+        try {
+            Excel::import(new CalonPemilihImport(), $file);
+            return redirect()->route('calon-pemilih')->with('success', 'Data berhasil diimpor dari Excel.');
+        } catch (\Exception $e) {
+            return redirect()->route('calon-pemilih')->with('error', 'Terjadi kesalahan saat mengimpor data dari Excel: ' . $e->getMessage());
+        }
+    }
+
+
     /*
      * Dashboard Pages Routs
      */
@@ -21,27 +80,27 @@ class HomeController extends Controller
     public function horizontal(Request $request)
     {
         $assets = ['chart', 'animation'];
-        return view('menu-style.horizontal',compact('assets'));
+        return view('menu-style.horizontal', compact('assets'));
     }
     public function dualhorizontal(Request $request)
     {
         $assets = ['chart', 'animation'];
-        return view('menu-style.dual-horizontal',compact('assets'));
+        return view('menu-style.dual-horizontal', compact('assets'));
     }
     public function dualcompact(Request $request)
     {
         $assets = ['chart', 'animation'];
-        return view('menu-style.dual-compact',compact('assets'));
+        return view('menu-style.dual-compact', compact('assets'));
     }
     public function boxed(Request $request)
     {
         $assets = ['chart', 'animation'];
-        return view('menu-style.boxed',compact('assets'));
+        return view('menu-style.boxed', compact('assets'));
     }
     public function boxedfancy(Request $request)
     {
         $assets = ['chart', 'animation'];
-        return view('menu-style.boxed-fancy',compact('assets'));
+        return view('menu-style.boxed-fancy', compact('assets'));
     }
 
     /*
@@ -55,7 +114,7 @@ class HomeController extends Controller
     public function calender(Request $request)
     {
         $assets = ['calender'];
-        return view('special-pages.calender',compact('assets'));
+        return view('special-pages.calender', compact('assets'));
     }
 
     public function kanban(Request $request)
@@ -180,7 +239,7 @@ class HomeController extends Controller
         return view('forms.validation');
     }
 
-     /*
+    /*
      * Table Page Routs
      */
     public function bootstraptable(Request $request)

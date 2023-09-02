@@ -1,5 +1,3 @@
-
-
 <!-- Favicon -->
 <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" />
 <link rel="stylesheet" href="{{asset('css/libs.min.css')}}">
@@ -20,7 +18,12 @@
 <link rel="stylesheet" href="{{asset('vendor/aos/dist/aos.css')}}" />
 
 <style>
-    th.hide-search input{
-       display: none;
+    th.hide-search input {
+        display: none;
     }
- </style>
+
+    #excel_file {
+        display: none;
+    }
+
+</style>

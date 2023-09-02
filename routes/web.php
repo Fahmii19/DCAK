@@ -40,6 +40,31 @@ Route::group(['middleware' => 'auth'], function () {
     // Dashboard Routes
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
+    // Authentication Routes
+
+    // dashboard
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    // Calon Pemilih
+    Route::get('/calon-pemilih', [HomeController::class, 'calonPemilih'])->name('calon-pemilih');
+    Route::get('/table-calon-pemilih', [HomeController::class, 'tableCalonPemilih'])->name('table-calon-pemilih');
+    Route::get('/input-calon-pemilih', [HomeController::class, 'inputCalonPemilih'])->name('input-calon-pemilih');
+    Route::post('/form-input-calon-pemilih', [HomeController::class, 'formInputCalonPemilih'])->name('form-input-calon-pemilih');
+    // import dengan excel
+    Route::post('/import-calon-pemilih', [HomeController::class, 'importExcelCalonPemilih'])->name('import-calon-pemilih');
+
+    // koordinator
+    Route::get('/koordinator', [HomeController::class, 'koordinator'])->name('koordinator');
+    // pemilih
+    Route::get('/pemilih', [HomeController::class, 'pemilih'])->name('pemilih');
+    // kelurahan
+    Route::get('/kelurahan', [HomeController::class, 'kelurahan'])->name('kelurahan');
+    // kecamatan
+    Route::get('/kecamatan', [HomeController::class, 'kecamatan'])->name('kecamatan');
+    // saksi
+    Route::get('/saksi', [HomeController::class, 'saksi'])->name('saksi');
+    // realcount
+    Route::get('/realcount', [HomeController::class, 'realcount'])->name('realcount');
+
     // Users Module
     Route::resource('users', UserController::class);
 });
