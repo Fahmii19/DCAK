@@ -21,7 +21,7 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        Data ini menampilkan kelurahan yang telah terdaftar.
+                        Data ini menampilkan kecamatan yang telah terdaftar.
                     </p>
                     <div class="">
                         <table id="datatableKecamatan" class="table table-striped dt-responsive nowrap" data-toggle="data-table">

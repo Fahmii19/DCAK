@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body">
                     <p>
-                        Data ini menampilakn  koordinator yang telah terdaftar.
+                        Data ini menampilakn koordinator yang telah terdaftar.
                     </p>
                     <div class="">
                         <table id="datatableKoordinator" class="table table-striped dt-responsive nowrap" data-toggle="data-table">
@@ -31,6 +31,11 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Kepala</th>
+                                    <th>Username</th>
+                                    <th>Password</th>
+                                    <th>Jumlah Surat Dukungan</th>
+                                    <th>Kelurahan</th>
+                                    <th>Kecamatan</th>
                                 </tr>
                             </thead>
 
@@ -64,13 +69,37 @@
                 , columns: [
 
                     {
-                        data: 'id'
-                        , name: 'id'
+                        data: 'id_koordinator'
+                        , name: 'id_koordinator'
                     },
 
                     {
                         data: 'nama_koordinator'
                         , name: 'nama_koordinator'
+                    }
+                    , {
+                        data: 'username'
+                        , name: 'username'
+                    },
+
+                    {
+                        data: 'password'
+                        , name: 'password'
+                    }
+
+                    , {
+                        data: 'jumlah_surat_dukungan'
+                        , name: 'jumlah_surat_dukungan'
+                    }
+
+                    , {
+                        data: 'kelurahan'
+                        , name: 'kelurahan'
+                    }
+
+                    , {
+                        data: 'kecamatan'
+                        , name: 'kecamatan'
                     }
 
                 , ]

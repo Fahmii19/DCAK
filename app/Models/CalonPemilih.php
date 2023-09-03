@@ -29,12 +29,13 @@ class CalonPemilih extends Model
      * @var array
      */
     protected $fillable = [
-        'nik',
         'nama_pemilih',
+        'jenis_kelamin',
         'no_hp',
         'rt',
         'rw',
-        'tps'
+        'tps',
+        'kelurahan',
     ];
 
     /**

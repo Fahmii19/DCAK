@@ -35,12 +35,13 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>NIK</th>
                                     <th>Nama Pemilih</th>
+                                    <th>Jenis Kelamin</th>
                                     <th>No HP</th>
                                     <th>RT</th>
                                     <th>RW</th>
                                     <th>TPS</th>
+                                    <th>Kelurahan</th>
                                 </tr>
                             </thead>
 
@@ -80,15 +81,14 @@
                     {
                         data: 'id_pemilih'
                         , name: 'id_pemilih'
-                    },
-
-                    {
-                        data: 'nik'
-                        , name: 'nik'
                     }
                     , {
                         data: 'nama_pemilih'
                         , name: 'nama_pemilih'
+                    }
+                    , {
+                        data: 'jenis_kelamin'
+                        , name: 'jenis_kelamin'
                     }
                     , {
                         data: 'no_hp'
@@ -105,6 +105,10 @@
                     , {
                         data: 'tps'
                         , name: 'tps'
+                    }
+                    , {
+                        data: 'kelurahan'
+                        , name: 'kelurahan'
                     }
                 , ]
                 , order: [0, 'desc']

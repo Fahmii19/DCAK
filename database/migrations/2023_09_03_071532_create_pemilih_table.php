@@ -14,14 +14,16 @@ class CreatePemilihTable extends Migration
     public function up()
     {
         Schema::create('pemilih', function (Blueprint $table) {
-            $table->id('id_pemilih'); // Primary key dengan nama id_pemilih
-            $table->string('nik'); // Kolom NIK (string)
-            $table->string('nama_pemilih'); // Kolom nama pemilih (string)
-            $table->string('no_hp'); // Kolom nomor HP (string)
-            $table->string('rt'); // Kolom RT (string)
-            $table->string('rw'); // Kolom RW (string)
-            $table->string('tps'); // Kolom TPS (string)
-            $table->timestamps(); // Kolom created_at dan updated_at
+            $table->id('id_pemilih');
+            $table->string('nama_koordinator')->nullable();
+            $table->string('nama_pemilih')->nullable();
+            $table->string('jenis_kelamin')->nullable();
+            $table->string('no_hp')->nullable();
+            $table->string('rt')->nullable();
+            $table->string('rw')->nullable();
+            $table->string('tps')->nullable();
+            $table->string('kelurahan')->nullable();
+            $table->timestamps();
         });
     }
 

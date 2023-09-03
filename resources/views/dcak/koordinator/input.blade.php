@@ -34,6 +34,56 @@
                                 </div>
                             </div>
 
+                            {{-- Username --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="username">Username</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Masukan Username" required>
+                                </div>
+                            </div>
+
+                            {{-- Passowrd --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="password">Password</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukan Password" required>
+                                </div>
+                            </div>
+
+                            {{-- Jumlah Surat Dukungan --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="jumlah_surat_dukungan">Jumlah Surat Dukungan</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="jumlah_surat_dukungan" name="jumlah_surat_dukungan" placeholder="Masukan Jumlah Surat Dukungan" required>
+                                </div>
+                            </div>
+
+                            {{-- Kelurahan --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="kelurahan">Kelurahan</label>
+                                <div class="col-sm-9">
+                                    <select class="form-select" aria-label="Default select example" name="kelurahan" id="kelurahan" required>
+                                        <option value="" disabled selected>Pilih Kelurahan</option>
+                                        @foreach($kelurahan as $k)
+                                        <option value="{{ $k->nama_kelurahan }}">{{ $k->nama_kelurahan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            {{-- Kecamatan --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="kecamatan">Kecamatan</label>
+                                <div class="col-sm-9">
+                                    <select class="form-select" aria-label="Default select example" name="kecamatan" id="kecamatan" required>
+                                        <option value="" disabled selected>Pilih Kecamatan</option>
+                                        @foreach($kecamatan as $k)
+                                        <option value="{{ $k->nama_kecamatan }}">{{ $k->nama_kecamatan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="form-group float-end">
 
                                 <button type="submit" class="btn btn-primary">Submit</button>

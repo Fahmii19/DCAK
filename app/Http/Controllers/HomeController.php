@@ -31,24 +31,28 @@ class HomeController extends Controller
 
     public function tableCalonPemilih()
     {
-        $calonPemilih = CalonPemilih::select(['id_pemilih', 'nik', 'nama_pemilih', 'no_hp', 'rt', 'rw', 'tps']);
+        $calonPemilih = CalonPemilih::select(['id_pemilih', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
         return DataTables::of($calonPemilih)->make(true);
     }
 
     public function inputCalonPemilih(Request $request)
     {
-        return view('dcak.calon-pemilih.input');
+        // get data kelurahan
+        $kelurahan = Kelurahan::all();
+
+        return view('dcak.calon-pemilih.input', compact('kelurahan'));
     }
 
     public function formInputCalonPemilih(Request $request)
     {
         $calonPemilih = new CalonPemilih();
-        $calonPemilih->nik = $request->nik;
         $calonPemilih->nama_pemilih = $request->nama_pemilih;
+        $calonPemilih->jenis_kelamin = $request->jenis_kelamin;
         $calonPemilih->no_hp = $request->no_hp;
         $calonPemilih->rt = $request->rt;
         $calonPemilih->rw = $request->rw;
         $calonPemilih->tps = $request->tps;
+        $calonPemilih->kelurahan = $request->kelurahan;
         $calonPemilih->save();
 
         return redirect()->route('calon-pemilih')->with('success', 'Data calon pemilih berhasil disimpan.');
@@ -78,20 +82,29 @@ class HomeController extends Controller
 
     function tableKoordinator()
     {
-        $koordinator = Koordinator::select(['id', 'nama_koordinator']);
+        $koordinator = Koordinator::select(['id_koordinator', 'username', 'password', 'nama_koordinator', 'jumlah_surat_dukungan', 'kelurahan', 'kecamatan']);
         return DataTables::of($koordinator)->make(true);
     }
 
     function inputKoordinator(Request $request)
     {
-        return view('dcak.koordinator.input');
+        $kelurahan = Kelurahan::all();
+        $kecamatan = Kecamatan::all();
+        return view('dcak.koordinator.input', compact('kelurahan', 'kecamatan'));
     }
 
     function formInputKoordinator(Request $request)
     {
+        // dd($request->all());
         $koordinator = new Koordinator();
         $koordinator->nama_koordinator = $request->nama_koordinator;
+        $koordinator->username = $request->username;
+        $koordinator->password = $request->password;
+        $koordinator->jumlah_surat_dukungan = $request->jumlah_surat_dukungan;
+        $koordinator->kelurahan = $request->kelurahan;
+        $koordinator->kecamatan = $request->kecamatan;
         $koordinator->save();
+
 
         return redirect()->route('koordinator')->with('success', 'Data koordinator berhasil disimpan.');
     }
@@ -105,24 +118,30 @@ class HomeController extends Controller
 
     function tablePemilih()
     {
-        $Pemilih = Pemilih::select(['id_pemilih', 'nik', 'nama_pemilih', 'no_hp', 'rt', 'rw', 'tps']);
+        $Pemilih = Pemilih::select(['id_pemilih', 'nama_koordinator', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
         return DataTables::of($Pemilih)->make(true);
     }
 
     function inputPemilih(Request $request)
     {
-        return view('dcak.pemilih.input');
+        $kelurahan = Kelurahan::all();
+        $koordinator = Koordinator::all();
+
+        return view('dcak.pemilih.input', compact('kelurahan', 'koordinator'));
     }
 
     function formInputPemilih(Request $request)
     {
         $Pemilih = new Pemilih();
-        $Pemilih->nik = $request->nik;
+        $Pemilih->nama_koordinator = $request->nama_koordinator;
         $Pemilih->nama_pemilih = $request->nama_pemilih;
+        $Pemilih->jenis_kelamin = $request->jenis_kelamin;
         $Pemilih->no_hp = $request->no_hp;
         $Pemilih->rt = $request->rt;
         $Pemilih->rw = $request->rw;
         $Pemilih->tps = $request->tps;
+        $Pemilih->kelurahan = $request->kelurahan;
+
         $Pemilih->save();
 
         return redirect()->route('pemilih')->with('success', 'Data pemilih berhasil disimpan.');
@@ -159,6 +178,7 @@ class HomeController extends Controller
     // Function Kecamatan
     function kecamatan(Request $request)
     {
+
         return view('dcak.kecamatan.index');
     }
 

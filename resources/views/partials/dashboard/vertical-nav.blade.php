@@ -442,7 +442,8 @@
     </a>
 </li>
 <li class="nav-item">
-    <a class="nav-link {{activeRoute(route('pemilih'))}}" href="{{ route('pemilih') }}">
+    <a class="nav-link {{activeRoute(route('pemilih')) || activeRoute(route('input-pemilih')) ? 'active' : '' }}" href="{{ route('pemilih') }}">
+
         <i class="icon">
             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M7.7688 8.71387H16.2312C18.5886 8.71387 20.5 10.5831 20.5 12.8885V17.8254C20.5 20.1308 18.5886 22 16.2312 22H7.7688C5.41136 22 3.5 20.1308 3.5 17.8254V12.8885C3.5 10.5831 5.41136 8.71387 7.7688 8.71387ZM11.9949 17.3295C12.4928 17.3295 12.8891 16.9419 12.8891 16.455V14.2489C12.8891 13.772 12.4928 13.3844 11.9949 13.3844C11.5072 13.3844 11.1109 13.772 11.1109 14.2489V16.455C11.1109 16.9419 11.5072 17.3295 11.9949 17.3295Z" fill="currentColor"></path>
@@ -477,7 +478,9 @@
 </a>
 </li> --}}
 <li class="nav-item">
-    <a class="nav-link {{activeRoute(route('kelurahan'))}}" href="{{ route('kelurahan') }}">
+    <a class="nav-link {{activeRoute(route('kelurahan')) || activeRoute(route('input-kelurahan')) ? 'active' : ''}}" href="{{ route('kelurahan') }}">
+
+
         <i class="icon">
             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.4" d="M2 11.0786C2.05 13.4166 2.19 17.4156 2.21 17.8566C2.281 18.7996 2.642 19.7526 3.204 20.4246C3.986 21.3676 4.949 21.7886 6.292 21.7886C8.148 21.7986 10.194 21.7986 12.181 21.7986C14.176 21.7986 16.112 21.7986 17.747 21.7886C19.071 21.7886 20.064 21.3566 20.836 20.4246C21.398 19.7526 21.759 18.7896 21.81 17.8566C21.83 17.4856 21.93 13.1446 21.99 11.0786H2Z" fill="currentColor"></path>
@@ -490,7 +493,8 @@
     </a>
 </li>
 <li class="nav-item">
-    <a class="nav-link {{activeRoute(route('kecamatan'))}}" href="{{ route('kecamatan') }}">
+    <a class="nav-link {{activeRoute(route('kecamatan')) || activeRoute(route('input-kecamatan')) ? 'active' : '' }}" href="{{ route('kecamatan') }}">
+
         <i class="icon">
             <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.4" d="M2 11.0786C2.05 13.4166 2.19 17.4156 2.21 17.8566C2.281 18.7996 2.642 19.7526 3.204 20.4246C3.986 21.3676 4.949 21.7886 6.292 21.7886C8.148 21.7986 10.194 21.7986 12.181 21.7986C14.176 21.7986 16.112 21.7986 17.747 21.7886C19.071 21.7886 20.064 21.3566 20.836 20.4246C21.398 19.7526 21.759 18.7896 21.81 17.8566C21.83 17.4856 21.93 13.1446 21.99 11.0786H2Z" fill="currentColor"></path>
