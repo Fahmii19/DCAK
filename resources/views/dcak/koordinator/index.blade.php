@@ -30,9 +30,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Kepala</th>
-                                    <th>Username</th>
-                                    <th>Password</th>
+                                    <th>Nama Koordinator</th>
                                     <th>Jumlah Surat Dukungan</th>
                                     <th>Kelurahan</th>
                                     <th>Kecamatan</th>
@@ -77,16 +75,6 @@
                         data: 'nama_koordinator'
                         , name: 'nama_koordinator'
                     }
-                    , {
-                        data: 'username'
-                        , name: 'username'
-                    },
-
-                    {
-                        data: 'password'
-                        , name: 'password'
-                    }
-
                     , {
                         data: 'jumlah_surat_dukungan'
                         , name: 'jumlah_surat_dukungan'

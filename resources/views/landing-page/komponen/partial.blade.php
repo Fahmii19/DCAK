@@ -34,7 +34,6 @@
     <nav class="navbar navbar-expand-lg fixed-top sticky" id="navbar">
         <div class="container">
             <a href="layout-1.html" class="navbar-brand me-5">
-                <img src="{{ asset('assets_landing/images/logo-light.png') }}" class="logo-light" alt="" height="22" />
                 <img src="{{ asset('assets_landing/images/logo-dark.png') }}" class="logo-dark" alt="" height="22" />
             </a>
             <a href="javascript:void(0)" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,19 +54,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#faq">Visi & Misi</a>
                     </li>
-                    <!-- <li class="nav-item">
-              <a class="nav-link" href="#pricing">Pricing</a>
-            </li> -->
+
                     <li class="nav-item">
                         <a class="nav-link" href="#client">Guru</a>
                     </li>
-                    <!-- <li class="nav-item">
-              <a class="nav-link" href="#contact">Join Us</a>
-            </li> -->
+                    <li class="nav-item" style="position: absolute;right: 0;margin-right: 12vh;">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Masuk
+                        </a>
+                    </li>
                 </ul>
-                <div class="mb-4 mb-lg-0">
-                    <a href="#" class="btn btn-sm nav-btn btn-primary mb-4 mb-lg-0 ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</a>
-                </div>
             </div>
         </div>
         <!-- end container -->
@@ -107,54 +103,51 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Get In Touch</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Masuk sebagai penginput data</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" name="myForm" onsubmit="return validateForm()">
+
+                    <!-- Pesan Error (jika ada) -->
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        {{ $errors->first('message') }}
+                    </div>
+                    @endif
+
+                    <!-- Form Login -->
+                    <form action="{{ route('loginProcess') }}" method="post">
+                        @csrf
                         <span id="error-msg"></span>
                         <div class="row">
                             <div class="col-12">
                                 <div class="row">
+                                    <!-- Username -->
                                     <div class="col-md-6 mb-3">
-                                        <label class="fw-medium form-label" for="name">Name</label>
-                                        <input type="text" class="form-control" placeholder="Your name" id="name" />
+                                        <label class="fw-medium form-label" for="username">Username</label>
+                                        <input type="text" name="username" class="form-control" placeholder="Masukan username" id="username" required />
                                     </div>
-                                    <!-- end col -->
+
+                                    <!-- Password -->
                                     <div class="col-md-6 mb-3">
-                                        <label class="fw-medium form-label" for="email">Email</label>
-                                        <input type="email" class="form-control" placeholder="Your email" id="email" />
+                                        <label class="fw-medium form-label" for="Password">Password</label>
+                                        <input type="password" name="password" class="form-control" placeholder="Your Password" id="Password" required />
                                     </div>
-                                    <!-- end col -->
-                                    <div class="col-md-6 mb-3">
-                                        <label class="fw-medium form-label" for="subject">Subject</label>
-                                        <input type="text" class="form-control" placeholder="your subject" id="subject" />
-                                    </div>
-                                    <!-- end col -->
-                                    <div class="col-md-6 mb-3">
-                                        <label class="fw-medium form-label" for="number">Contact</label>
-                                        <input type="text" class="form-control" placeholder="+00 1234 5678 90" id="number" />
-                                    </div>
-                                    <!-- end col -->
-                                    <div class="col-12 mb-3">
-                                        <label class="fw-medium form-label" for="comments">Message</label>
-                                        <textarea class="form-control" id="comments" placeholder="Enter your message..." rows="5"></textarea>
-                                    </div>
-                                    <!-- end col -->
+
+                                    <!-- Submit Button -->
                                     <div class="col-12">
-                                        <input type="submit" id="submit" name="send" class="btn btn-primary mt-2" value="Send Information" />
+                                        <input type="submit" id="submit" name="send" class="btn btn-primary mt-2" value="Kirim" />
                                     </div>
-                                    <!-- end col -->
                                 </div>
                             </div>
                         </div>
-                        <!-- end row -->
                     </form>
-                    <!-- end form -->
                 </div>
             </div>
         </div>
     </div>
+
+
     <!-- end modal -->
 
     <script src="{{asset('assets_landing/js/bootstrap.bundle.min.js') }}"></script>

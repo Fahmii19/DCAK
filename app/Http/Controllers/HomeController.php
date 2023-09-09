@@ -8,15 +8,99 @@ use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CalonPemilihImport;
 use App\Models\Pemilih;
+use App\Models\User_dcak;
 use App\Models\Koordinator;
 use App\Models\Kelurahan;
 use App\Models\Kecamatan;
+use Illuminate\Support\Facades\Auth;
 
 
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('CheckAdmin')->only('adminMethod');
+        $this->middleware('CheckSuperAdmin')->only('superAdminMethod');
+    }
+
+    // Form Inputan
+    public function formPemilih(Request $request)
+    {
+        return view('user-dcak.inputan');
+    }
+
+    // login
+
+    public function getAllUsers()
+    {
+        $users       = (new User_dcak())->all();
+        return response()->json($users, 200);
+    }
+
+    public function loginDcak(Request $request)
+    {
+        // proses login
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            $user = Auth::users_dcak();
+            if ($user->isAdmin()) {
+                return redirect('/admin');
+            }
+            if ($user->isSuperAdmin()) {
+                return redirect('/superadmin');
+            }
+        }
+        return redirect('/login');
+    }
+
+
+    // Akun dcak
+    public function akunDcak(Request $request)
+    {
+        return view('dcak.akun-dcak.index');
+    }
+
+    public function tableAkunDcak()
+    {
+        $akunDcaks = User_dcak::with('koordinator')->get();
+        return DataTables::of($akunDcaks)
+            ->editColumn('koordinator.nama_koordinator', function ($akunDcak) {
+                return $akunDcak->koordinator ? $akunDcak->koordinator->nama_koordinator : 'N/A';
+            })
+            ->editColumn('koordinator.kelurahan', function ($akunDcak) {
+                return $akunDcak->koordinator ? $akunDcak->koordinator->kelurahan : 'N/A';
+            })
+            ->make(true);
+    }
+
+    public function inputAkunDcak(Request $request)
+    {
+        // koordinator
+        $koordinator = Koordinator::all();
+
+        // Dapatkan semua id_koordinator yang sudah dipilih
+        $selectedCoordinators = User_dcak::select('id_koordinator')->distinct()->pluck('id_koordinator')->all();
+
+        // Dapatkan semua koordinator yang belum dipilih
+        $koordinator = Koordinator::whereNotIn('id_koordinator', $selectedCoordinators)->get();
+
+        return view('dcak.akun-dcak.input', compact('koordinator'));
+    }
+
+    public function formInputAkunDcak(Request $request)
+    {
+        $akunDcak = new User_dcak();
+        $akunDcak->id_koordinator = $request->koordinator;
+        $akunDcak->username = $request->username;
+        $akunDcak->password = ($request->password);
+        $akunDcak->level = ($request->level);
+        $akunDcak->save();
+
+        return redirect()->route('akun-dcak')->with('success', 'Data akun dcak berhasil disimpan.');
+    }
+
     // Landing Page
     public function landingPage(Request $request)
     {

@@ -12,8 +12,8 @@ class Koordinator extends Model
         'nama_kepala', 'username', 'password', 'jumlah_surat_dukungan', 'id_kelurahan', 'id_kecamatan', 'user_id'
     ];
 
-    public function user_dcak()
+    public function usersDcak()
     {
-        return $this->belongsTo(User_dcak::class);
+        return $this->hasMany(UserDcak::class, 'id_koordinator');
     }
 }

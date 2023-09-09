@@ -34,22 +34,6 @@
                                 </div>
                             </div>
 
-                            {{-- Username --}}
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="username">Username</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="username" name="username" placeholder="Masukan Username" required>
-                                </div>
-                            </div>
-
-                            {{-- Passowrd --}}
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="password">Password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukan Password" required>
-                                </div>
-                            </div>
-
                             {{-- Jumlah Surat Dukungan --}}
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="jumlah_surat_dukungan">Jumlah Surat Dukungan</label>

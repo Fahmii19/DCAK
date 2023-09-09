@@ -150,6 +150,8 @@ return [
 
         'key' => 'spatie.permission.cache',
 
+        'default_guard' => 'web',
+
         /*
          * You may optionally indicate a specific cache driver to use for permission and
          * role caching using any of the `store` drivers listed in the cache.php config

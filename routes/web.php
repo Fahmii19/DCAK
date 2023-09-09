@@ -6,9 +6,12 @@ use App\Http\Controllers\Security\RolePermission;
 use App\Http\Controllers\Security\RoleController;
 use App\Http\Controllers\Security\PermissionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Artisan;
 // Packages
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +30,40 @@ Route::get('/storage', function () {
     Artisan::call('storage:link');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+
+    Route::get('/koordinator', [MenuController::class, 'koordinator'])->middleware('can:view koordinator');
+    Route::get('/calon-pemilih', [MenuController::class, 'calonPemilih'])->middleware('can:view calon pemilih');
+    Route::get('/pemilih', [MenuController::class, 'pemilih'])->middleware('can:view pemilih');
+    Route::get('/akun-dcak', [MenuController::class, 'akunDcak'])->middleware('can:view akun dcak');
+});
+
+// Rute untuk login User
+// Route::get('login-dcak', [AuthController::class, 'showLoginForm'])->name('showLoginForm');
+Route::post('login-process', [AuthController::class, 'login'])->name('loginProcess');
+Route::post('logout-dcak', [AuthController::class, 'logout'])->name('logout-dcak');
+
+// Inputan Calon Pemilih
+Route::get('form-pemilih', [HomeController::class, 'formPemilih'])->name('formPemilih');
+
+
+
+// Login Admin
+Route::get('admin', [AuthController::class, 'showLoginFormAdmin'])->name('showLoginFormAdmin');
+Route::post('login-process-admin', [AuthController::class, 'loginProcessAdmin'])->name('loginProcessAdmin');
+Route::post('logout-admin', [AuthController::class, 'logoutAdmin'])->name('logoutAdmin');
+
 
 // landing Page
 Route::get('/homepage', [HomeController::class, 'landingPage'])->name('landing');
 
 //UI Pages Routs
 Route::get('/', [HomeController::class, 'uisheet'])->name('uisheet');
+
+Route::get('/users-dcak', [UserController::class, 'getAllUsers'])->middleware('role:super-user');
 
 Route::group(['middleware' => 'auth'], function () {
     // Permission Module
@@ -77,6 +108,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/table-kecamatan', [HomeController::class, 'tableKecamatan'])->name('table-kecamatan');
     Route::get('/input-kecamatan', [HomeController::class, 'inputKecamatan'])->name('input-kecamatan');
     Route::post('/form-input-kecamatan', [HomeController::class, 'inputFormKecamatan'])->name('form-input-kecamatan');
+
+    // akun dcak
+    Route::get('/akun-dcak', [HomeController::class, 'akunDcak'])->name('akun-dcak');
+    Route::get('/table-akun-dcak', [HomeController::class, 'tableAkunDcak'])->name('table-akun-dcak');
+    Route::get('/input-akun-dcak', [HomeController::class, 'inputAkunDcak'])->name('input-akun-dcak');
+    Route::post('/form-input-akun-dcak', [HomeController::class, 'formInputAkunDcak'])->name('form-input-akun-dcak');
 
     // saksi
     Route::get('/saksi', [HomeController::class, 'saksi'])->name('saksi');

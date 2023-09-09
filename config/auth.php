@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users_dcak',  // Nama provider Anda mungkin berbeda
+        ],
+
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -69,6 +74,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'users_dcak' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User_dcak::class,
         ],
 
         // 'users' => [
