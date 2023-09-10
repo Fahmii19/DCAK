@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
 
 Route::get('/storage', function () {
     Artisan::call('storage:link');
@@ -35,10 +35,10 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     });
 
-    Route::get('/koordinator', [MenuController::class, 'koordinator'])->middleware('can:view koordinator');
-    Route::get('/calon-pemilih', [MenuController::class, 'calonPemilih'])->middleware('can:view calon pemilih');
-    Route::get('/pemilih', [MenuController::class, 'pemilih'])->middleware('can:view pemilih');
-    Route::get('/akun-dcak', [MenuController::class, 'akunDcak'])->middleware('can:view akun dcak');
+    // Route::get('/koordinator', [MenuController::class, 'koordinator'])->middleware('can:view koordinator');
+    // Route::get('/calon-pemilih', [MenuController::class, 'calonPemilih'])->middleware('can:view calon pemilih');
+    // Route::get('/pemilih', [MenuController::class, 'pemilih'])->middleware('can:view pemilih');
+    // Route::get('/akun-dcak', [MenuController::class, 'akunDcak'])->middleware('can:view akun dcak');
 });
 
 // Rute untuk login User
@@ -52,7 +52,7 @@ Route::get('form-pemilih', [HomeController::class, 'formPemilih'])->name('formPe
 
 
 // Login Admin
-Route::get('admin', [AuthController::class, 'showLoginFormAdmin'])->name('showLoginFormAdmin');
+Route::get('login', [AuthController::class, 'showLoginFormAdmin'])->name('showLoginFormAdmin');
 Route::post('login-process-admin', [AuthController::class, 'loginProcessAdmin'])->name('loginProcessAdmin');
 Route::post('logout-admin', [AuthController::class, 'logoutAdmin'])->name('logoutAdmin');
 
@@ -96,6 +96,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/table-pemilih', [HomeController::class, 'tablePemilih'])->name('table-pemilih');
     Route::get('/input-pemilih', [HomeController::class, 'inputPemilih'])->name('input-pemilih');
     Route::post('/form-input-pemilih', [HomeController::class, 'formInputPemilih'])->name('form-input-pemilih');
+    Route::get('/input-pemilih-nama', [HomeController::class, 'inputPemilihNama'])->name('input-pemilih-nama');
+    // Route::get('/cari-pemilih', [HomeController::class, 'cariPemilih'])->name('cari-pemilih');
+    Route::get('/search/nama', [HomeController::class, 'searchNama'])->name('search.nama');
+    Route::get('/get-pemilih-detail', [HomeController::class, 'getPemilihDetail'])->name('get.pemilih_detail');
+
+    Route::post('/form-input-pencarian-pemilih', [HomeController::class, 'formInputPencarianPemilih'])->name('form-input-pencarian-pemilih');
+
+
 
     // kelurahan
     Route::get('/kelurahan', [HomeController::class, 'kelurahan'])->name('kelurahan');

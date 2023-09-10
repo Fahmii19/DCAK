@@ -47,7 +47,7 @@
 
                     @csrf
                     <span class="login100-form-title p-b-43">
-                        Masuk untuk administrator
+                        Login 4KSI
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Username is required">

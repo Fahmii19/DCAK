@@ -23,7 +23,7 @@
                     <p>
                         Data ini menampilkan pemilih yang telah terdaftar.
                     </p>
-                    <div class="">
+                    <div class="table-responsive">
                         <table id="datatablePemilih" class="table table-striped dt-responsive nowrap" data-toggle="data-table">
 
                             <thead>

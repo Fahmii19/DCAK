@@ -33,7 +33,6 @@
                                     <th>Koordinator</th>
                                     <th>Kelurahan</th>
                                     <th>Username</th>
-                                    <th>Password</th>
                                     <th>Level</th>
 
                                 </tr>
@@ -74,24 +73,20 @@
                     },
 
                     {
-                        data: 'koordinator.nama_koordinator',
-                        name: 'koordinator.nama_koordinator',
-                        "defaultContent": "N/A"
-                    },
-                    {
-                        data: 'koordinator.kelurahan',
-                        name: 'koordinator.kelurahan',
-                        "defaultContent": "N/A"
-                    },
-                    {
+                        data: 'koordinator.nama_koordinator'
+                        , name: 'koordinator.nama_koordinator'
+                        , "defaultContent": "N/A"
+                    }
+                    , {
+                        data: 'koordinator.kelurahan'
+                        , name: 'koordinator.kelurahan'
+                        , "defaultContent": "N/A"
+                    }
+                    , {
                         data: 'username'
                         , name: 'username'
                     },
 
-                    {
-                        data: 'password'
-                        , name: 'password'
-                    },
                     {
                         data: 'level'
                         , name: 'level'

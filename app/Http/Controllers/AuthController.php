@@ -23,16 +23,44 @@ class AuthController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/dashboard');
+
+            $level = Auth::user()->level;
+            // level
+            if ($level == 'superadmin') {
+                return redirect()->intended('/dashboard');
+            } else if ($level == 'admin') {
+                return redirect()->intended('/pemilih');
+            }
         }
 
         return back()->withErrors(['message' => 'Username atau password salah']);
     }
 
+    // public function loginProcessAdmin(Request $request)
+    // {
+    //     $user = User_dcak::where('username', $request->username)->first();
+
+    //     if ($user && $user->password == $request->password) {
+
+    //         Auth::login($user);
+
+    //         $level = $user->level;
+
+    //         if ($level == 'superadmin') {
+    //             return redirect()->intended('/dashboard');
+    //         } else if ($level == 'admin') {
+    //             return redirect()->intended('/pemilih');
+    //         }
+    //     }
+
+    //     return back()->withErrors(['message' => 'Username atau password salah']);
+    // }
+
+
     public function logoutAdmin()
     {
         Auth::logout();
-        return redirect('/admin');
+        return redirect('/login');
     }
 
     public function login(Request $request)

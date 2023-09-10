@@ -79,8 +79,8 @@
                 , columns: [
 
                     {
-                        data: 'id_pemilih'
-                        , name: 'id_pemilih'
+                        data: 'id_calon_pemilih'
+                        , name: 'id_calon_pemilih'
                     }
                     , {
                         data: 'nama_pemilih'
