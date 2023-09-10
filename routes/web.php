@@ -96,6 +96,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/table-pemilih', [HomeController::class, 'tablePemilih'])->name('table-pemilih');
     Route::get('/input-pemilih', [HomeController::class, 'inputPemilih'])->name('input-pemilih');
     Route::post('/form-input-pemilih', [HomeController::class, 'formInputPemilih'])->name('form-input-pemilih');
+    Route::get('/input-pemilih-nama', [HomeController::class, 'inputPemilihNama'])->name('input-pemilih-nama');
+    // Route::get('/cari-pemilih', [HomeController::class, 'cariPemilih'])->name('cari-pemilih');
+    Route::get('/search/nama', [HomeController::class, 'searchNama'])->name('search.nama');
+    Route::get('/get-pemilih-detail', [HomeController::class, 'getPemilihDetail'])->name('get.pemilih_detail');
+
+
 
     // kelurahan
     Route::get('/kelurahan', [HomeController::class, 'kelurahan'])->name('kelurahan');

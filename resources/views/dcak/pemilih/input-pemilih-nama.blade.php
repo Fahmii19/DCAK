@@ -1,4 +1,22 @@
 <x-app-layout :assets="$assets ?? []">
+
+    <style>
+        #searchResults {
+            position: absolute;
+            background-color: #fff;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100vh;
+            z-index: 1000;
+            border-radius: 5px;
+        }
+
+        #searchResults .list-group-item {
+            cursor: pointer;
+        }
+
+    </style>
+
     <div>
         <div class="row">
             <div class="col-sm-12 col-lg-12">
@@ -10,8 +28,8 @@
                                     <h4 class="card-title">Pemilih</h4>
                                 </div>
                                 <div class="col-md-6 text-md-end">
-                                    <a href="{{ route('input-pemilih-nama') }}">
-                                        <button type="button" class="btn btn-primary">Cari Dengan Nama</button>
+                                    <a href="{{ route('input-pemilih') }}">
+                                        <button type="button" class="btn btn-primary">Kembali</button>
                                     </a>
 
                                 </div>
@@ -38,10 +56,11 @@
                             </div>
 
                             {{-- Nama PEMILIH --}}
-                            <div class="form-group row">
+                            <div class="form-group row position-relative">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nama_pemilih">Nama Pemilih</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="nama_pemilih" name="nama_pemilih" placeholder="Masukan Nama Pemilih" required>
+                                    <input type="text" class="form-control" id="searchNama" placeholder="Ketik nama untuk mencari...">
+                                    <div id="searchResults"></div>
                                 </div>
                             </div>
 
@@ -49,12 +68,9 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="jenis_kelamin">Jenis Kelamin</label>
                                 <div class="col-sm-9">
-                                    <select class="form-select" aria-label="Default select example" name="jenis_kelamin" id="jenis_kelamin" required>
-                                        <option selected>Pilih Jenis Kelamin</option>
-                                        <option value="Pria">Pria</option>
-                                        <option value="Wanita">Wanita</option>
 
-                                    </select>
+                                    <input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin" placeholder="Masukan Jenis Kelamin" disabled>
+
                                 </div>
                             </div>
 
@@ -62,7 +78,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="no_hp">NO.HP</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukan Nomor Handphone" required>
+                                    <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukan Nomor Handphone" disabled>
+
                                 </div>
                             </div>
 
@@ -71,7 +88,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="rt">RT</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="rt" name="rt" placeholder="Masukan RT" required>
+                                    <input type="number" class="form-control" id="rt" name="rt" placeholder="Masukan RT" disabled>
+
 
                                 </div>
                             </div>
@@ -80,7 +98,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="rt">RW</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="rw" name="rw" placeholder="Masukan RW" required>
+                                    <input type="number" class="form-control" id="rw" name="rw" placeholder="Masukan RW" disabled>
+
                                 </div>
                             </div>
 
@@ -88,7 +107,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="tps">TPS</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="tps" name="tps" placeholder="Masukan TPS" required>
+                                    <input type="number" class="form-control" id="tps" name="tps" placeholder="Masukan TPS" disabled>
+
 
                                 </div>
                             </div>
@@ -98,18 +118,14 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="kelurahan">Kelurahan</label>
                                 <div class="col-sm-9">
-                                    <select class="form-select" aria-label="Default select example" name="kelurahan" id="kelurahan" required>
-                                        <option value="" disabled selected>Pilih Kelurahan</option>
-                                        @foreach($kelurahan as $k)
-                                        <option value="{{ $k->nama_kelurahan }}">{{ $k->nama_kelurahan }}</option>
-                                        @endforeach
-                                    </select>
+
+                                    <input type="text" class="form-control" id="kelurahan" name="kelurahan" placeholder="Masukan Kelurahan" disabled>
+
                                 </div>
                             </div>
 
 
                             <div class="form-group float-end">
-
                                 <button type="submit" class="btn btn-primary">Submit</button>
                                 <button type="button" class="btn btn-danger">cancel</button>
                             </div>
@@ -122,7 +138,69 @@
     </div>
 
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     {{-- --}}
-    <script></script>
+    <script>
+        $(document).ready(function() {
+            // Fungsi untuk mereset semua field
+            function resetFields() {
+                $('#jenis_kelamin').val('');
+                $('#no_hp').val('');
+                $('#rt').val('');
+                $('#rw').val('');
+                $('#tps').val('');
+                $('#kelurahan').val('');
+            }
+
+            $('#searchNama').on('keyup', function() {
+                let query = $(this).val().trim();
+
+                if (!query || query.length < 3) {
+                    $('#searchResults').empty().hide();
+                    resetFields();
+                    return;
+                }
+
+                $.ajax({
+                    url: "{{ route('search.nama') }}"
+                    , data: {
+                        query: query
+                    }
+                    , success: function(data) {
+                        $('#searchResults').html(data).show();
+                    }
+                });
+            });
+
+            $(document).on('click', '#searchResults .list-group-item', function(e) {
+                e.preventDefault();
+
+                let selectedName = $(this).text();
+                $('#searchNama').val(selectedName);
+                $('#searchResults').empty().hide();
+
+                $.ajax({
+                    url: "{{ route('get.pemilih_detail') }}"
+                    , data: {
+                        nama: selectedName
+                    }
+                    , success: function(data) {
+                        $('#jenis_kelamin').val(data.jenis_kelamin);
+                        $('#no_hp').val(data.no_hp);
+                        $('#rt').val(data.rt);
+                        $('#rw').val(data.rw);
+                        $('#tps').val(data.tps);
+                        $('#kelurahan').val(data.kelurahan);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+
+
+
 
 </x-app-layout>

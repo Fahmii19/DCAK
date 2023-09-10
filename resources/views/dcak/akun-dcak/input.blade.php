@@ -33,8 +33,11 @@
                                     <select class="form-select" aria-label="Default select example" name="koordinator" id="koordinator">
                                         <option value="" disabled selected>Pilih Koordinator</option>
                                         @foreach($koordinator as $k)
+                                        @if (!in_array($k->id_koordinator, $userKoordinators))
                                         <option value="{{ $k->id_koordinator }}">{{ $k->nama_koordinator }} - {{ $k->kelurahan }}</option>
+                                        @endif
                                         @endforeach
+
                                     </select>
                                 </div>
                             </div>
@@ -45,8 +48,8 @@
                                 <div class="col-sm-9">
                                     <select class="form-select" aria-label="Default select example" name="level" id="level">
                                         <option value="" disabled selected>Pilih Level</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="SuperAdmin">SuperAdmin</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="superadmin">SuperAdmin</option>
                                     </select>
                                 </div>
                             </div>

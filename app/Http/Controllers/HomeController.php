@@ -14,6 +14,11 @@ use App\Models\Kelurahan;
 use App\Models\Kecamatan;
 use Illuminate\Support\Facades\Auth;
 
+// middleware
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\PermissionRegistrar;
+
 
 use Illuminate\Http\Request;
 
@@ -65,6 +70,7 @@ class HomeController extends Controller
     public function tableAkunDcak()
     {
         $akunDcaks = User_dcak::with('koordinator')->get();
+        // dd($akunDcaks);
         return DataTables::of($akunDcaks)
             ->editColumn('koordinator.nama_koordinator', function ($akunDcak) {
                 return $akunDcak->koordinator ? $akunDcak->koordinator->nama_koordinator : 'N/A';
@@ -79,27 +85,42 @@ class HomeController extends Controller
     {
         // koordinator
         $koordinator = Koordinator::all();
+        $userKoordinators = User_dcak::pluck('id_koordinator')->toArray();
 
-        // Dapatkan semua id_koordinator yang sudah dipilih
-        $selectedCoordinators = User_dcak::select('id_koordinator')->distinct()->pluck('id_koordinator')->all();
-
-        // Dapatkan semua koordinator yang belum dipilih
-        $koordinator = Koordinator::whereNotIn('id_koordinator', $selectedCoordinators)->get();
-
-        return view('dcak.akun-dcak.input', compact('koordinator'));
+        return view('dcak.akun-dcak.input', compact('koordinator', 'userKoordinators'));
     }
 
     public function formInputAkunDcak(Request $request)
     {
-        $akunDcak = new User_dcak();
-        $akunDcak->id_koordinator = $request->koordinator;
-        $akunDcak->username = $request->username;
-        $akunDcak->password = ($request->password);
-        $akunDcak->level = ($request->level);
-        $akunDcak->save();
+
+
+        if ($request->level == 'superadmin') {
+            // Cek apakah role sudah ada
+            $superadminRole = Role::firstOrCreate(['name' => 'superadmin', 'guard_name' => 'web']);
+
+            $userDcak = new User_dcak();
+            $userDcak->username = $request->username;
+            $userDcak->password = bcrypt($request->password);
+            $userDcak->id_koordinator = $request->koordinator;
+            $userDcak->level = $request->level;
+            $userDcak->save();
+            $userDcak->assignRole($superadminRole);
+        } elseif ($request->level == 'admin') {
+            // Cek apakah role sudah ada
+            $adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+
+            $userDcak = new User_dcak();
+            $userDcak->username = $request->username;
+            $userDcak->password = bcrypt($request->password);
+            $userDcak->id_koordinator = $request->input('koordinator');
+            $userDcak->level = $request->level;
+            $userDcak->save();
+            $userDcak->assignRole($adminRole);
+        }
 
         return redirect()->route('akun-dcak')->with('success', 'Data akun dcak berhasil disimpan.');
     }
+
 
     // Landing Page
     public function landingPage(Request $request)
@@ -202,7 +223,24 @@ class HomeController extends Controller
 
     function tablePemilih()
     {
-        $Pemilih = Pemilih::select(['id_pemilih', 'nama_koordinator', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+        if (Auth::check()) {
+            // If superadmin, display all data
+            if (Auth::user()->level == 'superadmin') {
+                $Pemilih = Pemilih::select(['id_pemilih', 'nama_koordinator', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+            }
+            // If admin, display data based on nama_koordinator and kelurahan
+            elseif (Auth::user()->level == 'admin') {
+                $userKelurahan = Auth::user()->koordinator->kelurahan;
+                $Pemilih = Pemilih::where('nama_koordinator', Auth::user()->koordinator->nama_koordinator)
+                    ->where('kelurahan', $userKelurahan)
+                    ->select(['id_pemilih', 'nama_koordinator', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+            }
+        } else {
+            // If user is not authenticated, you can either return an empty result or redirect them to a login page.
+            // For this example, I'll return an empty result.
+            $Pemilih = collect([]);
+        }
+
         return DataTables::of($Pemilih)->make(true);
     }
 
@@ -211,8 +249,58 @@ class HomeController extends Controller
         $kelurahan = Kelurahan::all();
         $koordinator = Koordinator::all();
 
-        return view('dcak.pemilih.input', compact('kelurahan', 'koordinator'));
+        $user = Auth::user();
+        $nama_koordinator = $user->koordinator->nama_koordinator;
+
+        return view('dcak.pemilih.input', compact('kelurahan', 'koordinator', 'nama_koordinator'));
     }
+
+    function inputPemilihNama(Request $request)
+    {
+        $kelurahan = Kelurahan::all();
+        $koordinator = Koordinator::all();
+
+        // $calonPemilih = CalonPemilih::get();
+
+        $user = Auth::user();
+        $nama_koordinator = $user->koordinator->nama_koordinator;
+
+
+        return view('dcak.pemilih.input-pemilih-nama', compact('kelurahan', 'koordinator', 'nama_koordinator'));
+    }
+
+    public function searchNama(Request $request)
+    {
+        $query = $request->get('query');
+
+        $results = CalonPemilih::where('nama_pemilih', 'LIKE', "%{$query}%")->get();
+
+        $output = '<div class="list-group">';
+
+        foreach ($results as $result) {
+            $output .= '<a href="#" class="list-group-item list-group-item-action">' . $result->nama_pemilih . '</a>';
+        }
+
+        $output .= '</div>';
+
+
+
+        return $output;
+    }
+
+    public function getPemilihDetail(Request $request)
+    {
+        $nama = $request->get('nama');
+
+        $pemilih = CalonPemilih::where('nama_pemilih', $nama)->first();
+
+        if ($pemilih) {
+            return response()->json($pemilih);
+        } else {
+            return response()->json(['error' => 'Pemilih tidak ditemukan'], 404);
+        }
+    }
+
 
     function formInputPemilih(Request $request)
     {
