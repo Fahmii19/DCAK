@@ -136,7 +136,7 @@ class HomeController extends Controller
 
     public function tableCalonPemilih()
     {
-        $calonPemilih = CalonPemilih::select(['id_pemilih', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+        $calonPemilih = CalonPemilih::select(['id_calon_pemilih', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
         return DataTables::of($calonPemilih)->make(true);
     }
 
@@ -223,26 +223,27 @@ class HomeController extends Controller
 
     function tablePemilih()
     {
+        $Pemilih = collect([]);
+
         if (Auth::check()) {
+            $user = Auth::user();
+
             // If superadmin, display all data
-            if (Auth::user()->level == 'superadmin') {
-                $Pemilih = Pemilih::select(['id_pemilih', 'nama_koordinator', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+            if ($user->level == 'superadmin') {
+                $Pemilih = Pemilih::select(['id_pemilih', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
             }
-            // If admin, display data based on nama_koordinator and kelurahan
-            elseif (Auth::user()->level == 'admin') {
-                $userKelurahan = Auth::user()->koordinator->kelurahan;
-                $Pemilih = Pemilih::where('nama_koordinator', Auth::user()->koordinator->nama_koordinator)
-                    ->where('kelurahan', $userKelurahan)
-                    ->select(['id_pemilih', 'nama_koordinator', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+            // If admin and has koordinator, display data based on nama_koordinator and kelurahan
+            elseif ($user->level == 'admin' && $user->koordinator) {
+                $Pemilih = Pemilih::where('nama_koordinator', $user->koordinator->nama_koordinator)
+                    ->where('kelurahan', $user->koordinator->kelurahan)
+                    ->select(['id_pemilih', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
             }
-        } else {
-            // If user is not authenticated, you can either return an empty result or redirect them to a login page.
-            // For this example, I'll return an empty result.
-            $Pemilih = collect([]);
         }
 
         return DataTables::of($Pemilih)->make(true);
     }
+
+
 
     function inputPemilih(Request $request)
     {
@@ -259,8 +260,6 @@ class HomeController extends Controller
     {
         $kelurahan = Kelurahan::all();
         $koordinator = Koordinator::all();
-
-        // $calonPemilih = CalonPemilih::get();
 
         $user = Auth::user();
         $nama_koordinator = $user->koordinator->nama_koordinator;
@@ -299,6 +298,23 @@ class HomeController extends Controller
         } else {
             return response()->json(['error' => 'Pemilih tidak ditemukan'], 404);
         }
+    }
+
+    public function formInputPencarianPemilih(Request $request)
+    {
+        $Pemilih = new Pemilih();
+        $Pemilih->id_calon_pemilih = $request->id_calon_pemilih;
+        $Pemilih->nama_koordinator = $request->nama_koordinator;
+        $Pemilih->nama_pemilih = $request->nama_pemilih;
+        $Pemilih->jenis_kelamin = $request->jenis_kelamin;
+        $Pemilih->no_hp = $request->no_hp;
+        $Pemilih->rt = $request->rt;
+        $Pemilih->rw = $request->rw;
+        $Pemilih->tps = $request->tps;
+        $Pemilih->kelurahan = $request->kelurahan;
+        $Pemilih->save();
+
+        return redirect()->route('pemilih')->with('success', 'Data Calon berhasil disimpan.');
     }
 
 

@@ -14,7 +14,7 @@ class CreateCalonPemilihTable extends Migration
     public function up()
     {
         Schema::create('calon_pemilih', function (Blueprint $table) {
-            $table->id('id_pemilih');
+            $table->id('id_calon_pemilih');
             $table->string('nama_pemilih')->nullable();
             $table->string('jenis_kelamin')->nullable();
             $table->string('no_hp')->nullable();

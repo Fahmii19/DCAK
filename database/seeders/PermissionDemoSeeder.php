@@ -26,19 +26,21 @@ class PermissionDemoSeeder extends Seeder
         $adminRole = Role::create(['name' => 'admin', 'guard_name' => 'web']);
         $adminRole->givePermissionTo('view calon pemilih');
 
-        $superadminRole = Role::create(['name' => 'super-admin', 'guard_name' => 'web']);
+        $superadminRole = Role::create(['name' => 'superadmin', 'guard_name' => 'web']);
         // superadmin gets all permissions via Gate::before rule
 
         // create demo users
         $user = User_dcak::create([
             'username' => 'admin',
-            'password' => bcrypt('12345678')
+            'level' => 'admin',
+            'password' => bcrypt('admin')
         ]);
         $user->assignRole($adminRole);
 
         $user = User_dcak::create([
             'username' => 'superadmin',
-            'password' => bcrypt('12345678')
+            'level' => 'superadmin',
+            'password' => bcrypt('superadmin')
         ]);
         $user->assignRole($superadminRole);
     }
