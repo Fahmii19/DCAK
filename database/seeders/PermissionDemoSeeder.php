@@ -33,14 +33,14 @@ class PermissionDemoSeeder extends Seeder
         $user = User_dcak::create([
             'username' => 'admin',
             'level' => 'admin',
-            'password' => bcrypt('admin')
+            'password' => bcrypt('Januar!2003')
         ]);
         $user->assignRole($adminRole);
 
         $user = User_dcak::create([
             'username' => 'superadmin',
             'level' => 'superadmin',
-            'password' => bcrypt('superadmin')
+            'password' => bcrypt('Januar!2003')
         ]);
         $user->assignRole($superadminRole);
     }

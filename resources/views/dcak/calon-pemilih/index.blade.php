@@ -35,6 +35,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>NIK</th>
                                     <th>Nama Pemilih</th>
                                     <th>Jenis Kelamin</th>
                                     <th>No HP</th>
@@ -81,6 +82,10 @@
                     {
                         data: 'id_calon_pemilih'
                         , name: 'id_calon_pemilih'
+                    }
+                    , {
+                        data: 'nik'
+                        , name: 'nik'
                     }
                     , {
                         data: 'nama_pemilih'

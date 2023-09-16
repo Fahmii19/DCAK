@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Koordinator</th>
+                                    <th>NIK</th>
                                     <th>Nama Pemilih</th>
                                     <th>Jenis Kelamin</th>
                                     <th>No HP</th>
@@ -76,6 +77,10 @@
                     , {
                         data: 'nama_koordinator'
                         , name: 'nama_koordinator'
+                    }
+                    , {
+                        data: 'nik'
+                        , name: 'nik'
                     }
                     , {
                         data: 'nama_pemilih'

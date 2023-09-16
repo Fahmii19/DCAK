@@ -33,7 +33,14 @@
 
                                     <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator" readonly value="{{ $nama_koordinator }}">
 
+                                </div>
+                            </div>
 
+                            {{-- NIK --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="nik">NIK</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="nik" name="nik" placeholder="Masukan NIK" required>
                                 </div>
                             </div>
 

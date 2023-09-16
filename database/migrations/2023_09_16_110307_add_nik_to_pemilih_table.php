@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIdCalonPemilihToPemilihTable extends Migration
+class AddNikToPemilihTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddIdCalonPemilihToPemilihTable extends Migration
     public function up()
     {
         Schema::table('pemilih', function (Blueprint $table) {
-            $table->bigInteger('id_calon_pemilih')->nullable()->after('id_pemilih');
+            $table->string('nik')->nullable()->after('id_calon_pemilih');
         });
     }
 
@@ -26,7 +26,7 @@ class AddIdCalonPemilihToPemilihTable extends Migration
     public function down()
     {
         Schema::table('pemilih', function (Blueprint $table) {
-            $table->dropColumn('id_calon_pemilih');
+            $table->dropColumn('nik');
         });
     }
 }

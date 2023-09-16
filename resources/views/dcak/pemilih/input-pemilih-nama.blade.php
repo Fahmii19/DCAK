@@ -58,6 +58,7 @@
                                 </div>
                             </div>
 
+
                             {{-- Nama PEMILIH --}}
                             <div class="form-group row position-relative">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nama_pemilih">Nama Pemilih</label>
@@ -66,6 +67,25 @@
                                     <div id="searchResults"></div>
                                 </div>
                             </div>
+
+
+                            {{-- NIK --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="nik">NIK</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="nik" name="nik" placeholder="Masukan NIK">
+                                </div>
+                            </div>
+
+                            {{-- NO.HP --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="no_hp">NO.HP</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukan Nomor Handphone">
+
+                                </div>
+                            </div>
+
 
                             {{-- Jenis Kelamin --}}
                             <div class="form-group row">
@@ -76,16 +96,6 @@
 
                                 </div>
                             </div>
-
-                            {{-- NO.HP --}}
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="no_hp">NO.HP</label>
-                                <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukan Nomor Handphone" readonly>
-
-                                </div>
-                            </div>
-
 
                             {{-- RT --}}
                             <div class="form-group row">
@@ -154,10 +164,13 @@
                 $('#tps').val('');
                 $('#kelurahan').val('');
                 $('#id_calon_pemilih').val('');
+                $('#nik').val('');
             }
 
             $('#searchNama').on('keyup', function() {
                 let query = $(this).val().trim();
+
+                console.log(query);
 
                 if (!query || query.length < 3) {
                     $('#searchResults').empty().hide();
@@ -196,6 +209,7 @@
                         $('#tps').val(data.tps);
                         $('#kelurahan').val(data.kelurahan);
                         $('#id_calon_pemilih').val(data.id_calon_pemilih);
+                        $('#nik').val(data.nik);
                     }
                 });
             });

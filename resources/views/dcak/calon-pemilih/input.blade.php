@@ -26,6 +26,14 @@
                         <form class="form-horizontal" method="post" action="{{ route('form-input-calon-pemilih') }}">
                             @csrf
 
+                            {{-- NIK --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="nik">NIK</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="nik" name="nik" placeholder="Masukan NIK" required>
+                                </div>
+                            </div>
+
                             {{-- Nama PEMILIH --}}
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nama_pemilih">Nama Pemilih</label>

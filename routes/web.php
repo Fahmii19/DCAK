@@ -90,6 +90,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/table-koordinator', [HomeController::class, 'tableKoordinator'])->name('table-koordinator');
     Route::get('/input-koordinator', [HomeController::class, 'inputKoordinator'])->name('input-koordinator');
     Route::post('/form-input-koordinator', [HomeController::class, 'formInputKoordinator'])->name('form-input-koordinator');
+    // Edit Koordinator
+    Route::get('/edit-koordinator/{id}', [HomeController::class, 'editKoordinator'])->name('edit-koordinator');
+    Route::post('/form-edit-koordinator/{id}', [HomeController::class, 'formEditKoordinator'])->name('form-edit-koordinator');
+    // Delete Koordinator
+    Route::delete('/delete-koordinator/{id}', [HomeController::class, 'deleteKoordinator'])->name('delete-koordinator');
 
     // pemilih
     Route::get('/pemilih', [HomeController::class, 'pemilih'])->name('pemilih');

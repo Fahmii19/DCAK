@@ -136,7 +136,7 @@ class HomeController extends Controller
 
     public function tableCalonPemilih()
     {
-        $calonPemilih = CalonPemilih::select(['id_calon_pemilih', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+        $calonPemilih = CalonPemilih::select(['id_calon_pemilih', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
         return DataTables::of($calonPemilih)->make(true);
     }
 
@@ -151,6 +151,7 @@ class HomeController extends Controller
     public function formInputCalonPemilih(Request $request)
     {
         $calonPemilih = new CalonPemilih();
+        $calonPemilih->nik = $request->nik;
         $calonPemilih->nama_pemilih = $request->nama_pemilih;
         $calonPemilih->jenis_kelamin = $request->jenis_kelamin;
         $calonPemilih->no_hp = $request->no_hp;
@@ -214,6 +215,37 @@ class HomeController extends Controller
         return redirect()->route('koordinator')->with('success', 'Data koordinator berhasil disimpan.');
     }
 
+    function editKoordinator($id)
+    {
+        $koordinator = Koordinator::find($id);
+        return response()->json($koordinator);
+    }
+
+    function formEditKoordinator(Request $request, $id)
+    {
+        $koordinator = Koordinator::find($id);
+        $koordinator->nama_koordinator = $request->nama_koordinator;
+        $koordinator->username = $request->username;
+        $koordinator->password = $request->password;
+        $koordinator->jumlah_surat_dukungan = $request->jumlah_surat_dukungan;
+        $koordinator->kelurahan = $request->kelurahan;
+        $koordinator->kecamatan = $request->kecamatan;
+        $koordinator->save();
+
+        return redirect()->route('koordinator')->with('success', 'Data koordinator berhasil diupdate.');
+    }
+
+    function deleteKoordinator($id)
+    {
+        $koordinator = Koordinator::find($id);
+        if ($koordinator) {
+            $koordinator->delete();
+            return response()->json(['success' => true, 'message' => 'Data koordinator berhasil dihapus.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Data koordinator tidak ditemukan.']);
+        }
+    }
+
     // Function Pemilih
 
     function pemilih(Request $request)
@@ -230,13 +262,13 @@ class HomeController extends Controller
 
             // If superadmin, display all data
             if ($user->level == 'superadmin') {
-                $Pemilih = Pemilih::select(['id_pemilih', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+                $Pemilih = Pemilih::select(['id_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
             }
             // If admin and has koordinator, display data based on nama_koordinator and kelurahan
             elseif ($user->level == 'admin' && $user->koordinator) {
                 $Pemilih = Pemilih::where('nama_koordinator', $user->koordinator->nama_koordinator)
                     ->where('kelurahan', $user->koordinator->kelurahan)
-                    ->select(['id_pemilih', 'nama_koordinator', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+                    ->select(['id_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
             }
         }
 
@@ -268,24 +300,42 @@ class HomeController extends Controller
         return view('dcak.pemilih.input-pemilih-nama', compact('kelurahan', 'koordinator', 'nama_koordinator'));
     }
 
+
     public function searchNama(Request $request)
     {
         $query = $request->get('query');
 
-        $results = CalonPemilih::where('nama_pemilih', 'LIKE', "%{$query}%")->get();
+        // Mendapatkan informasi pengguna aktif
+        $user = Auth::user();
+        $nama_koordinator = $user->koordinator->kelurahan;
+
+        // Dapatkan semua id_calon_pemilih yang sudah ada di table pemilih
+        $existingIds = Pemilih::pluck('id_calon_pemilih')->filter()->toArray();
+
+        $results = CalonPemilih::where('nama_pemilih', 'LIKE', "%{$query}%")
+            ->where(function ($query) use ($existingIds) {
+                if (!empty($existingIds)) {
+                    $query->whereNotIn('id_calon_pemilih', $existingIds);
+                }
+            })
+            ->where('kelurahan', $nama_koordinator)
+            ->get();
 
         $output = '<div class="list-group">';
 
-        foreach ($results as $result) {
-            $output .= '<a href="#" class="list-group-item list-group-item-action">' . $result->nama_pemilih . '</a>';
+        if ($results->isEmpty()) {
+            $output .= '<div class="list-group-item text-center">Tidak ada data pemilih</div>';
+        } else {
+            foreach ($results as $result) {
+                $output .= '<a href="#" class="list-group-item list-group-item-action">' . $result->nama_pemilih . '</a>';
+            }
         }
 
         $output .= '</div>';
 
-
-
         return $output;
     }
+
 
     public function getPemilihDetail(Request $request)
     {
@@ -304,6 +354,7 @@ class HomeController extends Controller
     {
         $Pemilih = new Pemilih();
         $Pemilih->id_calon_pemilih = $request->id_calon_pemilih;
+        $Pemilih->nik = $request->nik;
         $Pemilih->nama_koordinator = $request->nama_koordinator;
         $Pemilih->nama_pemilih = $request->nama_pemilih;
         $Pemilih->jenis_kelamin = $request->jenis_kelamin;
@@ -321,6 +372,8 @@ class HomeController extends Controller
     function formInputPemilih(Request $request)
     {
         $Pemilih = new Pemilih();
+        // $Pemilih->id_calon_pemilih = $request->id_calon_pemilih;
+        $Pemilih->nik = $request->nik;
         $Pemilih->nama_koordinator = $request->nama_koordinator;
         $Pemilih->nama_pemilih = $request->nama_pemilih;
         $Pemilih->jenis_kelamin = $request->jenis_kelamin;
@@ -329,6 +382,8 @@ class HomeController extends Controller
         $Pemilih->rw = $request->rw;
         $Pemilih->tps = $request->tps;
         $Pemilih->kelurahan = $request->kelurahan;
+
+        // dd($Pemilih);
 
         $Pemilih->save();
 
@@ -396,7 +451,25 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $assets = ['chart', 'animation'];
-        return view('dashboards.dashboard', compact('assets'));
+
+
+        // Hitung Koordinator
+        $koordinator = Koordinator::all();
+        $jumlahKoordinator = $koordinator->count();
+
+        // Hitung Calon Pemilih
+        $calonPemilih = CalonPemilih::all();
+        $jumlahCalonPemilih = $calonPemilih->count();
+
+        // Hitung Pemilih
+        $pemilih = Pemilih::all();
+        $jumlahPemilih = $pemilih->count();
+
+        // Hitung Akun Dcak
+        $akunDcak = User_dcak::all();
+        $jumlahAkunDcak = $akunDcak->count();
+
+        return view('dashboards.dashboard', compact('assets', 'jumlahKoordinator', 'jumlahCalonPemilih', 'jumlahPemilih', 'jumlahAkunDcak'));
     }
 
     /*
