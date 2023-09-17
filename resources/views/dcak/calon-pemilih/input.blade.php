@@ -11,7 +11,7 @@
                                 </div>
                                 <div class="col-md-6 text-md-end">
                                     <a href="{{ route('calon-pemilih') }}">
-                                        <button type="button" class="btn btn-primary"> Kembali</button>
+                                        <button type="button" class="btn btn-secondary"> Kembali</button>
                                     </a>
 
                                 </div>
@@ -108,8 +108,8 @@
 
 
                             <div class="form-group float-end">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="button" class="btn btn-danger">cancel</button>
+                                <button type="submit" class="btn btn-primary">Kirim</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
                             </div>
                         </form>
 

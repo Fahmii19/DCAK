@@ -29,6 +29,7 @@ class Pemilih extends Model
      * @var array
      */
     protected $fillable = [
+        'id_pemilih',
         'nik',
         'nama_koordinator',
         'nama_pemilih',

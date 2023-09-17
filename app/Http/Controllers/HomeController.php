@@ -121,6 +121,49 @@ class HomeController extends Controller
         return redirect()->route('akun-dcak')->with('success', 'Data akun dcak berhasil disimpan.');
     }
 
+    public function editAkunDcak($id)
+    {
+        $akunDcak = User_dcak::with('koordinator')->find($id);
+        return response()->json($akunDcak);
+    }
+
+    public function formEditAkunDcak(Request $request, $id)
+    {
+        // Update for table akun_dcak
+        $akunDcak = User_dcak::find($id);
+        $akunDcak->id_koordinator = $request->id_koordinator;
+        $akunDcak->username = $request->username;
+        $akunDcak->password = bcrypt($request->password);
+        $akunDcak->level = $request->level;
+        $akunDcak->save();
+
+        // Find the related koordinator
+        $koordinator = Koordinator::find($akunDcak->id_koordinator);
+        if ($koordinator) {
+            // Update for table koordinator
+            $koordinator->nama_koordinator = $request->nama_koordinator;
+            $koordinator->save();
+        } else {
+            // Handle the case where the koordinator doesn't exist
+            // Maybe return an error message or do some other error handling
+            return redirect()->route('akun-dcak')->with('error', 'Koordinator not found.');
+        }
+
+        return redirect()->route('akun-dcak')->with('success', 'Data akun dcak berhasil diupdate.');
+    }
+
+
+    public function deleteAkunDcak($id)
+    {
+        $akunDcak = User_dcak::find($id);
+        if ($akunDcak) {
+            $akunDcak->delete();
+            return response()->json(['success' => true, 'message' => 'Data akun dcak berhasil dihapus.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Data akun dcak tidak ditemukan.']);
+        }
+    }
+
 
     // Landing Page
     public function landingPage(Request $request)
@@ -177,6 +220,39 @@ class HomeController extends Controller
             return redirect()->route('calon-pemilih')->with('success', 'Data berhasil diimpor dari Excel.');
         } catch (\Exception $e) {
             return redirect()->route('calon-pemilih')->with('error', 'Terjadi kesalahan saat mengimpor data dari Excel: ' . $e->getMessage());
+        }
+    }
+    function editCalonPemilih($id)
+    {
+        // dd($id);
+        $calonPemilih = CalonPemilih::find($id);
+        return response()->json($calonPemilih);
+    }
+
+    function formEditCalonPemilih(Request $request, $id)
+    {
+        $calonPemilih = CalonPemilih::find($id);
+        $calonPemilih->nik = $request->nik;
+        $calonPemilih->nama_pemilih = $request->nama_pemilih;
+        $calonPemilih->jenis_kelamin = $request->jenis_kelamin;
+        $calonPemilih->no_hp = $request->no_hp;
+        $calonPemilih->rt = $request->rt;
+        $calonPemilih->rw = $request->rw;
+        $calonPemilih->tps = $request->tps;
+        $calonPemilih->kelurahan = $request->kelurahan;
+        $calonPemilih->save();
+
+        return redirect()->route('calon-pemilih')->with('success', 'Data calon pemilih berhasil diupdate.');
+    }
+
+    function deleteCalonPemilih($id)
+    {
+        $calonPemilih = CalonPemilih::find($id);
+        if ($calonPemilih) {
+            $calonPemilih->delete();
+            return response()->json(['success' => true, 'message' => 'Data calon pemilih berhasil dihapus.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Data calon pemilih tidak ditemukan.']);
         }
     }
 
@@ -266,9 +342,10 @@ class HomeController extends Controller
             }
             // If admin and has koordinator, display data based on nama_koordinator and kelurahan
             elseif ($user->level == 'admin' && $user->koordinator) {
+
                 $Pemilih = Pemilih::where('nama_koordinator', $user->koordinator->nama_koordinator)
                     ->where('kelurahan', $user->koordinator->kelurahan)
-                    ->select(['id_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+                    ->select(['id_pemilih', 'id_calon_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
             }
         }
 
@@ -284,6 +361,7 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $nama_koordinator = $user->koordinator->nama_koordinator;
+
 
         return view('dcak.pemilih.input', compact('kelurahan', 'koordinator', 'nama_koordinator'));
     }
@@ -390,6 +468,40 @@ class HomeController extends Controller
         return redirect()->route('pemilih')->with('success', 'Data pemilih berhasil disimpan.');
     }
 
+    function editPemilih($id)
+    {
+        $Pemilih = Pemilih::find($id);
+        return response()->json($Pemilih);
+    }
+
+    function formEditPemilih(Request $request, $id)
+    {
+        $Pemilih = Pemilih::find($id);
+        $Pemilih->nik = $request->nik;
+        $Pemilih->nama_koordinator = $request->nama_koordinator;
+        $Pemilih->nama_pemilih = $request->nama_pemilih;
+        $Pemilih->jenis_kelamin = $request->jenis_kelamin;
+        $Pemilih->no_hp = $request->no_hp;
+        $Pemilih->rt = $request->rt;
+        $Pemilih->rw = $request->rw;
+        $Pemilih->tps = $request->tps;
+        $Pemilih->kelurahan = $request->kelurahan;
+        $Pemilih->save();
+
+        return redirect()->route('pemilih')->with('success', 'Data pemilih berhasil diupdate.');
+    }
+
+    function deletePemilih($id)
+    {
+        $Pemilih = Pemilih::find($id);
+        if ($Pemilih) {
+            $Pemilih->delete();
+            return response()->json(['success' => true, 'message' => 'Data pemilih berhasil dihapus.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Data pemilih tidak ditemukan.']);
+        }
+    }
+
 
     // Function Kelurahan
     function kelurahan(Request $request)
@@ -412,7 +524,7 @@ class HomeController extends Controller
     function inputFormKelurahan(Request $request)
     {
         $kelurahan = new Kelurahan();
-        $kelurahan->nama_kelurahan = $request->nama_kelurahan;
+        $kelurahan->nama_kelurahan = strtoupper($request->nama_kelurahan);
         $kelurahan->save();
 
         return redirect()->route('kelurahan')->with('success', 'Data kelurahan berhasil disimpan.');
@@ -439,7 +551,7 @@ class HomeController extends Controller
     function inputFormKecamatan(Request $request)
     {
         $kecamatan = new Kecamatan();
-        $kecamatan->nama_kecamatan = $request->nama_kecamatan;
+        $kecamatan->nama_kecamatan = strtoupper($request->nama_kecamatan);
         $kecamatan->save();
 
         return redirect()->route('kecamatan')->with('success', 'Data kecamatan berhasil disimpan.');

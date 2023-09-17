@@ -21,7 +21,7 @@ class CalonPemilih extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'id_pemilih';
+    protected $primaryKey = 'id_calon_pemilih';
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +29,7 @@ class CalonPemilih extends Model
      * @var array
      */
     protected $fillable = [
+        'id_calon_pemilih',
         'nik',
         'nama_pemilih',
         'jenis_kelamin',
