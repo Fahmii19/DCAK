@@ -45,8 +45,7 @@
 
                             @csrf
 
-                            <input type="text" name="id_calon_pemilih" id="id_calon_pemilih">
-
+                            <input type="hidden" name="id_calon_pemilih" id="id_calon_pemilih">
 
                             {{-- Nama Koordinator --}}
                             <div class="form-group row">
