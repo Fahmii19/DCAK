@@ -17,6 +17,11 @@
 
 <link rel="stylesheet" href="{{asset('vendor/aos/dist/aos.css')}}" />
 
+{{-- Nambahin Asset Sendiri --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+
 <style>
     th.hide-search input {
         display: none;

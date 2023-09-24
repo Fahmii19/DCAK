@@ -54,4 +54,10 @@ class Pemilih extends Model
      * @var array
      */
     protected $casts = [];
+
+
+    public function koordinator()
+    {
+        return $this->belongsTo(Koordinator::class, 'nama_koordinator', 'nama_koordinator');
+    }
 }

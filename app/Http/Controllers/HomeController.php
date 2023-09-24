@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
+use Carbon\Carbon;
 
 
 use Illuminate\Http\Request;
@@ -575,14 +576,34 @@ class HomeController extends Controller
 
         // Hitung Pemilih
         $pemilih = Pemilih::all();
+
+
         $jumlahPemilih = $pemilih->count();
 
         // Hitung Akun Dcak
         $akunDcak = User_dcak::all();
         $jumlahAkunDcak = $akunDcak->count();
 
-        return view('dashboards.dashboard', compact('assets', 'jumlahKoordinator', 'jumlahCalonPemilih', 'jumlahPemilih', 'jumlahAkunDcak'));
+        return view('dashboards.dashboard', compact('assets', 'jumlahKoordinator', 'jumlahCalonPemilih', 'jumlahPemilih', 'jumlahAkunDcak', 'pemilih'));
     }
+
+    public function dataChart($periode)
+    {
+
+        // mendapatkan tanggal sekarang
+        $tanggalSekarang = Carbon::today()->endOfDay();  // mendapatkan akhir dari hari ini (23:59:59)
+
+        // menghitung tanggal awal berdasarkan periode dari tanggal sekarang
+        $tanggalAwal = $tanggalSekarang->copy()->subDays($periode - 1)->startOfDay(); // mengambil awal dari hari tersebut (00:00:00) setelah dikurangi periode
+
+        // mengambil data pemilih yang berada dalam periode tertentu dari tanggal saat ini, dengan relasi ke koordinator
+        $chartData = Pemilih::with('koordinator')
+            ->whereBetween('created_at', [$tanggalAwal, $tanggalSekarang])
+            ->get();
+
+        return response()->json($chartData);
+    }
+
 
     /*
      * Menu Style Routs

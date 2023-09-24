@@ -118,7 +118,7 @@
                             <div class="form-group float-end">
 
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="button" class="btn btn-danger">cancel</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
                             </div>
                         </form>
 

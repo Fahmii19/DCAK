@@ -73,6 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Dashboard Routes
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    // Data Chart Dashboard
+    Route::get('/data-chart/{periode}', [HomeController::class, 'dataChart'])->name('data-chart');
 
     // Authentication Routes
 

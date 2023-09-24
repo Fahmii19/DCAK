@@ -124,50 +124,135 @@
                     <div class="card" data-aos="fade-up" data-aos-delay="800">
                         <div class="card-header d-flex justify-content-between flex-wrap">
                             <div class="header-title">
-                                <h4 class="card-title">Data Pemilih</h4>
-                                {{-- <p class="mb-0">Gross Sales</p> --}}
+                                <h4 class="card-title">Trafik Penginputan Pemilih Selama <span class="jumlah_hari">7</span> Hari
+                                    Terakhir</h3>
+                                </h4>
                             </div>
                             <div class="d-flex align-items-center align-self-center">
                                 <div class="d-flex align-items-center text-primary">
-                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="currentColor">
-                                        <g id="Solid dot2">
-                                            <circle id="Ellipse 65" cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                    <div class="ms-2">
-                                        <span class="text-secondary">Sales</span>
-                                    </div> --}}
                                 </div>
                                 <div class="d-flex align-items-center ms-3 text-info">
-                                    {{-- <svg xmlns="http://www.w3.org/2000/svg" width="12" viewBox="0 0 24 24" fill="currentColor">
-                                        <g id="Solid dot3">
-                                            <circle id="Ellipse 66" cx="12" cy="12" r="8" fill="currentColor"></circle>
-                                        </g>
-                                    </svg>
-                                    <div class="ms-2">
-                                        <span class="text-secondary">Cost</span>
-                                    </div> --}}
+                                    <div class="dropdown">
+                                        <a href="#" class="text-gray dropdown-toggle" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Filter: <span class="jumlah_hari">7</span> hari
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton3">
+                                            <li><a class="dropdown-item tujuh_hari" href="#" onclick="filterChartPemilih(7)">7 Hari</a></li>
+                                            <li><a class="dropdown-item tigapuluh_hari" href="#" onclick="filterChartPemilih(30)">30 Hari</a></li>
+                                            <li><a class="dropdown-item sembilanpuluh_hari" href="#" onclick="filterChartPemilih(90)">90 Hari</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            {{-- Pilih perminggu opsi --}}
 
-                            {{-- <div class="dropdown">
-                                <a href="#" class="text-secondary dropdown-toggle" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    This Week
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton2">
-                                    <li><a class="dropdown-item" href="#">This Week</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div> --}}
                         </div>
                         <div class="card-body">
-                            <div id="d-main" class="d-main"></div>
+                            {{-- <div id="d-main" class="d-main"></div> --}}
+                            <canvas id="myChart" width="400" height="200"></canvas>
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+    {{-- <script>
+        const rawDataPemilih = @json($pemilih);
+
+        // Fungsi untuk mendapatkan 7 tanggal terakhir
+        function getLastSevenDays() {
+            const dates = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                dates.push(d.toISOString().split("T")[0]);
+            }
+            return dates;
+        }
+
+        const lastSevenDays = getLastSevenDays();
+
+        function aggregateDataByDate(data) {
+            let result = {
+                Tapos: {
+                    "Sukamaju Baru": Array(7).fill(0)
+                    , "Sukatani": Array(7).fill(0)
+                , }
+                , Cilodong: {
+                    "Kalimulya": Array(7).fill(0)
+                , }
+            };
+
+            data.forEach(pemilih => {
+                let date = pemilih.created_at.split(" ")[0];
+                let index = getLastSevenDays().indexOf(date);
+                if (index !== -1) {
+                    if (result[pemilih.kecamatan] && result[pemilih.kecamatan][pemilih.kelurahan]) {
+                        result[pemilih.kecamatan][pemilih.kelurahan][index]++;
+                    }
+                }
+            });
+
+            return result;
+        }
+
+        const kelurahanData = aggregateDataByDate(rawDataPemilih);
+
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myChart = new Chart(ctx, {
+            type: "line"
+            , data: {
+                labels: lastSevenDays
+                , datasets: [{
+                        label: "Tapos"
+                        , data: kelurahanData.Tapos["Sukamaju Baru"].map(
+                            (data, index) => data + kelurahanData.Tapos["Sukatani"][index]
+                        )
+                        , borderColor: "rgba(75, 192, 192, 1)"
+                        , fill: false
+                        , borderWidth: 2
+                    , }
+                    , {
+                        label: "Cilodong"
+                        , data: kelurahanData.Cilodong["Kalimulya"]
+                        , borderColor: "rgba(255, 99, 132, 1)"
+                        , fill: false
+                        , borderWidth: 2
+                    , }
+                , ]
+            , }
+            , options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    , }
+                , }
+                , plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const kecamatan = context.dataset.label;
+                                const dateIndex = context.dataIndex;
+                                const kelurahanLabels = Object.keys(kelurahanData[kecamatan]);
+                                const labels = [];
+
+                                kelurahanLabels.forEach((kel) => {
+                                    labels.push(kel + ": " + kelurahanData[kecamatan][kel][dateIndex]);
+                                });
+
+                                return labels;
+                            }
+                        , }
+                    , }
+                , }
+            , }
+        , });
+
+    </script> --}}
+
+
 </x-app-layout>
