@@ -333,17 +333,16 @@
                                 <button class="accordion-button text-start text-dark fw-medium ps-0 pb-0"
                                     type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
                                     aria-expanded="false" aria-controls="flush-collapseOne">
-                                    Can we put a lot of effort in design?
+                                    Lorem ipsum dolor sit.
                                 </button>
                             </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse show"
+                            <div id="flush-collapseOne" class="accordion-collapse collapse "
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body text-muted pt-3">
-                                    High life accusamus terry richardson ad squid. 3 wolf moon
-                                    officia aute, non cupidatat skateboard dolor brunch. Food
-                                    truck quinoa nesciunt laborum eiusmod.It is a long
-                                    established fact that a reader will be distracted by the
-                                    readable.
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed consequuntur esse
+                                    quisquam exercitationem, sequi ad illum dolorem vero iste. Qui blanditiis nemo nam
+                                    esse iusto hic nisi exercitationem numquam vero officiis eligendi, reiciendis
+                                    dolores illum facere sequi ullam inventore eos.
                                 </div>
                             </div>
                         </div>
@@ -352,15 +351,16 @@
                                 <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
                                     type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
                                     aria-expanded="false" aria-controls="flush-collapseTwo">
-                                    The most important of successful website?
+                                    Lorem ipsum dolor sit.
                                 </button>
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body text-muted pt-3">
-                                    Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-                                    moon tempor, sunt aliqua put a bird on it squid
-                                    single-origin coffee nulla assumenda shoreditch et.
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ipsam atque
+                                    architecto, facere, nihil facilis in assumenda exercitationem autem nobis quasi quis
+                                    quaerat! Esse tempora mollitia perspiciatis ullam beatae non, tempore sint
+                                    voluptatibus fuga vel quisquam odit deserunt dolorem labore.
                                 </div>
                             </div>
                         </div>
@@ -369,15 +369,16 @@
                                 <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
                                     type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
                                     aria-expanded="false" aria-controls="flush-collapseThree">
-                                    Submit Your Orgnization?
+                                    Lorem ipsum dolor sit.
                                 </button>
                             </h2>
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body text-muted pt-3">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                                    accusamus terry richardson ad squid. 3 wolf moon officia
-                                    aute, non cupidatat skateboard dolor brunch.
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse cumque placeat
+                                    mollitia, dolorum reprehenderit fugit ad voluptatem numquam, voluptate soluta
+                                    provident quod nostrum ducimus deserunt doloremque natus expedita repudiandae a
+                                    vero? Cupiditate eum culpa fugit nulla officiis ab facere numquam!
                                 </div>
                             </div>
                         </div>
@@ -386,15 +387,16 @@
                                 <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
                                     type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix"
                                     aria-expanded="false" aria-controls="flush-collapseSix">
-                                    New exhibition at our Museum?
+                                    Lorem ipsum dolor sit.
                                 </button>
                             </h2>
                             <div id="flush-collapseSix" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body text-muted pt-3">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                                    accusamus terry richardson ad squid. 3 wolf moon officia
-                                    aute, non cupidatat skateboard dolor brunch.
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ea consequuntur,
+                                    consequatur hic repellendus perferendis cum architecto optio maiores placeat
+                                    voluptates, porro totam nesciunt neque, tenetur molestias natus dignissimos
+                                    provident suscipit autem quia eveniet maxime. Esse, dicta. Nisi, fugiat vitae.
                                 </div>
                             </div>
                         </div>
