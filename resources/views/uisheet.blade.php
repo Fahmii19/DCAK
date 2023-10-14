@@ -144,9 +144,10 @@
 
         @media only screen and (min-width: 768px) and (max-width: 991px) {
             .carousel-item {
-                max-height: 50vh;
-                min-height: 300px;
+                max-height: 30vh;
+                margin-top: 8vh;
             }
+
 
             .bg-1 {
                 background-image: url('{{ asset('assets_landing/images/b1.png') }}');
@@ -188,8 +189,8 @@
         @media only screen and (max-width: 767px) {
 
             .carousel-item {
-                max-height: 50vh;
-                min-height: 300px;
+                max-height: 30vh;
+                margin-top: 8vh;
             }
 
             .bg-1 {
@@ -233,6 +234,7 @@
                 background: #02754C;
             }
         }
+
     </style>
 
 
@@ -246,9 +248,7 @@
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="border:none;">
         <div class="container">
             <a class="navbar-brand" href="#"><span class="text-warning">4</span>KSI</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -293,13 +293,11 @@
                 </div>
             </div> --}}
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -307,8 +305,7 @@
         <!--thumbnails-->
 
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1">
                 <img class="d-block w-100" src="{{ asset('assets_landing/images/b1.png') }}" class="img-fluid" />
 
             </button>
@@ -329,14 +326,11 @@
                     <div class="accordion accordion-flush mt-4 pt-2" id="accordionFlushExample">
                         <div class="accordion-item my-2">
                             <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button text-start text-dark fw-medium ps-0 pb-0"
-                                    type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-                                    aria-expanded="false" aria-controls="flush-collapseOne">
+                                <button class="accordion-button text-start text-dark fw-medium ps-0 pb-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                     Can we put a lot of effort in design?
                                 </button>
                             </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse show"
-                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body text-muted pt-3">
                                     High life accusamus terry richardson ad squid. 3 wolf moon
                                     officia aute, non cupidatat skateboard dolor brunch. Food
@@ -348,14 +342,11 @@
                         </div>
                         <div class="accordion-item my-2">
                             <h2 class="accordion-header" id="flush-headingTwo">
-                                <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
-                                    type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
-                                    aria-expanded="false" aria-controls="flush-collapseTwo">
+                                <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                                     The most important of successful website?
                                 </button>
                             </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body text-muted pt-3">
                                     Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
                                     moon tempor, sunt aliqua put a bird on it squid
@@ -365,14 +356,11 @@
                         </div>
                         <div class="accordion-item my-2">
                             <h2 class="accordion-header" id="flush-headingThree">
-                                <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
-                                    type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
-                                    aria-expanded="false" aria-controls="flush-collapseThree">
+                                <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                                     Submit Your Orgnization?
                                 </button>
                             </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body text-muted pt-3">
                                     Anim pariatur cliche reprehenderit, enim eiusmod high life
                                     accusamus terry richardson ad squid. 3 wolf moon officia
@@ -382,14 +370,11 @@
                         </div>
                         <div class="accordion-item my-2">
                             <h2 class="accordion-header" id="flush-headingSix">
-                                <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
-                                    type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix"
-                                    aria-expanded="false" aria-controls="flush-collapseSix">
+                                <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
                                     New exhibition at our Museum?
                                 </button>
                             </h2>
-                            <div id="flush-collapseSix" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body text-muted pt-3">
                                     Anim pariatur cliche reprehenderit, enim eiusmod high life
                                     accusamus terry richardson ad squid. 3 wolf moon officia
@@ -400,8 +385,7 @@
                     </div>
                 </div>
                 <div class="col-xl-5 offset-xl-1 col-lg-12">
-                    <img class="faq-img mt-sm-0 mt-5" src="{{ asset('assets_landing/images/faq.png') }}"
-                        alt="" />
+                    <img class="faq-img mt-sm-0 mt-5" src="{{ asset('assets_landing/images/faq.png') }}" alt="" />
                 </div>
             </div>
         </div>
@@ -413,8 +397,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <img class="img-container" src="{{ asset('assets_landing/images/chat.png') }}"
-                        alt="HJ. Abdul Khoir S.T" />
+                    <img class="img-container" src="{{ asset('assets_landing/images/chat.png') }}" alt="HJ. Abdul Khoir S.T" />
                 </div>
                 <div class="col-lg-6 mt-lg-0 mt-5 pt-lg-0 pt-4">
                     <h3 class="fw-semibold lh-base mb-4">
@@ -552,6 +535,7 @@
                     <div class="col-lg-12">
                         <script>
                             document.write(new Date().getFullYear());
+
                         </script>
                         &copy; by <a href="" class="text-muted">4KSI</a>
                     </div>
