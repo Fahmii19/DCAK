@@ -73,22 +73,18 @@
         /* carousel */
 
         .carousel-item {
-            height: 100vh;
+            max-height: 100vh;
             min-height: 300px;
         }
 
         .bg-1 {
             background-image: url('{{ asset('assets_landing/images/b1.png') }}');
-
+            height: 100vh;
         }
 
         .bg-2 {
             background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
-
-        }
-
-        .bg-3 {
-            background-image: url(img/3.jpg);
+            height: 100vh;
         }
 
         .bg-1,
@@ -148,6 +144,22 @@
         }
 
         @media only screen and (min-width: 768px) and (max-width: 991px) {
+            .carousel-item {
+                max-height: 50vh;
+                min-height: 300px;
+            }
+
+            .bg-1 {
+                background-image: url('{{ asset('assets_landing/images/b1.png') }}');
+                height: 50vh;
+            }
+
+            .bg-2 {
+                background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
+                height: 50vh;
+            }
+
+
             .navbar-nav {
                 text-align: center;
             }
@@ -175,6 +187,23 @@
         }
 
         @media only screen and (max-width: 767px) {
+
+            .carousel-item {
+                max-height: 50vh;
+                min-height: 300px;
+            }
+
+            .bg-1 {
+                background-image: url('{{ asset('assets_landing/images/b1.png') }}');
+                height: 50vh;
+            }
+
+            .bg-2 {
+                background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
+                height: 50vh;
+            }
+
+
             .navbar-nav {
                 text-align: center;
             }
