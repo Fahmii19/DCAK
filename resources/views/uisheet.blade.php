@@ -12,6 +12,8 @@
     <!-- favicon -->
     <link rel="shortcut icon" href="images/favicon.ico" />
 
+
+    {{-- --}}
     <!-- tinyslider -->
     <link rel='stylesheet' href="{{ asset('assets_landing/css/tiny-slider.css') }}" />
     <link rel='stylesheet' href="{{ asset('assets_landing/css/bootstrap.min.css') }}" />
