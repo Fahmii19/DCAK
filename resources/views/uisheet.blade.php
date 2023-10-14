@@ -17,6 +17,10 @@
     <link rel='stylesheet' href="{{ asset('assets_landing/css/bootstrap.min.css') }}" />
     <link rel='stylesheet' href="{{ asset('assets_landing/css/style.min.css') }}" />
 
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Moon+Dance&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" /> --}}
+
+
     <style>
         .navbar {
             background-color: #2A895B !important;
@@ -26,12 +30,183 @@
             color: #fff !important;
         }
 
+        body {
+            font-family: montserrat;
+        }
+
+        .navbar-nav a {
+            font-size: 15px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-light .navbar-brand {
+            color: #fff;
+            font-size: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .navbar-light .navbar-brand:focus,
+        .navbar-light .navbar-brand:hover {
+            color: #fff;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .navbar-light .navbar-nav .nav-link:focus,
+        .navbar-light .navbar-nav .nav-link:hover {
+            color: yellow;
+        }
+
+        .navbar-toggler {
+            padding: 1px 5px;
+            font-size: 18px;
+            line-height: 0.3;
+            background: #fff;
+        }
+
+        /* carousel */
+
+        .carousel-item {
+            height: 100vh;
+            min-height: 300px;
+        }
+
+        .bg-1 {
+            background-image: url('{{ asset('assets_landing/images/b1.png') }}');
+
+        }
+
+        .bg-2 {
+            background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
+
+        }
+
+        .bg-3 {
+            background-image: url(img/3.jpg);
+        }
+
+        .bg-1,
+        .bg-2,
+        .bg-3 {
+            -webkit-background-size: cover;
+            background-size: cover;
+        }
+
+        .carousel-caption {
+            bottom: 220px;
+            z-index: 2;
+        }
+
+        .carousel-caption h5 {
+            font-size: 85px;
+            text-transform: capitalize;
+            letter-spacing: 2px;
+            margin-top: 25px;
+            font-family: "Moon Dance", cursive;
+        }
+
+        .carousel-caption p {
+            width: 60%;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.9;
+        }
+
+        .carousel-caption a {
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 5px 20px;
+            display: inline-block;
+            color: #fff;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .carousel-inner:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .carousel-indicators {
+            bottom: 65px;
+        }
+
+        .carousel-indicators button {
+            width: 100px !important;
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-collapse {
+                background: #fff;
+            }
+
+            .navbar-collapse .nav-item .nav-link {
+                color: #000;
+            }
+
+            .carousel-caption {
+                bottom: 350px;
+            }
+
+            .carousel-caption h5 {
+                font-size: 65px;
+            }
+
+            .carousel-caption p {
+                font-size: 18px;
+                width: 100%;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .navbar-collapse .nav-item .nav-link {
+                color: #000;
+            }
+
+            .carousel-caption {
+                bottom: 165px;
+            }
+
+            .carousel-caption h5 {
+                font-size: 25px;
+            }
+
+            .carousel-caption p {
+                font-size: 12px;
+                width: 100%;
+            }
+
+            .carousel-caption a {
+                padding: 10px 15px;
+                font-size: 15px;
+            }
+
+            .navbar-collapse {
+                background: #fff;
+            }
+        }
+
     </style>
-
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
 
 
 </head>
@@ -41,136 +216,76 @@
 
 
     {{-- new --}}
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="border:none;">
+        <div class="container">
+            <a class="navbar-brand" href="#"><span class="text-warning">4</span>DCAK</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#feature">Latar Belakang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#service">Portofolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq">Visi & Misi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ 'login' }}">
+                            Masuk
+                        </a>
+                    </li>
 
-    <section class="hero-1 bg-white position-relative">
-
-        <!-- start navbar -->
-        <nav class="navbar navbar-expand-lg w-100" id="navbar">
-            <div class="container">
-                <a href="#" class="navbar-brand me-5">
-                    <img src="{{ asset('assets_landing/images/analysis.png') }}" class="logo-dark" alt="Logo" height="22" />
-                </a>
-                <a href="javascript:void(0)" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggle-icon"><i data-feather="menu"></i></span>
-                </a>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto mt-lg-0 mt-2">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#home">Beranda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#feature">Latar Belakang</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#service">Portofolio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#faq">Visi & Misi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ 'login' }}">
-                                Masuk
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                </ul>
             </div>
-            <!-- end container -->
-        </nav>
+        </div>
+    </nav>
 
-
-        <section class="hero-1 bg-white position-relative overflow-hidden" id="home">
-            <div class="row align-items-center text-center text-lg-start">
-
-                <div>
-                    <!-- Carousel wrapper -->
-                    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-mdb-ride="carousel">
-
-                        <!-- Slides -->
-                        <div class="carousel-inner" style="height: 80vh;">
-
-
-                            <div class="carousel-item active">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(88).webp" class="d-block w-100" alt="..." />
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>First Slide</h5>
-                                    <p>
-                                        Some representative placeholder content for the first slide.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(121).webp" class="d-block w-100" alt="..." />
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Second Slide</h5>
-                                    <p>
-                                        Some representative placeholder content for the second slide.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(31).webp" class="d-block w-100" alt="..." />
-                                <div class="carousel-caption d-none d-md-block">
-                                    <h5>Third Slide</h5>
-                                    <p>
-                                        Some representative placeholder content for the third slide.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Slides -->
-
-                        <!-- Controls -->
-                        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide="prev">
-                            <span class=" carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide="next">
-
-                            <span class=" carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                        <!-- Controls -->
-
-                        <!-- Thumbnails -->
-                        <div class="" style="height: 12vh; ">
-
-                            <div class="carousel-indicators" style="position: static;  display: flex; align-items: center; justify-content: center;">
-
-                                <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="width: 100px; border-top:0px;">
-                                    <div class="w-100" style=" height:12vh;">
-                                        <img class="d-block w-100 h-100" style="object-fit: scale-down;" src="https://mdbcdn.b-cdn.net/img/Photos/Others/Carousel-thumbs/img%20(88).webp" class="img-fluid" />
-                                    </div>
-                                </button>
-                                <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="1" class="active" aria-current="true" aria-label="Slide 1" style="width: 100px; border-top:0px;">
-                                    <div class="w-100" style=" height:12vh;">
-                                        <img class="d-block w-100 h-100" style="object-fit: scale-down;" src="https://mdbcdn.b-cdn.net/img/Photos/Others/Carousel-thumbs/img%20(121).webp" class="img-fluid" />
-                                    </div>
-                                </button>
-                                <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="2" class="active" aria-current="true" aria-label="Slide 2" style="width: 100px; border-top:0px;">
-                                    <div class="w-100" style=" height:12vh;">
-                                        <img class="d-block w-100 h-100" style="object-fit: scale-down;" src="
-                                        https://mdbcdn.b-cdn.net/img/Photos/Others/Carousel-thumbs/img%20(31).webp" class="img-fluid" />
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Thumbnails -->
-
-                    </div>
-                    <!-- Carousel wrapper -->
-                </div>
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active bg-1"></div>
+            <div class="carousel-item bg-2">
 
             </div>
-        </section>
+            {{-- <div class="carousel-item bg-3">
+                <div class="carousel-caption">
+                    <h5>Effordable <span class="text-warning">Budget</span></h5>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Temporibus, culpa.
+                    </p>
+                    <a href="#" class="bg-warning text-white">Learn More</a>
+                </div>
+            </div> --}}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
 
+        <!--thumbnails-->
 
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1">
+                <img class="d-block w-100" src="{{ asset('assets_landing/images/b1.png') }}" class="img-fluid" />
 
+            </button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2">
+                <img class="d-block w-100" src="{{ asset('assets_landing/images/b2.jpg') }}" class="img-fluid" />
+            </button>
 
-    </section>
-
+        </div>
+    </div>
 
 
     <!-- start feature -->
@@ -286,7 +401,7 @@
     <!-- end faq -->
 
     <!-- start services -->
-    <section class="section" id="service">
+    <section class="section bg-light" id="service">
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-12 mb-4">
@@ -383,7 +498,7 @@
     <!-- end brand logo -->
 
     <!-- start footer -->
-    <footer class="footer bg-dark">
+    <footer class="footer bg-dark" style="display:none;">
         <!-- start footer alter -->
         <div class="footer-alt bg-dark">
             <div class="container">
@@ -410,13 +525,6 @@
         <script src="{{ asset('assets_landing/js/text-animation.init.js') }}"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-
-
-
-
-        <!-- MDB -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
-
 
     </footer>
     <!-- end footer -->
