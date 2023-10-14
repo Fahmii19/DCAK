@@ -1,0 +1,68 @@
+[24-Sep-2023 16:26:22 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:26:22 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:26:22 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/aksicom/public_html/public/../DCAK/vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aksicom/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:26:28 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:26:28 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:26:28 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/aksicom/public_html/public/../DCAK/vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aksicom/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:27:13 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:27:13 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:27:13 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/aksicom/public_html/public/../DCAK/vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aksicom/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:30:40 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:30:40 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[24-Sep-2023 16:30:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/aksicom/public_html/public/../DCAK/vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aksicom/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/aksicom/public_html/public/index.php on line 34
+[26-Sep-2023 22:58:38 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Cell/Coordinate.php on line 36
+[26-Sep-2023 22:59:15 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 12288 bytes) in /home/aksicom/public_html/DCAK/vendor/facade/ignition/src/LogRecorder/LogRecorder.php on line 42
+[26-Sep-2023 23:00:59 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Xlsx.php on line 327
+[27-Sep-2023 01:31:06 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:32:02 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:33:22 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:33:34 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:33:38 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:33:39 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:33:40 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:33:49 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:40:39 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:40:49 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:40:50 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:40:52 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:40:52 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:40:52 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:40:54 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:41:06 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:41:13 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:41:38 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[26-Sep-2023 18:42:42 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[26-Sep-2023 18:42:42 UTC] PHP Warning:  require(/home/aksicom/public_html/public/../DCAK/vendor/autoload.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/public/index.php on line 34
+[26-Sep-2023 18:42:42 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/aksicom/public_html/public/../DCAK/vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aksicom/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/aksicom/public_html/public/index.php on line 34
+[26-Sep-2023 18:42:46 UTC] PHP Warning:  require(/home/aksicom/public_html/DCAK/vendor/composer/../symfony/polyfill-php80/bootstrap.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/DCAK/vendor/composer/autoload_real.php on line 39
+[26-Sep-2023 18:42:46 UTC] PHP Warning:  require(/home/aksicom/public_html/DCAK/vendor/composer/../symfony/polyfill-php80/bootstrap.php): Failed to open stream: No such file or directory in /home/aksicom/public_html/DCAK/vendor/composer/autoload_real.php on line 39
+[26-Sep-2023 18:42:46 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/aksicom/public_html/DCAK/vendor/composer/../symfony/polyfill-php80/bootstrap.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/aksicom/public_html/DCAK/vendor/composer/autoload_real.php:39
+Stack trace:
+#0 /home/aksicom/public_html/DCAK/vendor/composer/autoload_real.php(43): {closure}()
+#1 /home/aksicom/public_html/DCAK/vendor/autoload.php(25): ComposerAutoloaderInit4a125ea4207d42285af513a8825c2b1e::getLoader()
+#2 /home/aksicom/public_html/public/index.php(34): require('/home/aksicom/p...')
+#3 {main}
+  thrown in /home/aksicom/public_html/DCAK/vendor/composer/autoload_real.php on line 39
+[27-Sep-2023 01:44:48 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:44:51 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:44:53 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:44:55 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 4096 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:47:38 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:47:46 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:47:54 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes) in /home/aksicom/public_html/DCAK/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 375
+[27-Sep-2023 01:52:11 Asia/Jakarta] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 12288 bytes) in /home/aksicom/public_html/DCAK/vendor/facade/ignition/src/QueryRecorder/QueryRecorder.php on line 44

@@ -90,7 +90,7 @@
                             <div class="d-flex align-items-center align-self-center">
                                 <div class="d-flex align-items-center text-primary">
                                 </div>
-                                <div class="d-flex align-items-center ms-3 text-info" style="display:none;">
+                                <div class="d-flex align-items-center ms-3 text-info" style="display:none !important;">
                                     <div class="dropdown">
                                         <a href="#" class="text-gray dropdown-toggle" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                                             Filter: <span class="jumlah_hari">7</span> hari
