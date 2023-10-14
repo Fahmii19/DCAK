@@ -23,7 +23,7 @@
 
     <style>
         .navbar {
-            background-color: #2A895B !important;
+            background-color: #02754C !important;
         }
 
         .navbar .nav-link {
@@ -67,7 +67,6 @@
             padding: 1px 5px;
             font-size: 18px;
             line-height: 0.3;
-            background: #fff;
         }
 
         /* carousel */
@@ -165,7 +164,7 @@
             }
 
             .navbar-collapse {
-                background: #fff;
+                background: #2A895B;
             }
 
             .navbar-collapse .nav-item .nav-link {
@@ -231,7 +230,7 @@
             }
 
             .navbar-collapse {
-                background: #fff;
+                background: #02754C;
             }
         }
     </style>
@@ -246,7 +245,7 @@
     {{-- new --}}
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="border:none;">
         <div class="container">
-            <a class="navbar-brand" href="#"><span class="text-warning">4</span>DCAK</a>
+            <a class="navbar-brand" href="#"><span class="text-warning">4</span>KSI</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
