@@ -259,9 +259,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#feature">Latar Belakang</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="#service">Portofolio</a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link" href="#faq">Visi & Misi</a>
                     </li>
