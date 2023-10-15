@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>4KSI </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Premium Bootstrap 5 Template" />
+    <meta name="description" content="" />
     <meta name="keywords" content="bootstrap 5, premium, marketing, multipurpose" />
     <meta content="Themesdesign" name="author" />
 
@@ -77,12 +77,12 @@
         }
 
         .bg-1 {
-            background-image: url('{{ asset('assets_landing/images/b1.png') }}');
+            background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
             height: 100vh;
         }
 
         .bg-2 {
-            background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
+            background-image: url('{{ asset('assets_landing/images/b1.png') }}');
             height: 100vh;
         }
 
@@ -130,7 +130,7 @@
             height: 100%;
             top: 0;
             left: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
 
@@ -150,12 +150,12 @@
 
 
             .bg-1 {
-                background-image: url('{{ asset('assets_landing/images/b1.png') }}');
+                background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
                 height: 50vh;
             }
 
             .bg-2 {
-                background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
+                background-image: url('{{ asset('assets_landing/images/b1.png') }}');
                 height: 50vh;
             }
 
@@ -194,18 +194,18 @@
             }
 
             .bg-1 {
-                background-image: url('{{ asset('assets_landing/images/b1.png') }}');
+                background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
                 height: 50vh;
             }
 
             .bg-2 {
-                background-image: url('{{ asset('assets_landing/images/b2.jpg') }}');
+                background-image: url('{{ asset('assets_landing/images/b1.png') }}');
                 height: 50vh;
             }
 
 
             .navbar-nav {
-                text-align: center;
+                text-align: right;
             }
 
             .navbar-collapse .nav-item .nav-link {
@@ -271,6 +271,9 @@
                             Masuk
                         </a>
                     </li>
+                    <li class="nav-item">
+
+                    </li>
 
                 </ul>
             </div>
@@ -310,11 +313,11 @@
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
                 aria-current="true" aria-label="Slide 1">
-                <img class="d-block w-100" src="{{ asset('assets_landing/images/b1.png') }}" class="img-fluid" />
+                <img class="d-block w-100" src="{{ asset('assets_landing/images/b2.jpg') }}" class="img-fluid" />
 
             </button>
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2">
-                <img class="d-block w-100" src="{{ asset('assets_landing/images/b2.jpg') }}" class="img-fluid" />
+                <img class="d-block w-100" src="{{ asset('assets_landing/images/b1.png') }}" class="img-fluid" />
             </button>
 
         </div>
@@ -324,16 +327,21 @@
     <section class="section border-top overflow-hidden" id="faq">
         <div class="container">
             <div class="row align-items-center">
+                <div class="col-xl-5 offset-xl-1 col-lg-12">
+                    <img class="img-container" style=" margin-bottom: 15%;"
+                        src="{{ asset('assets_landing/images/bg.jpg') }}" alt="" />
+                </div>
+
                 <div class="col-xl-6 col-lg-12">
                     <h6 class="text-muted mb-3">Visi dan Misi</h6>
                     <h3 class="faq-title pb-4">HJ. Abdul Khoir S.T</h3>
                     <div class="accordion accordion-flush mt-4 pt-2" id="accordionFlushExample">
                         <div class="accordion-item my-2">
                             <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button text-start text-dark fw-medium ps-0 pb-0"
+                                <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
                                     type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
                                     aria-expanded="false" aria-controls="flush-collapseOne">
-                                    Lorem ipsum dolor sit.
+                                    Mewakili Suara Rakyat untuk Kesejahteraan Bersama.
                                 </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse "
@@ -351,7 +359,7 @@
                                 <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
                                     type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
                                     aria-expanded="false" aria-controls="flush-collapseTwo">
-                                    Lorem ipsum dolor sit.
+                                    Kesehatan dan Kesejahteraan Rakyat Terjamin
                                 </button>
                             </h2>
                             <div id="flush-collapseTwo" class="accordion-collapse collapse"
@@ -369,7 +377,7 @@
                                 <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
                                     type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
                                     aria-expanded="false" aria-controls="flush-collapseThree">
-                                    Lorem ipsum dolor sit.
+                                    Membangun Infrastruktur dan Lingkungan yang Berkelanjutan.
                                 </button>
                             </h2>
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
@@ -387,7 +395,7 @@
                                 <button class="accordion-button text-start text-dark fw-medium collapsed ps-0 pb-0"
                                     type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix"
                                     aria-expanded="false" aria-controls="flush-collapseSix">
-                                    Lorem ipsum dolor sit.
+                                    Pendidikan Berkualitas dan Kesetaraan Peluang.
                                 </button>
                             </h2>
                             <div id="flush-collapseSix" class="accordion-collapse collapse"
@@ -402,10 +410,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-5 offset-xl-1 col-lg-12">
-                    <img class="faq-img mt-sm-0 mt-5" src="{{ asset('assets_landing/images/faq.png') }}"
-                        alt="" />
-                </div>
+
             </div>
         </div>
     </section>
@@ -416,7 +421,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <img class="img-container" src="{{ asset('assets_landing/images/chat.png') }}"
+                    <img class="img-container" src="{{ asset('assets_landing/images/chat.png ') }}"
                         alt="HJ. Abdul Khoir S.T" />
                 </div>
                 <div class="col-lg-6 mt-lg-0 mt-5 pt-lg-0 pt-4">
@@ -547,32 +552,21 @@
     <!-- end brand logo -->
 
     <!-- start footer -->
-    <footer class="footer bg-dark" style="display:none;">
-        <!-- start footer alter -->
-        <div class="footer-alt bg-dark">
-            <div class="container">
-                <div class="row text-center">
-                    <div class="col-lg-12">
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        &copy; by <a href="" class="text-muted">4KSI</a>
-                    </div>
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
+    <footer class=" bg-dark text-white text-center" style=" padding: 15px; background-color:#02754C !important">
+        <div class="container">
+            Hj. Abdul Khoir S.T || 4KSI.COM
         </div>
-        <!-- end footer alter -->
+    </footer>
+    <!-- end footer alter -->
 
-        <script src="{{ asset('assets_landing/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('assets_landing/js/feather.js') }}"></script>
-        <script src="{{ asset('assets_landing/js/tiny-slider.js') }}"></script>
-        <script src="{{ asset('assets_landing/js/tiny.init.js') }}"></script>
-        <script src="{{ asset('assets_landing/js/app.js') }}"></script>
-        <script src="{{ asset('assets_landing/js/text-animation.init.js') }}"></script>
+    <script src="{{ asset('assets_landing/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets_landing/js/feather.js') }}"></script>
+    <script src="{{ asset('assets_landing/js/tiny-slider.js') }}"></script>
+    <script src="{{ asset('assets_landing/js/tiny.init.js') }}"></script>
+    <script src="{{ asset('assets_landing/js/app.js') }}"></script>
+    <script src="{{ asset('assets_landing/js/text-animation.init.js') }}"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 
     </footer>
     <!-- end footer -->
