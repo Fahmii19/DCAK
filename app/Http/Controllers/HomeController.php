@@ -7,12 +7,36 @@ use App\Models\CalonPemilih;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CalonPemilihImport;
+use App\Imports\SaksiTpsImport;
 use App\Models\Pemilih;
 use App\Models\User_dcak;
 use App\Models\Koordinator;
 use App\Models\Kelurahan;
 use App\Models\Kecamatan;
+use App\Models\SaksiTPS;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Worksheet\WorksheetDrawingExt;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing as WorksheetMemoryDrawing;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+
+use ZipArchive;
+
+use Illuminate\Support\Str;
+
+
+
+
 
 // middleware
 use Spatie\Permission\Models\Role;
@@ -171,6 +195,164 @@ class HomeController extends Controller
     {
         return view('landing-page.home');
     }
+
+    // Saksi TPS
+    public function saksiTps(Request $request)
+    {
+        return view('dcak.saksi_tps.index');
+    }
+
+    public function tableSaksiTps()
+    {
+        $saksiTps = SaksiTps::select(['id_saksi_tps', 'nik', 'no_hp', 'rt', 'rw', 'kelurahan', 'kecamatan', 'jumlah_suara', 'gambar']);
+        return DataTables::of($saksiTps)->make(true);
+    }
+
+    // inputSaksiTps
+    public function inputSaksiTps(Request $request)
+    {
+        return view('dcak.saksi_tps.input');
+    }
+
+    // formInputSaksiTps
+    public function formInputSaksiTps(Request $request)
+    {
+
+        $saksiTps = new SaksiTps();
+        $saksiTps->nik = $request->nik;
+        $saksiTps->no_hp = $request->no_hp;
+        $saksiTps->rt = $request->rt;
+        $saksiTps->rw = $request->rw;
+        $saksiTps->kelurahan = $request->kelurahan;
+        $saksiTps->kecamatan = $request->kecamatan;
+        $saksiTps->jumlah_suara = $request->jumlah_suara;
+
+        // Handle file upload
+        if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
+            $folderPath = public_path('images/saksi_tps');
+
+            // Check if folder exists, create if not
+            if (!File::exists($folderPath)) {
+                File::makeDirectory($folderPath, $mode = 0755, true, true);
+            }
+
+            $filename = $request->file('gambar')->getClientOriginalName();
+            $request->file('gambar')->move($folderPath, $filename); // Move file to the target folder
+            $saksiTps->gambar =  $filename; // Update the path in the database
+        }
+        // dd($saksiTps);
+        $saksiTps->save();
+
+        return redirect()->route('saksi-tps')->with('success', 'Data saksi tps berhasil disimpan.');
+    }
+
+
+
+    function editSaksiTps($id)
+    {
+        $saksiTps = SaksiTps::find($id);
+        return response()->json($saksiTps);
+    }
+
+    public function formEditSaksiTps(Request $request, $id)
+    {
+        $saksiTps = SaksiTps::find($id);
+
+        // Handling file if a new file is uploaded
+        if ($request->hasFile('gambar')) {
+            // Add validation, storage, etc.
+            $filename = $request->gambar->getClientOriginalName();
+            $request->gambar->move(public_path('images/saksi_tps'), $filename);
+            $saksiTps->gambar = $filename; // Saving the filename to the database
+        }
+
+        $saksiTps->nik = $request->nik;
+        $saksiTps->no_hp = $request->no_hp;
+        $saksiTps->rt = $request->rt;
+        $saksiTps->rw = $request->rw;
+        $saksiTps->kelurahan = $request->kelurahan;
+        $saksiTps->kecamatan = $request->kecamatan;
+        $saksiTps->jumlah_suara = $request->jumlah_suara;
+        $saksiTps->save();
+
+        return response()->json(['success' => true]);
+    }
+
+
+    function deleteSaksiTps($id)
+    {
+        $saksiTps = SaksiTps::find($id);
+        if ($saksiTps) {
+            // Jika perlu, hapus file gambar dari server di sini
+            if (File::exists(public_path('images/saksi_tps/' . $saksiTps->gambar))) {
+                File::delete(public_path('images/saksi_tps/' . $saksiTps->gambar));
+            }
+
+            $saksiTps->delete();
+            return response()->json(['success' => true, 'message' => 'Data saksi tps berhasil dihapus.']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Data saksi tps tidak ditemukan.']);
+        }
+    }
+
+
+
+    public function importExcelSaksiTps(Request $request)
+    {
+        $file = $request->file('excel_file');
+        $path = $file->getPathName();
+        $extractFolder = storage_path('app/public/excel_images');
+
+        // Unzip the Excel file
+        $zip = new ZipArchive;
+        if ($zip->open($path) === TRUE) {
+            $zip->extractTo($extractFolder);
+            $zip->close();
+        } else {
+            return response()->json(['error' => 'Failed to extract Excel file']);
+        }
+
+        $files = glob($extractFolder . '/xl/media/*');
+
+        // Move images to a specific folder and get the URLs
+        $imageUrls = [];
+        foreach ($files as $file) {
+            $filename = basename($file);
+
+            // Log untuk mengecek apakah file ada
+            Log::info('Checking file: ' . $filename);
+            Log::info('File exists: ' . Storage::exists('public/excel_images/xl/media/' . $filename));
+
+            // Modifikasi di sini, menambahkan string acak untuk membuat nama file unik
+            $newFilename = time() . '_' . Str::random(5) . '_' . $filename;
+
+            // Cek apakah proses pemindahan file berhasil
+            $moved = Storage::move('public/excel_images/xl/media/' . $filename, 'public/images/saksi_tps/' . $newFilename);
+            Log::info('File moved: ' . $moved);
+
+            if ($moved) {
+                $imageUrls[] = asset('storage/images/saksi_tps/' . $newFilename);
+            }
+        }
+
+        // Clean up the temporary folder
+        Storage::deleteDirectory('public/excel_images');
+
+        // dd($imageUrls, $path);
+
+        // Import data into the database
+        Excel::import(new SaksiTpsImport($imageUrls), $path);  // Pass image URLs to the import class
+
+        return back()->with('success', 'Data and Images have been imported successfully!');
+    }
+
+
+
+
+
+
+
+
 
     // Calon Pemilih
     public function calonPemilih(Request $request)

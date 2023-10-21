@@ -86,12 +86,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/input-calon-pemilih', [HomeController::class, 'inputCalonPemilih'])->name('input-calon-pemilih');
     Route::post('/form-input-calon-pemilih', [HomeController::class, 'formInputCalonPemilih'])->name('form-input-calon-pemilih');
     Route::post('/import-calon-pemilih', [HomeController::class, 'importExcelCalonPemilih'])->name('import-calon-pemilih');
-    // Edit Calon Pemilih
     Route::get('/edit-calon-pemilih/{id}', [HomeController::class, 'editCalonPemilih'])->name('edit-calon-pemilih');
     Route::post('/form-edit-calon-pemilih/{id}', [HomeController::class, 'formEditCalonPemilih'])->name('form-edit-calon-pemilih');
-
-    // Delete Calon Pemilih
     Route::delete('/delete-calon-pemilih/{id}', [HomeController::class, 'deleteCalonPemilih'])->name('delete-calon-pemilih');
+
+    // Saksi TPS
+    Route::get('/saksi-tps', [HomeController::class, 'saksiTps'])->name('saksi-tps');
+    Route::get('/table-saksi-tps', [HomeController::class, 'tableSaksiTps'])->name('table-saksi-tps');
+    Route::get('/input-saksi-tps', [HomeController::class, 'inputSaksiTps'])->name('input-saksi-tps');
+    Route::post('/form-input-saksi-tps', [HomeController::class, 'formInputSaksiTps'])->name('form-input-saksi-tps');
+    Route::post('/import-saksi-tps', [HomeController::class, 'importExcelSaksiTps'])->name('import-saksi-tps');
+    Route::get('/edit-saksi-tps/{id}', [HomeController::class, 'editSaksiTps'])->name('edit-saksi-tps');
+    Route::post('/form-edit-saksi-tps/{id}', [HomeController::class, 'formEditSaksiTps'])->name('form-edit-saksi-tps');
+    Route::delete('/delete-saksi-tps/{id}', [HomeController::class, 'deleteSaksiTps'])->name('delete-saksi-tps');
+    // Import saksi tps
+    Route::post('/import-saksi-tps', [HomeController::class, 'importExcelSaksiTps'])->name('import-saksi-tps');
+
 
 
     // koordinator

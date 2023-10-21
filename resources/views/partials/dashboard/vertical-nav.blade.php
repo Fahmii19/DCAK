@@ -145,9 +145,9 @@
             <span class="item-name">Kecamatan</span>
         </a>
     </li>
-
     <li class="nav-item">
-        <a class="nav-link" href="" target="_blank">
+        <a class="nav-link {{activeRoute(route('saksi-tps')) ? 'active' : '' }}" href="{{ route('saksi-tps') }}">
+
             <i class="icon">
                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 
@@ -159,6 +159,7 @@
             <span class="item-name">Saksi TPS</span>
         </a>
     </li>
+
     <li class="nav-item">
         <a class="nav-link" href="" target="_blank">
             <i class="icon">
