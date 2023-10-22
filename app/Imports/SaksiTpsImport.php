@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 class SaksiTpsImport implements ToModel, WithStartRow
 {
     private $images;
+    private $rowIndex = 0;  // Initialize rowIndex
 
     public function __construct($images)
     {
@@ -18,27 +19,28 @@ class SaksiTpsImport implements ToModel, WithStartRow
 
     public function startRow(): int
     {
-        return 2;
+        return 2;  // Adjust as per your excel structure
     }
 
     public function model(array $row)
     {
         Log::info($row);
 
-        // Here you need a logic to associate each row of data with the correct image
-        // For simplicity, I'm just using the first image for every row of data
-        $imageFile = $this->images[0] ?? null;
+        // Check if there are images, if not set to null
+        $imageFile = $this->images[$this->rowIndex] ?? null;
+        $this->rowIndex++;  // Increment rowIndex for each row
+        Log::info('Image File: ' . $imageFile);
 
         try {
             return new SaksiTps([
-                'nik'          => $row[0] ?? null,
-                'no_hp'        => $row[1] ?? null,
-                'rt'           => $row[2] ?? null,
-                'rw'           => $row[3] ?? null,
-                'kelurahan'    => isset($row[4]) ? strtoupper($row[4]) : null,
-                'kecamatan'    => isset($row[5]) ? strtoupper($row[5]) : null,
+                'nik' => $row[0] ?? null,
+                'no_hp' => $row[1] ?? null,
+                'rt' => $row[2] ?? null,
+                'rw' => $row[3] ?? null,
+                'kelurahan' => isset($row[4]) ? strtoupper($row[4]) : null,
+                'kecamatan' => isset($row[5]) ? strtoupper($row[5]) : null,
                 'jumlah_suara' => $row[6] ?? null,
-                'gambar'       => basename($imageFile), // Store only the image name
+                'gambar' => $imageFile ? basename($imageFile) : null,  // Set to null if no image
             ]);
         } catch (\Exception $e) {
             Log::error("Error importing row: " . $e->getMessage());

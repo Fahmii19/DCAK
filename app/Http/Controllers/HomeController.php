@@ -301,50 +301,89 @@ class HomeController extends Controller
     {
         $file = $request->file('excel_file');
         $path = $file->getPathName();
-        $extractFolder = storage_path('app/public/excel_images');
+        $extractFolder = storage_path('app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'saksi_tps');
 
         // Unzip the Excel file
         $zip = new ZipArchive;
         if ($zip->open($path) === TRUE) {
             $zip->extractTo($extractFolder);
             $zip->close();
+            Log::info('Excel file extracted to: ' . $extractFolder);
         } else {
+            Log::error('Failed to extract Excel file');
             return response()->json(['error' => 'Failed to extract Excel file']);
         }
 
-        $files = glob($extractFolder . '/xl/media/*');
+        $files = glob($extractFolder . DIRECTORY_SEPARATOR . 'xl' . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . '*');
+        Log::info('Extracted media files: ', $files);
 
         // Move images to a specific folder and get the URLs
         $imageUrls = [];
-        foreach ($files as $file) {
+        foreach ($files as $index => $file) {
             $filename = basename($file);
+            Log::info('Processing file: ' . $filename);
 
-            // Log untuk mengecek apakah file ada
-            Log::info('Checking file: ' . $filename);
-            Log::info('File exists: ' . Storage::exists('public/excel_images/xl/media/' . $filename));
+            // Adding a timestamp to make each filename unique
+            $newFilename = time() . '_' . $filename;
 
-            // Modifikasi di sini, menambahkan string acak untuk membuat nama file unik
-            $newFilename = time() . '_' . Str::random(5) . '_' . $filename;
+            // Ensure the destination directory exists
+            $destinationDirectory = public_path('images' . DIRECTORY_SEPARATOR . 'saksi_tps' . DIRECTORY_SEPARATOR);
+            if (!is_dir($destinationDirectory)) {
+                mkdir($destinationDirectory, 0777, true);
+            }
 
-            // Cek apakah proses pemindahan file berhasil
-            $moved = Storage::move('public/excel_images/xl/media/' . $filename, 'public/images/saksi_tps/' . $newFilename);
-            Log::info('File moved: ' . $moved);
-
-            if ($moved) {
-                $imageUrls[] = asset('storage/images/saksi_tps/' . $newFilename);
+            // Move file to the destination directory
+            if (rename($file, $destinationDirectory . $newFilename)) {
+                Log::info('File moved: ' . $newFilename);
+                $imageUrls[$index] = asset('images' . DIRECTORY_SEPARATOR . 'saksi_tps' . DIRECTORY_SEPARATOR . $newFilename);
+            } else {
+                Log::error('Failed to move file: ' . $filename);
+                $imageUrls[$index] = null;  // Set null if fail to move
             }
         }
 
         // Clean up the temporary folder
-        Storage::deleteDirectory('public/excel_images');
-
-        // dd($imageUrls, $path);
+        $this->deleteDirectory($extractFolder . DIRECTORY_SEPARATOR . 'xl');
 
         // Import data into the database
-        Excel::import(new SaksiTpsImport($imageUrls), $path);  // Pass image URLs to the import class
+        Excel::import(new SaksiTpsImport($imageUrls), $path);
 
         return back()->with('success', 'Data and Images have been imported successfully!');
     }
+
+
+
+
+
+
+    private function deleteDirectory($dirPath)
+    {
+        if (is_dir($dirPath)) {
+            $objects = scandir($dirPath);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (is_dir($dirPath . DIRECTORY_SEPARATOR . $object)) {
+                        $this->deleteDirectory($dirPath . DIRECTORY_SEPARATOR . $object);
+                    } else {
+                        unlink($dirPath . DIRECTORY_SEPARATOR . $object);
+                    }
+                }
+            }
+            rmdir($dirPath);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
