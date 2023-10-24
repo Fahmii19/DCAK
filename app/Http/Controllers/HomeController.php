@@ -204,7 +204,7 @@ class HomeController extends Controller
 
     public function tableSaksiTps()
     {
-        $saksiTps = SaksiTps::select(['id_saksi_tps', 'nik', 'no_hp', 'rt', 'rw', 'kelurahan', 'kecamatan', 'jumlah_suara', 'gambar']);
+        $saksiTps = SaksiTps::select(['id_saksi_tps', 'nama_saksi', 'nik', 'no_hp', 'rt', 'rw', 'no_tps', 'kelurahan', 'kecamatan', 'jumlah_suara', 'gambar']);
         return DataTables::of($saksiTps)->make(true);
     }
 
@@ -219,10 +219,12 @@ class HomeController extends Controller
     {
 
         $saksiTps = new SaksiTps();
+        $saksiTps->nama_saksi = $request->nama_saksi;
         $saksiTps->nik = $request->nik;
         $saksiTps->no_hp = $request->no_hp;
         $saksiTps->rt = $request->rt;
         $saksiTps->rw = $request->rw;
+        $saksiTps->no_tps = $request->no_tps;
         $saksiTps->kelurahan = $request->kelurahan;
         $saksiTps->kecamatan = $request->kecamatan;
         $saksiTps->jumlah_suara = $request->jumlah_suara;
@@ -266,10 +268,12 @@ class HomeController extends Controller
             $saksiTps->gambar = $filename; // Saving the filename to the database
         }
 
+        $saksiTps->nama_saksi = $request->nama_saksi;
         $saksiTps->nik = $request->nik;
         $saksiTps->no_hp = $request->no_hp;
         $saksiTps->rt = $request->rt;
         $saksiTps->rw = $request->rw;
+        $saksiTps->no_tps = $request->no_tps;
         $saksiTps->kelurahan = $request->kelurahan;
         $saksiTps->kecamatan = $request->kecamatan;
         $saksiTps->jumlah_suara = $request->jumlah_suara;

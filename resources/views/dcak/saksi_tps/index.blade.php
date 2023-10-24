@@ -39,11 +39,13 @@
                         <table id="datatableSaksiTPS" class="table table-striped dt-responsive nowrap" data-toggle="data-table">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama Saksi</th>
                                     <th>NIK</th>
                                     <th>NO HP</th>
                                     <th>RT</th>
                                     <th>RW</th>
+                                    <th>NO TPS</th>
                                     <th>KELURAHAN</th>
                                     <th>KECAMATAN</th>
                                     <th>JUMLAH SUARA</th>
@@ -144,6 +146,10 @@
                         , name: 'id_saksi_tps'
                     }
                     , {
+                        data: 'nama_saksi'
+                        , name: 'nama_saksi'
+                    }
+                    , {
                         data: 'nik'
                         , name: 'nik'
                     }
@@ -158,6 +164,10 @@
                     , {
                         data: 'rw'
                         , name: 'rw'
+                    }
+                    , {
+                        data: 'no_tps'
+                        , name: 'no_tps'
                     }
                     , {
                         data: 'kelurahan'
@@ -209,9 +219,12 @@
                     $('#ModalSaksiTPS').text('Edit Saksi TPS');
 
                     $('#nik').val(data.nik);
+
+                    $('#nama_saksi').val(data.nama_saksi);
                     $('#no_hp').val(data.no_hp);
                     $('#rt').val(data.rt);
                     $('#rw').val(data.rw);
+                    $('#no_tps').val(data.no_tps);
                     $('#kelurahan').val(data.kelurahan);
                     $('#kecamatan').val(data.kecamatan);
                     $('#jumlah_suara').val(data.jumlah_suara);

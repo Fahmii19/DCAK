@@ -147,6 +147,10 @@
 
                             {{-- Input Fields --}}
                             <div class="mb-3">
+                                <label for="nama_saksi" class="form-label">Nama Saksi</label>
+                                <input type="text" class="form-control" id="nama_saksi" name="nama_saksi" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="nik" class="form-label">NIK</label>
                                 <input type="text" class="form-control" id="nik" name="nik" required>
                             </div>
@@ -161,6 +165,10 @@
                             <div class="mb-3">
                                 <label for="rw" class="form-label">RW</label>
                                 <input type="text" class="form-control" id="rw" name="rw" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="no_tps" class="form-label">No TPS</label>
+                                <input type="text" class="form-control" id="no_tps" name="no_tps" required>
                             </div>
                             <div class="mb-3">
                                 <label for="kelurahan" class="form-label">Kelurahan</label>

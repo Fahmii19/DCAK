@@ -30,10 +30,12 @@ class SaksiTPS extends Model
      */
     protected $fillable = [
         'id_saksi_tps',
+        'nama_saksi',
         'nik',
         'no_hp',
         'rt',
         'rw',
+        'no_tps',
         'kelurahan',
         'kecamatan',
         'jumlah_suara',

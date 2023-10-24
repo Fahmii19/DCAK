@@ -146,7 +146,10 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{activeRoute(route('saksi-tps')) ? 'active' : '' }}" href="{{ route('saksi-tps') }}">
+        <a class="nav-link {{activeRoute(route('saksi-tps')) || activeRoute(route('input-saksi-tps')) ? 'active' : '' }}" href="{{ route('saksi-tps') }}">
+
+
+
 
             <i class="icon">
                 <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

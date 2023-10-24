@@ -34,13 +34,16 @@ class SaksiTpsImport implements ToModel, WithStartRow
         try {
             return new SaksiTps([
                 'nik' => $row[0] ?? null,
-                'no_hp' => $row[1] ?? null,
-                'rt' => $row[2] ?? null,
-                'rw' => $row[3] ?? null,
-                'kelurahan' => isset($row[4]) ? strtoupper($row[4]) : null,
-                'kecamatan' => isset($row[5]) ? strtoupper($row[5]) : null,
-                'jumlah_suara' => $row[6] ?? null,
-                'gambar' => $imageFile ? basename($imageFile) : null,  // Set to null if no image
+                'nama_saksi' => $row[1] ?? null,
+                'no_hp' => $row[2] ?? null,
+                'rt' => $row[3] ?? null,
+                'rw' => $row[4] ?? null,
+                'no_tps' => $row[5] ?? null,
+                'kelurahan' => $row[6] ?? null,
+                'kecamatan' => $row[7] ?? null,
+                'jumlah_suara' => $row[8] ?? null,
+                'gambar' => $imageFile ? basename($imageFile) : null,
+
             ]);
         } catch (\Exception $e) {
             Log::error("Error importing row: " . $e->getMessage());
