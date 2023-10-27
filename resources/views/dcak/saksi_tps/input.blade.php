@@ -113,7 +113,6 @@
             border: 0;
             transition: all .2s ease;
         }
-
     </style>
 
     <div>
@@ -138,9 +137,11 @@
 
                     <div class="card-body">
                         <p>
-                            <span class="text-danger">*</span> Pastikan isi data dengan benar, karena data yang anda isi akan digunakan untuk keperluan pemilihan.
+                            <span class="text-danger">*</span> Pastikan isi data dengan benar, karena data yang anda isi
+                            akan digunakan untuk keperluan pemilihan.
                         </p>
-                        <form class="form-horizontal" method="post" action="{{ route('form-input-saksi-tps') }}" enctype="multipart/form-data">
+                        <form class="form-horizontal" method="post" action="{{ route('form-input-saksi-tps') }}"
+                            enctype="multipart/form-data">
 
                             <!-- Ubah route -->
                             @csrf
@@ -151,19 +152,19 @@
                                 <input type="text" class="form-control" id="nama_saksi" name="nama_saksi" required>
                             </div>
                             <div class="mb-3">
-                                <label for="nik" class="form-label">NIK</label>
+                                <label for="nik" class="form-label">NIK Saksi</label>
                                 <input type="text" class="form-control" id="nik" name="nik" required>
                             </div>
                             <div class="mb-3">
-                                <label for="no_hp" class="form-label">No HP</label>
+                                <label for="no_hp" class="form-label">No HP Saksi</label>
                                 <input type="text" class="form-control" id="no_hp" name="no_hp" required>
                             </div>
                             <div class="mb-3">
-                                <label for="rt" class="form-label">RT</label>
+                                <label for="rt" class="form-label">RT lokasi TPS</label>
                                 <input type="text" class="form-control" id="rt" name="rt" required>
                             </div>
                             <div class="mb-3">
-                                <label for="rw" class="form-label">RW</label>
+                                <label for="rw" class="form-label">RW lokasi TPS</label>
                                 <input type="text" class="form-control" id="rw" name="rw" required>
                             </div>
                             <div class="mb-3">
@@ -179,16 +180,18 @@
                                 <input type="text" class="form-control" id="kecamatan" name="kecamatan" required>
                             </div>
                             <div class="mb-3">
-                                <label for="jumlah_suara" class="form-label">Jumlah Suara</label>
-                                <input type="number" class="form-control" id="jumlah_suara" name="jumlah_suara" required>
+                                <label for="jumlah_suara" class="form-label">Jumlah Suara Di TPS</label>
+                                <input type="number" class="form-control" id="jumlah_suara" name="jumlah_suara">
                             </div>
 
                             <div class="mb-3">
                                 <div class="file-upload">
-                                    <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Upload Gambar</button>
+                                    <button class="file-upload-btn" type="button"
+                                        onclick="$('.file-upload-input').trigger( 'click' )">Upload Gambar</button>
 
                                     <div class="image-upload-wrap">
-                                        <input type="file" name="gambar" class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+                                        <input type="file" name="gambar" class="file-upload-input" type='file'
+                                            onchange="readURL(this);" accept="image/*" />
                                         <div class="drag-text">
                                             <h3>
                                                 Masukan Gambar Saksi TPS Anda Disini
@@ -198,7 +201,8 @@
                                     <div class="file-upload-content">
                                         <img class="file-upload-image" src="#" alt="your image" />
                                         <div class="image-title-wrap">
-                                            <button type="button" onclick="removeUpload()" class="remove-image">Hapus <span class="image-title">Uploaded Image</span></button>
+                                            <button type="button" onclick="removeUpload()" class="remove-image">Hapus
+                                                <span class="image-title">Uploaded Image</span></button>
                                         </div>
                                     </div>
                                 </div>
@@ -249,7 +253,6 @@
         $('.image-upload-wrap').bind('dragleave', function() {
             $('.image-upload-wrap').removeClass('image-dropping');
         });
-
     </script>
 
 </x-app-layout>

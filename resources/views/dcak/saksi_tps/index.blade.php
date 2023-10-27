@@ -4,7 +4,6 @@
         #showModalSaksiTPS .modal-content {
             color: black;
         }
-
     </style>
 
     <div class="row">
@@ -17,11 +16,14 @@
                                 <h4 class="card-title">Saksi TPS</h4>
                             </div>
                             <div class="col-md-6 text-md-end">
-                                <form action="{{ route('import-saksi-tps') }}" method="POST" enctype="multipart/form-data" class="d-inline-block">
+                                <form action="{{ route('import-saksi-tps') }}" method="POST"
+                                    enctype="multipart/form-data" class="d-inline-block">
                                     @csrf
-                                    <input type="file" name="excel_file" id="excel_file" required onchange="this.form.submit();" style="display:none;">
+                                    <input type="file" name="excel_file" id="excel_file" required
+                                        onchange="this.form.submit();" style="display:none;">
 
-                                    <button type="button" class="btn btn-primary" id="activateInput">Import Data Excel</button>
+                                    <button type="button" class="btn btn-primary" id="activateInput">Import Data
+                                        Excel</button>
                                 </form>
 
                                 <a href="{{ route('input-saksi-tps') }}" class="d-inline-block">
@@ -36,7 +38,8 @@
                         Data ini menampilkan saksi TPS yang telah terdaftar.
                     </p>
                     <div class="table-responsive">
-                        <table id="datatableSaksiTPS" class="table table-striped dt-responsive nowrap" data-toggle="data-table">
+                        <table id="datatableSaksiTPS" class="table table-striped dt-responsive nowrap"
+                            data-toggle="data-table">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -48,7 +51,7 @@
                                     <th>NO TPS</th>
                                     <th>KELURAHAN</th>
                                     <th>KECAMATAN</th>
-                                    <th>JUMLAH SUARA</th>
+                                    <th>JUMLAH SUARA DI TPS</th>
                                     <th>GAMBAR</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -136,75 +139,64 @@
             }
 
             $('#datatableSaksiTPS').DataTable({
-                processing: true
-                , destroy: true
-                , responsive: true
-                , serverSide: true
-                , ajax: '{{ route("table-saksi-tps") }}'
-                , columns: [{
-                        data: 'id_saksi_tps'
-                        , name: 'id_saksi_tps'
-                    }
-                    , {
-                        data: 'nama_saksi'
-                        , name: 'nama_saksi'
-                    }
-                    , {
-                        data: 'nik'
-                        , name: 'nik'
-                    }
-                    , {
-                        data: 'no_hp'
-                        , name: 'no_hp'
-                    }
-                    , {
-                        data: 'rt'
-                        , name: 'rt'
-                    }
-                    , {
-                        data: 'rw'
-                        , name: 'rw'
-                    }
-                    , {
-                        data: 'no_tps'
-                        , name: 'no_tps'
-                    }
-                    , {
-                        data: 'kelurahan'
-                        , name: 'kelurahan'
-                    }
-                    , {
-                        data: 'kecamatan'
-                        , name: 'kecamatan'
-                    }
-                    , {
-                        data: 'jumlah_suara'
-                        , name: 'jumlah_suara'
-                    }
-                    , {
-                        data: 'gambar'
-                        , name: 'gambar'
-                        , render: function(data, type, row) {
-                            if (data) {
-                                return `<img src="{{ asset('images/saksi_tps') }}/${data}" width="50" height="50" />`;
-                            } else {
-                                return `<img src='{{ asset('asset-login-dcak/images/not-image.jpg') }}' width="50" height="50" />`;
-                            }
+                processing: true,
+                destroy: true,
+                responsive: true,
+                serverSide: true,
+                ajax: '{{ route('table-saksi-tps') }}',
+                columns: [{
+                    data: 'id_saksi_tps',
+                    name: 'id_saksi_tps'
+                }, {
+                    data: 'nama_saksi',
+                    name: 'nama_saksi'
+                }, {
+                    data: 'nik',
+                    name: 'nik'
+                }, {
+                    data: 'no_hp',
+                    name: 'no_hp'
+                }, {
+                    data: 'rt',
+                    name: 'rt'
+                }, {
+                    data: 'rw',
+                    name: 'rw'
+                }, {
+                    data: 'no_tps',
+                    name: 'no_tps'
+                }, {
+                    data: 'kelurahan',
+                    name: 'kelurahan'
+                }, {
+                    data: 'kecamatan',
+                    name: 'kecamatan'
+                }, {
+                    data: 'jumlah_suara',
+                    name: 'jumlah_suara'
+                }, {
+                    data: 'gambar',
+                    name: 'gambar',
+                    render: function(data, type, row) {
+                        if (data) {
+                            return `<img src="{{ asset('images/saksi_tps') }}/${data}" width="50" height="50" />`;
+                        } else {
+                            return `<img src='{{ asset('asset-login-dcak/images/not-image.jpg') }}' width="50" height="50" />`;
                         }
-                    }, {
+                    }
+                }, {
 
 
-                        data: 'id_saksi_tps'
-                        , name: 'id_saksi_tps'
-                        , render: function(data, type, row) {
-                            return `
+                    data: 'id_saksi_tps',
+                    name: 'id_saksi_tps',
+                    render: function(data, type, row) {
+                        return `
                         <button onclick="editSaksiTPS(${data})" class="btn btn-warning btn-sm">Edit</button>
                         <button onclick="hapusSaksiTPS(${data})" class="btn btn-danger btn-sm">Hapus</button>
                         `;
-                        }
                     }
-                ]
-                , order: [
+                }],
+                order: [
                     [0, 'desc']
                 ]
             });
@@ -233,7 +225,8 @@
                     if (data.gambar) {
                         $('#editImage').attr('src', `{{ asset('images/saksi_tps') }}/${data.gambar}`);
                     } else {
-                        $('#editImage').attr('src', `{{ asset('asset-login-dcak/images/not-image.jpg') }}`); // Sesuaikan dengan path gambar default jika tidak ada gambar
+                        $('#editImage').attr('src',
+                        `{{ asset('asset-login-dcak/images/not-image.jpg') }}`); // Sesuaikan dengan path gambar default jika tidak ada gambar
 
 
                     }
@@ -246,15 +239,15 @@
                         var formData = new FormData(form);
 
                         $.ajax({
-                            url: `/form-edit-saksi-tps/${id}`
-                            , type: 'POST'
-                            , data: formData
-                            , processData: false
-                            , contentType: false
-                            , headers: {
+                            url: `/form-edit-saksi-tps/${id}`,
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                            , success: function(response) {
+                            },
+                            success: function(response) {
                                 if (response.success) {
                                     alert('Data updated successfully');
                                     $('#datatableSaksiTPS').DataTable().ajax.reload();
@@ -262,8 +255,8 @@
                                 } else {
                                     alert('Failed to update data');
                                 }
-                            }
-                            , error: function() {
+                            },
+                            error: function() {
                                 alert('Failed to send data. Please try again.');
                             }
                         });
@@ -281,27 +274,26 @@
         function hapusSaksiTPS(id) {
             if (confirm("Apakah Anda yakin ingin menghapus saksi TPS ini?")) {
                 $.ajax({
-                    url: `/delete-saksi-tps/${id}`
-                    , method: 'POST'
-                    , data: {
-                        _token: '{{ csrf_token() }}'
-                        , _method: 'DELETE'
-                    }
-                    , success: function(response) {
+                    url: `/delete-saksi-tps/${id}`,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        _method: 'DELETE'
+                    },
+                    success: function(response) {
                         if (response.success) {
                             alert('Data saksi TPS berhasil dihapus.');
                             $('#datatableSaksiTPS').DataTable().ajax.reload();
                         } else {
                             alert('Gagal menghapus data.');
                         }
-                    }
-                    , error: function() {
+                    },
+                    error: function() {
                         alert('Terjadi kesalahan. Silakan coba lagi.');
                     }
                 });
             }
         }
-
     </script>
 
 
