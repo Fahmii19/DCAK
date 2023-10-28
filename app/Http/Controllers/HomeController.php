@@ -561,6 +561,7 @@ class HomeController extends Controller
     {
         $Pemilih = collect([]);
 
+
         if (Auth::check()) {
             $user = Auth::user();
 
@@ -573,9 +574,10 @@ class HomeController extends Controller
 
                 // dd($user->koordinator->kelurahan, $user->koordinator->nama_koordinator);
 
-                $Pemilih = Pemilih::where('nama_koordinator', 'Fahmi')
-                    ->where('kelurahan', 'SUKAMAJU')
+                $Pemilih = Pemilih::where('nama_koordinator', $user->koordinator->nama_koordinator)
+                    ->where('kelurahan', $user->koordinator->kelurahan)
                     ->select(['id_pemilih', 'id_calon_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+
 
                 // dd($Pemilih);
             }
