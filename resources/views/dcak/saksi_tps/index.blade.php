@@ -141,8 +141,7 @@
                 , destroy: true
                 , responsive: true
                 , serverSide: true
-                , ajax: '{{ route('
-                table - saksi - tps ') }}'
+                , ajax: '{{ route('table-saksi-tps') }}'
                 , columns: [{
                         data: null
                         , sortable: false
