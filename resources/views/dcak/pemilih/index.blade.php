@@ -17,6 +17,13 @@
                                 <h4 class="card-title">Pemilih</h4>
                             </div>
                             <div class="col-md-6 text-md-end">
+
+                                <form action="{{ route('import-pemilih') }}" method="POST" enctype="multipart/form-data" class="d-inline-block">
+                                    @csrf
+                                    <input type="file" name="excel_file_pemilih" id="excel_file_pemilih" required onchange="this.form.submit();" style="display:none;">
+                                    <button type="button" class="btn btn-primary" id="activateInputPemilih">Import Data Excel</button>
+                                </form>
+
                                 <a href="{{ route('input-pemilih') }}" class="d-inline-block">
                                     <button type="button" class="btn btn-success">Tambah Data</button>
                                 </a>
@@ -82,6 +89,13 @@
     <script>
         $(document).ready(function() {
 
+
+            document.getElementById("activateInputPemilih").addEventListener("click", function() {
+                document.getElementById("excel_file_pemilih").click();
+            });
+
+
+
             if ($.fn.dataTable.isDataTable('#datatablePemilih')) {
                 $('#datatablePemilih').DataTable().destroy();
             }
@@ -95,8 +109,14 @@
                 , columns: [
 
                     {
-                        data: 'id_pemilih'
-                        , name: 'id_pemilih'
+                        data: null
+                        , sortable: false
+                        , searchable: false
+                        , render: function(data, type, row, meta) {
+                            // Mengurutkan dari nomor terakhir
+                            let recordsTotal = meta.settings.fnRecordsTotal();
+                            return recordsTotal - meta.row;
+                        }
                     }
                     , {
                         data: 'nama_koordinator'

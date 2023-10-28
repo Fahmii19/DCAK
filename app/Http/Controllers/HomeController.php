@@ -7,6 +7,7 @@ use App\Models\CalonPemilih;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CalonPemilihImport;
+use App\Imports\PemilihImport;
 use App\Imports\SaksiTpsImport;
 use App\Models\Pemilih;
 use App\Models\User_dcak;
@@ -448,6 +449,7 @@ class HomeController extends Controller
             return redirect()->route('calon-pemilih')->with('error', 'Terjadi kesalahan saat mengimpor data dari Excel: ' . $e->getMessage());
         }
     }
+
     function editCalonPemilih($id)
     {
         // dd($id);
@@ -569,9 +571,13 @@ class HomeController extends Controller
             // If admin and has koordinator, display data based on nama_koordinator and kelurahan
             elseif ($user->level == 'admin' && $user->koordinator) {
 
-                $Pemilih = Pemilih::where('nama_koordinator', $user->koordinator->nama_koordinator)
-                    ->where('kelurahan', $user->koordinator->kelurahan)
+                // dd($user->koordinator->kelurahan, $user->koordinator->nama_koordinator);
+
+                $Pemilih = Pemilih::where('nama_koordinator', 'Fahmi')
+                    ->where('kelurahan', 'SUKAMAJU')
                     ->select(['id_pemilih', 'id_calon_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+
+                // dd($Pemilih);
             }
         }
 
@@ -727,6 +733,24 @@ class HomeController extends Controller
             return response()->json(['success' => false, 'message' => 'Data pemilih tidak ditemukan.']);
         }
     }
+
+    function importExcelPemilih(Request $request)
+    {
+
+        $request->validate([
+            'excel_file_pemilih' => 'required|mimes:xls,xlsx',
+        ]);
+
+        $file = $request->file('excel_file_pemilih');
+
+        try {
+            Excel::import(new PemilihImport(), $file);
+            return redirect()->route('pemilih')->with('success', 'Data berhasil diimpor dari Excel.');
+        } catch (\Exception $e) {
+            return redirect()->route('pemilih')->with('error', 'Terjadi kesalahan saat mengimpor data dari Excel: ' . $e->getMessage());
+        }
+    }
+
 
 
     // Function Kelurahan
