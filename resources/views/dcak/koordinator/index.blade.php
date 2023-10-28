@@ -90,10 +90,17 @@
                 , serverSide: true
                 , ajax: '{{ route("table-koordinator") }}'
                 , columns: [{
-                        data: 'id_koordinator'
-                        , name: 'id_koordinator'
-                    }
-                    , {
+                        data: null
+                        , sortable: false
+                        , searchable: false
+                        , render: function(data, type, row, meta) {
+                            // Mengurutkan dari nomor terakhir
+                            let recordsTotal = meta.settings.fnRecordsTotal();
+                            return recordsTotal - meta.row;
+                        }
+                    },
+
+                    {
                         data: 'nama_koordinator'
                         , name: 'nama_koordinator'
                     }

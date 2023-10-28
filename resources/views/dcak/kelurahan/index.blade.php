@@ -62,8 +62,14 @@
                 , columns: [
 
                     {
-                        data: 'id'
-                        , name: 'id'
+                        data: null
+                        , sortable: false
+                        , searchable: false
+                        , render: function(data, type, row, meta) {
+                            // Mengurutkan dari nomor terakhir
+                            let recordsTotal = meta.settings.fnRecordsTotal();
+                            return recordsTotal - meta.row;
+                        }
                     },
 
                     {

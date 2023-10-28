@@ -104,11 +104,19 @@
                 , ajax: '{{ route("table-calon-pemilih") }}'
                 , columns: [
 
+
                     {
-                        data: 'id_calon_pemilih'
-                        , name: 'id_calon_pemilih'
-                    }
-                    , {
+                        data: null
+                        , sortable: false
+                        , searchable: false
+                        , render: function(data, type, row, meta) {
+                            // Mengurutkan dari nomor terakhir
+                            let recordsTotal = meta.settings.fnRecordsTotal();
+                            return recordsTotal - meta.row;
+                        }
+                    },
+
+                    {
                         data: 'nik'
                         , name: 'nik'
                     }
