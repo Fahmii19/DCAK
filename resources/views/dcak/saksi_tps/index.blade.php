@@ -16,19 +16,20 @@
                             <div class="col-md-6">
                                 <h4 class="card-title">Saksi TPS</h4>
                             </div>
-                            <div class="col-md-6 text-md-end">
-                                <form action="{{ route('import-saksi-tps') }}" method="POST" enctype="multipart/form-data" class="d-inline-block">
+                            <div class="col-md-6 d-flex justify-content-md-end align-items-center custom-mt">
+
+                                <form action="{{ route('import-saksi-tps') }}" method="POST" enctype="multipart/form-data" class="d-inline-block me-3">
                                     @csrf
                                     <input type="file" name="excel_file" id="excel_file" required onchange="this.form.submit();" style="display:none;">
-
-                                    <button type="button" class="btn btn-primary" id="activateInput">Import Data
-                                        Excel</button>
+                                    <button type="button" class="btn btn-primary" id="activateInput">Import Data Excel</button>
                                 </form>
 
                                 <a href="{{ route('input-saksi-tps') }}" class="d-inline-block">
                                     <button type="button" class="btn btn-success">Tambah Data</button>
                                 </a>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -141,7 +142,7 @@
                 , destroy: true
                 , responsive: true
                 , serverSide: true
-                , ajax: '{{ route('table-saksi-tps') }}'
+                , ajax: `{{ route('table-saksi-tps') }}`
                 , columns: [{
                         data: null
                         , sortable: false

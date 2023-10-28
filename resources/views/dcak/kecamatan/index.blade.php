@@ -9,7 +9,8 @@
                             <div class="col-md-6">
                                 <h4 class="card-title">Kecamatan</h4>
                             </div>
-                            <div class="col-md-6 text-md-end">
+                            <div class="col-md-6 text-md-end custom-mt">
+
                                 <a href="{{ route('input-kecamatan') }}" class="d-inline-block">
                                     <button type="button" class="btn btn-success">Tambah Data</button>
                                 </a>

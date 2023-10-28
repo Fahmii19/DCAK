@@ -16,9 +16,9 @@
                             <div class="col-md-6">
                                 <h4 class="card-title">Pemilih</h4>
                             </div>
-                            <div class="col-md-6 text-md-end">
+                            <div class="col-md-6 d-flex justify-content-md-end align-items-center custom-mt">
 
-                                <form action="{{ route('import-pemilih') }}" method="POST" enctype="multipart/form-data" class="d-inline-block">
+                                <form action="{{ route('import-pemilih') }}" method="POST" enctype="multipart/form-data" class="d-inline-block me-3">
                                     @csrf
                                     <input type="file" name="excel_file_pemilih" id="excel_file_pemilih" required onchange="this.form.submit();" style="display:none;">
                                     <button type="button" class="btn btn-primary" id="activateInputPemilih">Import Data Excel</button>
@@ -28,6 +28,7 @@
                                     <button type="button" class="btn btn-success">Tambah Data</button>
                                 </a>
                             </div>
+
 
 
                         </div>
