@@ -683,8 +683,19 @@ class HomeController extends Controller
 
     function formInputPemilih(Request $request)
     {
+        // 1. Cek apakah nik atau nama_pemilih sudah ada di database
+        $existingPemilihByNIK = Pemilih::where('nik', $request->nik)->first();
+        $existingPemilihByName = Pemilih::where('nama_pemilih', $request->nama_pemilih)->first();
+        $existingPemilihByRT = Pemilih::where('rt', $request->rt)->first();
+        $existingPemilihByRW = Pemilih::where('rw', $request->rw)->first();
+        $existingPemilihByKelurahan = Pemilih::where('kelurahan', $request->kelurahan)->first();
+
+        if ($existingPemilihByNIK || $existingPemilihByName || $existingPemilihByRT || $existingPemilihByRW || $existingPemilihByKelurahan) {
+            // Jika nik atau nama_pemilih sudah ada, kembali ke formulir dengan pesan kesalahan
+            return back()->with('error', 'Data pemilih dengan NIK atau nama yang sama sudah ada.');
+        }
+
         $Pemilih = new Pemilih();
-        // $Pemilih->id_calon_pemilih = $request->id_calon_pemilih;
         $Pemilih->nik = $request->nik;
         $Pemilih->nama_koordinator = $request->nama_koordinator;
         $Pemilih->nama_pemilih = $request->nama_pemilih;
@@ -695,12 +706,11 @@ class HomeController extends Controller
         $Pemilih->tps = $request->tps;
         $Pemilih->kelurahan = $request->kelurahan;
 
-        // dd($Pemilih);
-
         $Pemilih->save();
 
         return redirect()->route('pemilih')->with('success', 'Data pemilih berhasil disimpan.');
     }
+
 
     function editPemilih($id)
     {
