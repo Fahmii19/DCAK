@@ -13,11 +13,13 @@
                 <div class="card-header d-flex justify-content-between">
                     <div class="container p-0">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h4 class="card-title">Calon Pemilih</h4>
-                            </div>
+
                             <div class="container-fluid">
                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <h4 class="card-title">Calon Pemilih</h4>
+                                    </div>
+
                                     <!-- Ini akan memakan setengah lebar layar di ukuran layar medium ke atas (md) -->
                                     <div class="col-md-6 d-flex justify-content-md-end align-items-center custom-mt">
                                         <form action="{{ route('import-calon-pemilih') }}" method="POST" enctype="multipart/form-data" class="d-inline-block me-3">

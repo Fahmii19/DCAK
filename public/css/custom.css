@@ -506,6 +506,10 @@
 
 /* Laptop */
 @media (min-width: 1200px) {
+    .sidebar + .main-content .iq-navbar-header .iq-header-img {
+        height: unset !important;
+    }
+
     .custom-image-header {
         object-fit: fill;
     }
@@ -515,7 +519,8 @@
     }
 
     .iq-header-img-custom {
-        padding-left: 5vh !important;
+        top: -4vh !important;
+        padding-left: 14vh !important;
         padding-right: 5vh !important;
         margin-top: 14vh !important;
     }
