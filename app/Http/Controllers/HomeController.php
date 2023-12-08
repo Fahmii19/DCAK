@@ -550,6 +550,106 @@ class HomeController extends Controller
         }
     }
 
+    // Function Linjur
+    function linjur(Request $request)
+    {
+        return view('dcak.linjur.index');
+    }
+
+    function tableLinjur()
+    {
+        $Pemilih = collect([]);
+
+
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            // If superadmin, display all data
+            if ($user->level == 'superadmin') {
+                $Pemilih = Pemilih::select(['id_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+            }
+            // If admin and has koordinator, display data based on nama_koordinator and kelurahan
+            elseif ($user->level == 'admin' && $user->koordinator) {
+
+
+                $Pemilih = Pemilih::where('nama_koordinator', $user->koordinator->nama_koordinator)
+                    ->where('kelurahan', $user->koordinator->kelurahan)
+                    ->select(['id_pemilih', 'id_calon_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
+            }
+        }
+
+        return DataTables::of($Pemilih)->make(true);
+    }
+
+    function inputLinjur(Request $request)
+    {
+        $kelurahan = Kelurahan::all();
+        $koordinator = Koordinator::all();
+
+        $user = Auth::user();
+        $nama_koordinator = $user->koordinator->nama_koordinator;
+
+        return view('dcak.linjur.input', compact('kelurahan', 'koordinator', 'nama_koordinator'));
+    }
+
+    public function getLinjurDetail(Request $request)
+    {
+        $kelurahan = $request->get('kelurahan');
+
+        $linjur = CalonPemilih::where('kelurahan', $kelurahan)
+            ->get();
+
+        if ($linjur->isNotEmpty()) {
+            return response()->json($linjur);
+        } else {
+            return response()->json(['error' => 'Linjur tidak ditemukan di kelurahan tersebut'], 404);
+        }
+    }
+
+    public function searchNamaLinjur(Request $request)
+    {
+        $query = $request->get('query');
+        $kelurahan = $request->get('kelurahan'); // Dapatkan kelurahan dari request
+
+
+        // Dapatkan semua id_calon_pemilih yang sudah ada di table pemilih
+        $existingIds = Pemilih::pluck('id_calon_pemilih')->filter()->toArray();
+
+
+        $results = CalonPemilih::where('nama_pemilih', 'LIKE', "%{$query}%")
+            ->when($kelurahan, function ($q) use ($kelurahan) {
+                // Jika kelurahan disediakan, tambahkan filter kelurahan ke query
+                return $q->where('kelurahan', $kelurahan);
+            })
+            ->where(function ($query) use ($existingIds) {
+                if (!empty($existingIds)) {
+                    // Jika ada existingIds, eksklusi mereka dari hasil pencarian
+                    $query->whereNotIn('id_calon_pemilih', $existingIds);
+                }
+            })
+            ->get();
+
+        $output = '<div class="list-group">';
+
+        if ($results->isEmpty()) {
+            $output .= '<div class="list-group-item text-center">Tidak ada data pemilih</div>';
+        } else {
+            foreach ($results as $result) {
+                dd($result->nama_pemilih);
+                $output .= '<a href="#" class="list-group-item list-group-item-action">' . $result->nama_pemilih . '</a>';
+            }
+        }
+
+        $output .= '</div>';
+
+        return $output;
+    }
+
+
+
+
+
+
     // Function Pemilih
 
     function pemilih(Request $request)
@@ -585,8 +685,6 @@ class HomeController extends Controller
 
         return DataTables::of($Pemilih)->make(true);
     }
-
-
 
     function inputPemilih(Request $request)
     {
@@ -661,6 +759,7 @@ class HomeController extends Controller
             return response()->json(['error' => 'Pemilih tidak ditemukan'], 404);
         }
     }
+
 
     public function formInputPencarianPemilih(Request $request)
     {
