@@ -129,7 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Linjur
     // linjur
     Route::get('/linjur', [HomeController::class, 'linjur'])->name('linjur');
-    Route::get('/table-linjur', [HomeController::class, 'tableLinjur'])->name('table-linjur');
+    // Route::get('/table-linjur', [HomeController::class, 'tableLinjur'])->name('table-linjur');
     Route::get('/input-linjur', [HomeController::class, 'inputLinjur'])->name('input-linjur');
     Route::post('/form-input-linjur', [HomeController::class, 'formInputLinjur'])->name('form-input-linjur');
     Route::get('/input-linjur-nama', [HomeController::class, 'inputLinjurNama'])->name('input-linjur-nama');
@@ -137,9 +137,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/search/nama-linjur', [HomeController::class, 'searchNamaLinjur'])->name('search.nama-linjur');
     Route::get('/get-linjur-detail', [HomeController::class, 'getLinjurDetail'])->name('get-linjur-detail');
     Route::post('/form-input-pencarian-linjur', [HomeController::class, 'formInputPencarianLinjur'])->name('form-input-pencarian-linjur');
-    Route::get('/edit-linjur/{id}', [HomeController::class, 'editLinjur'])->name('edit-linjur');
-    Route::post('/form-edit-linjur/{id}', [HomeController::class, 'formEditLinjur'])->name('form-edit-linjur');
-    Route::delete('/delete-linjur/{id}', [HomeController::class, 'deleteLinjur'])->name('delete-linjur');
+    // Route::get('/edit-linjur/{id}', [HomeController::class, 'editLinjur'])->name('edit-linjur');
+    // Route::post('/form-edit-linjur/{id}', [HomeController::class, 'formEditLinjur'])->name('form-edit-linjur');
+    // Route::delete('/delete-linjur/{id}', [HomeController::class, 'deleteLinjur'])->name('delete-linjur');
 
 
     // Route::post('/import-calon-pemilih', [HomeController::class, 'importExcelCalonPemilih'])->name('import-calon-pemilih');
