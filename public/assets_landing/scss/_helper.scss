@@ -1,9 +1,8 @@
-// 
+//
 // helper.scss
-// 
+//
 // color
-@each $color,
-$value in $theme-colors {
+@each $color, $value in $theme-colors {
     .text-#{$color} {
         color: ($value) !important;
     }
@@ -75,9 +74,9 @@ $value in $theme-colors {
 }
 
 // icon size
-.icon {    
+.icon {
     position: relative;
-    top:-2px;
+    top: -2px;
 }
 .icon-xxl {
     height: 48px;
@@ -116,7 +115,7 @@ $value in $theme-colors {
 
 .sw-1 {
     stroke-width: 1px;
-} 
+}
 
 // border
 .border {
@@ -145,7 +144,7 @@ $value in $theme-colors {
 .img-container {
     max-width: 120%;
     position: relative;
-    margin-left: -40%;
+    margin-left: -27%;
 }
 @media (max-width: 1024px) {
     .img-container {
@@ -155,13 +154,10 @@ $value in $theme-colors {
     }
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
     .img-container {
         max-width: 100%;
         position: relative;
         margin-left: 0;
     }
 }
-
-
-

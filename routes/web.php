@@ -73,6 +73,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Dashboard Routes
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    // Data Chart Dashboard
+    Route::get('/data-chart/{periode}', [HomeController::class, 'dataChart'])->name('data-chart');
 
     // Authentication Routes
 
@@ -84,12 +86,31 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/input-calon-pemilih', [HomeController::class, 'inputCalonPemilih'])->name('input-calon-pemilih');
     Route::post('/form-input-calon-pemilih', [HomeController::class, 'formInputCalonPemilih'])->name('form-input-calon-pemilih');
     Route::post('/import-calon-pemilih', [HomeController::class, 'importExcelCalonPemilih'])->name('import-calon-pemilih');
+    Route::get('/edit-calon-pemilih/{id}', [HomeController::class, 'editCalonPemilih'])->name('edit-calon-pemilih');
+    Route::post('/form-edit-calon-pemilih/{id}', [HomeController::class, 'formEditCalonPemilih'])->name('form-edit-calon-pemilih');
+    Route::delete('/delete-calon-pemilih/{id}', [HomeController::class, 'deleteCalonPemilih'])->name('delete-calon-pemilih');
+
+    // Saksi TPS
+    Route::get('/saksi-tps', [HomeController::class, 'saksiTps'])->name('saksi-tps');
+    Route::get('/table-saksi-tps', [HomeController::class, 'tableSaksiTps'])->name('table-saksi-tps');
+    Route::get('/input-saksi-tps', [HomeController::class, 'inputSaksiTps'])->name('input-saksi-tps');
+    Route::post('/form-input-saksi-tps', [HomeController::class, 'formInputSaksiTps'])->name('form-input-saksi-tps');
+    Route::post('/import-saksi-tps', [HomeController::class, 'importExcelSaksiTps'])->name('import-saksi-tps');
+    Route::get('/edit-saksi-tps/{id}', [HomeController::class, 'editSaksiTps'])->name('edit-saksi-tps');
+    Route::post('/form-edit-saksi-tps/{id}', [HomeController::class, 'formEditSaksiTps'])->name('form-edit-saksi-tps');
+    Route::delete('/delete-saksi-tps/{id}', [HomeController::class, 'deleteSaksiTps'])->name('delete-saksi-tps');
+    Route::post('/import-saksi-tps', [HomeController::class, 'importExcelSaksiTps'])->name('import-saksi-tps');
 
     // koordinator
     Route::get('/koordinator', [HomeController::class, 'koordinator'])->name('koordinator');
     Route::get('/table-koordinator', [HomeController::class, 'tableKoordinator'])->name('table-koordinator');
     Route::get('/input-koordinator', [HomeController::class, 'inputKoordinator'])->name('input-koordinator');
     Route::post('/form-input-koordinator', [HomeController::class, 'formInputKoordinator'])->name('form-input-koordinator');
+    // Edit Koordinator
+    Route::get('/edit-koordinator/{id}', [HomeController::class, 'editKoordinator'])->name('edit-koordinator');
+    Route::post('/form-edit-koordinator/{id}', [HomeController::class, 'formEditKoordinator'])->name('form-edit-koordinator');
+    // Delete Koordinator
+    Route::delete('/delete-koordinator/{id}', [HomeController::class, 'deleteKoordinator'])->name('delete-koordinator');
 
     // pemilih
     Route::get('/pemilih', [HomeController::class, 'pemilih'])->name('pemilih');
@@ -100,9 +121,31 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/cari-pemilih', [HomeController::class, 'cariPemilih'])->name('cari-pemilih');
     Route::get('/search/nama', [HomeController::class, 'searchNama'])->name('search.nama');
     Route::get('/get-pemilih-detail', [HomeController::class, 'getPemilihDetail'])->name('get.pemilih_detail');
-
     Route::post('/form-input-pencarian-pemilih', [HomeController::class, 'formInputPencarianPemilih'])->name('form-input-pencarian-pemilih');
+    Route::get('/edit-pemilih/{id}', [HomeController::class, 'editPemilih'])->name('edit-pemilih');
+    Route::post('/form-edit-pemilih/{id}', [HomeController::class, 'formEditPemilih'])->name('form-edit-pemilih');
+    Route::delete('/delete-pemilih/{id}', [HomeController::class, 'deletePemilih'])->name('delete-pemilih');
 
+    // Linjur
+    // linjur
+    Route::get('/linjur', [HomeController::class, 'linjur'])->name('linjur');
+    // Route::get('/table-linjur', [HomeController::class, 'tableLinjur'])->name('table-linjur');
+    Route::get('/input-linjur', [HomeController::class, 'inputLinjur'])->name('input-linjur');
+    Route::post('/form-input-linjur', [HomeController::class, 'formInputLinjur'])->name('form-input-linjur');
+    Route::get('/input-linjur-nama', [HomeController::class, 'inputLinjurNama'])->name('input-linjur-nama');
+    // Route::get('/cari-linjur', [HomeController::class, 'cariLinjur'])->name('cari-linjur');
+    Route::get('/search/nama-linjur', [HomeController::class, 'searchNamaLinjur'])->name('search.nama-linjur');
+    Route::get('/get-linjur-detail', [HomeController::class, 'getLinjurDetail'])->name('get-linjur-detail');
+    Route::post('/form-input-pencarian-linjur', [HomeController::class, 'formInputPencarianLinjur'])->name('form-input-pencarian-linjur');
+    // Route::get('/edit-linjur/{id}', [HomeController::class, 'editLinjur'])->name('edit-linjur');
+    // Route::post('/form-edit-linjur/{id}', [HomeController::class, 'formEditLinjur'])->name('form-edit-linjur');
+    // Route::delete('/delete-linjur/{id}', [HomeController::class, 'deleteLinjur'])->name('delete-linjur');
+
+
+    // Route::post('/import-calon-pemilih', [HomeController::class, 'importExcelCalonPemilih'])->name('import-calon-pemilih');
+
+    // import pemilih
+    Route::post('/import-pemilih', [HomeController::class, 'importExcelPemilih'])->name('import-pemilih');
 
 
     // kelurahan
@@ -122,6 +165,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/table-akun-dcak', [HomeController::class, 'tableAkunDcak'])->name('table-akun-dcak');
     Route::get('/input-akun-dcak', [HomeController::class, 'inputAkunDcak'])->name('input-akun-dcak');
     Route::post('/form-input-akun-dcak', [HomeController::class, 'formInputAkunDcak'])->name('form-input-akun-dcak');
+
+    // Edit Akundcak
+    Route::get('/edit-akundcak/{id}', [HomeController::class, 'editAkundcak'])->name('edit-akundcak');
+    Route::post('/form-edit-akundcak/{id}', [HomeController::class, 'formEditAkundcak'])->name('form-edit-akundcak');
+    // Delete Akundcak
+    Route::delete('/delete-akundcak/{id}', [HomeController::class, 'deleteAkundcak'])->name('delete-akundcak');
+
 
     // saksi
     Route::get('/saksi', [HomeController::class, 'saksi'])->name('saksi');

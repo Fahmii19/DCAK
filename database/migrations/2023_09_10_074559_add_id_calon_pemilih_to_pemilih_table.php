@@ -14,7 +14,7 @@ class AddIdCalonPemilihToPemilihTable extends Migration
     public function up()
     {
         Schema::table('pemilih', function (Blueprint $table) {
-            $table->bigInteger('id_calon_pemilih')->after('id_pemilih');
+            $table->bigInteger('id_calon_pemilih')->nullable()->after('id_pemilih');
         });
     }
 

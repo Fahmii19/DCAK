@@ -975,9 +975,6 @@
 .dark .custom-form-floating > .form-control:not(:-moz-placeholder-shown) ~ label {
   background-color: #222738;
 }
-.dark .custom-form-floating > .form-control:not(:-ms-input-placeholder) ~ label {
-  background-color: #222738;
-}
 .dark .custom-form-floating > .form-control:focus ~ label,
 .dark .custom-form-floating > .form-control:not(:placeholder-shown) ~ label,
 .dark .custom-form-floating > .form-select ~ label {

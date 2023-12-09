@@ -1,11 +1,8 @@
-<div class="iq-navbar-header" style="height: 215px;">
+<div class="iq-navbar-header iq-navbar-header-custom">
 
-    <div class="iq-header-img" style="
-    padding-left: 5vh;
-    padding-right: 5vh;
-    margin-top: 14vh;
+    <div class="iq-header-img iq-header-img-custom"
 ">
 
-        <img style="object-fit: fill;" src="{{asset('images/dashboard/bg-menu-utama.jpg')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100">
+        <img class="custom-image-header" src="{{asset('images/dashboard/bg-menu-utama.jpg')}}" alt="header" class="theme-color-default-img img-fluid w-100 h-100">
     </div>
 </div>

@@ -11,7 +11,7 @@
                                 </div>
                                 <div class="col-md-6 text-md-end">
                                     <a href="{{ route('calon-pemilih') }}">
-                                        <button type="button" class="btn btn-primary"> Kembali</button>
+                                        <button type="button" class="btn btn-secondary"> Kembali</button>
                                     </a>
 
                                 </div>
@@ -25,6 +25,14 @@
                         </p>
                         <form class="form-horizontal" method="post" action="{{ route('form-input-calon-pemilih') }}">
                             @csrf
+
+                            {{-- NIK --}}
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="nik">NIK</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" id="nik" name="nik" placeholder="Masukan NIK" required>
+                                </div>
+                            </div>
 
                             {{-- Nama PEMILIH --}}
                             <div class="form-group row">
@@ -100,8 +108,8 @@
 
 
                             <div class="form-group float-end">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="button" class="btn btn-danger">cancel</button>
+                                <button type="submit" class="btn btn-primary">Kirim</button>
+                                <button type="reset" class="btn btn-danger">Reset</button>
                             </div>
                         </form>
 

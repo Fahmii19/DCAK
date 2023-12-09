@@ -23,7 +23,7 @@ class User_dcak extends Authenticatable
     protected $table = 'users_dcak';
     protected $primaryKey = 'id_users_dcak';
     protected $fillable = [
-        'id_users_dcak', 'id_koordinator', 'username', 'password'
+        'id_users_dcak', 'id_koordinator', 'username', 'password', 'level'
     ];
 
     public function koordinator()
