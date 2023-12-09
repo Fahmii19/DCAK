@@ -206,26 +206,34 @@
             });
 
             // Event handler untuk pencarian nama
-            $('#searchNama').on('keyup', function() {
+            $('#searchNama').on('input', function() {
                 let query = $(this).val().trim().toLowerCase();
-                if (!query || query.length < 3) {
+
+                // Validasi minimal 3 huruf
+                if (query.length < 3) {
                     $('#searchResults').empty().hide();
                     return;
                 }
+
                 let kelurahan = $('#kelurahan').val();
                 let dataHTML = kelurahanDataCache[kelurahan];
-                if (dataHTML) { // Menciptakan elemen jQuery dari string HTML
-                    let $html = $(dataHTML); // Menyembunyikan semua item yang tidak cocok
-                    $html.each(function() {
-                        let $item = $(this);
-                        if ($item.text().toLowerCase().includes(query)) {
-                            $item.show();
-                        } else {
-                            $item.hide();
-                        }
-                    }); // Menampilkan hasil yang sudah difilter
-                    $('#searchResults').html($html).show();
-                } else { // Tampilkan pesan jika tidak ada data
+
+                if (dataHTML) {
+                    // Menciptakan elemen jQuery dari string HTML
+                    let $html = $(dataHTML);
+
+                    // Menyembunyikan semua item
+                    $html.find('.list-group-item').hide();
+
+                    // Menampilkan item yang cocok dengan query
+                    $html.find('.list-group-item').filter(function() {
+                        return $(this).text().toLowerCase().includes(query);
+                    }).show();
+
+                    // Menampilkan hasil yang sudah difilter
+                    $('#searchResults').html($html.html()).show();
+                } else {
+                    // Tampilkan pesan jika tidak ada data
                     $('#searchResults').html('<div class="list-group-item">No data available</div>').show();
                 }
             });
@@ -248,7 +256,6 @@
 
                 let selectedName = $(this).text();
                 let selectedKelurahan = $('#kelurahan').val(); // Mendapatkan nilai kelurahan yang dipilih
-
 
                 $('#searchNama').val(selectedName);
                 $('#searchResults').empty().hide();
@@ -275,6 +282,10 @@
             });
         });
     </script>
+
+
+
+
 
 
 
