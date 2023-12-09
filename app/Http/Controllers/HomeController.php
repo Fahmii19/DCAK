@@ -592,17 +592,33 @@ class HomeController extends Controller
         return view('dcak.linjur.input', compact('kelurahan', 'koordinator', 'nama_koordinator'));
     }
 
+
     public function getLinjurDetail(Request $request)
     {
-        $kelurahan = $request->get('kelurahan');
+        // Mendapatkan nama dan kelurahan dari request
+        $nama = $request->input('nama');
+        $kelurahan = $request->input('kelurahan');
 
-        $linjur = CalonPemilih::where('kelurahan', $kelurahan)
-            ->get();
+        // Melakukan query untuk mencari pemilih berdasarkan nama dan kelurahan
+        $pemilih = CalonPemilih::where('nama_pemilih', $nama)
+            ->where('kelurahan', $kelurahan)
+            ->first(); // Asumsi bahwa setiap kombinasi nama dan kelurahan unik
 
-        if ($linjur->isNotEmpty()) {
-            return response()->json($linjur);
+        // Jika pemilih ditemukan, kirim data kembali sebagai respons
+        if ($pemilih) {
+            return response()->json([
+                'jenis_kelamin' => $pemilih->jenis_kelamin,
+                'no_hp' => $pemilih->no_hp,
+                'rt' => $pemilih->rt,
+                'rw' => $pemilih->rw,
+                'tps' => $pemilih->tps,
+                'kelurahan' => $pemilih->kelurahan,
+                'id_calon_pemilih' => $pemilih->id_calon_pemilih,
+                'nik' => $pemilih->nik
+            ]);
         } else {
-            return response()->json(['error' => 'Linjur tidak ditemukan di kelurahan tersebut'], 404);
+            // Jika tidak ditemukan, kirim respons gagal
+            return response()->json(['error' => 'Pemilih tidak ditemukan'], 404);
         }
     }
 
@@ -777,6 +793,32 @@ class HomeController extends Controller
         $Pemilih->save();
 
         return redirect()->route('pemilih')->with('success', 'Data Calon berhasil disimpan.');
+    }
+
+    public function formInputPencarianLinjur(Request $request)
+    {
+        try {
+
+            $Pemilih = new Pemilih();
+            $Pemilih->id_calon_pemilih = $request->id_calon_pemilih;
+            $Pemilih->nik = $request->nik;
+            $Pemilih->nama_koordinator = $request->nama_koordinator;
+            $Pemilih->nama_pemilih = $request->nama_pemilih;
+            $Pemilih->jenis_kelamin = $request->jenis_kelamin;
+            $Pemilih->no_hp = $request->no_hp;
+            $Pemilih->rt = $request->rt;
+            $Pemilih->rw = $request->rw;
+            $Pemilih->tps = $request->tps;
+            $Pemilih->kelurahan = $request->kelurahan;
+            $Pemilih->save();
+
+            return redirect()->route('linjur')->with('success', 'Data Calon berhasil disimpan.');
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error($e->getMessage());
+
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        }
     }
 
 

@@ -67,14 +67,12 @@
 
                             {{-- Nama LINJUR --}}
                             <div class="form-group row position-relative">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="nama_linjur">Nama Linjur</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="nama_pemilih">Nama Linjur</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="nama_linjur" class="form-control" id="searchNama" placeholder="Ketik nama untuk mencari..." disabled>
+                                    <input type="text" name="nama_pemilih" class="form-control" id="searchNama" placeholder="Ketik nama untuk mencari..." disabled>
                                     <div id="searchResults"></div>
                                 </div>
                             </div>
-
-
 
                             {{-- NIK --}}
                             <div class="form-group row">
@@ -96,9 +94,14 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="jenis_kelamin">Jenis Kelamin</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin" placeholder="Masukan Jenis Kelamin">
+                                    <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="L">Laki-Laki</option>
+                                        <option value="P">Perempuan</option>
+                                    </select>
                                 </div>
                             </div>
+
 
                             {{-- RT --}}
                             <div class="form-group row">
@@ -156,7 +159,6 @@
                         , success: function(data) {
                             kelurahanDataCache[kelurahan] = data; // Simpan respons ke cache
                             handleDataResponse(data);
-                            console.log(data);
                         }
                         , error: function() {
                             alert('Error loading data. Please try again later.');
@@ -167,7 +169,11 @@
 
             // Fungsi untuk menangani respons data
             function handleDataResponse(data) {
-                if (data.length > 0) {
+                // Membuat elemen jQuery dari string HTML
+                var $data = $(data);
+
+                // Mengecek apakah ada data pemilih
+                if ($data.find('.list-group-item').length > 0 && $data.find('.list-group-item').text().trim() !== "Tidak ada data pemilih") {
                     $('#searchNama').prop('disabled', false);
                 } else {
                     $('#searchNama').prop('disabled', true);
@@ -208,24 +214,7 @@
                 }
             });
 
-
-
-            // Seleksi nama dari hasil pencarian
-            $(document).on('click', '#searchResults .list-group-item', function(e) {
-                e.preventDefault();
-                let selectedName = $(this).text();
-                $('#searchNama').val(selectedName);
-                $('#searchResults').empty().hide();
-            });
-        });
-
-    </script>
-
-
-
-
-    {{-- <script>
-        $(document).ready(function() {
+            // Fungsi untuk reset field
             function resetFields() {
                 $('#jenis_kelamin').val('');
                 $('#no_hp').val('');
@@ -237,52 +226,41 @@
                 $('#nik').val('');
             }
 
-            $('#searchNama').on('keyup', function() {
-                let query = $(this).val().trim();
+            // Gabungan event handler untuk pemilihan nama dari hasil pencarian
+            $(document).on('click', '#searchResults .list-group-item', function(e) {
+                e.preventDefault();
 
-                if (!query || query.length < 3) {
-                    $('#searchResults').empty().hide();
-                    resetFields();
-                    return;
-                }
+                let selectedName = $(this).text();
+                let selectedKelurahan = $('#kelurahan').val(); // Mendapatkan nilai kelurahan yang dipilih
 
+
+                $('#searchNama').val(selectedName);
+                $('#searchResults').empty().hide();
+
+                // Melakukan AJAX request untuk mendapatkan detail lebih lanjut
                 $.ajax({
-                    url: "{{ route('search.nama') }}"
-    , data: {
-    query: query
-    }
-    , success: function(data) {
-    $('#searchResults').html(data).show();
-    }
-    });
-    });
+                    url: "{{ route('get-linjur-detail') }}"
+                    , data: {
+                        nama: selectedName
+                        , kelurahan: selectedKelurahan
+                    }
+                    , success: function(data) {
+                        console.log(data);
+                        $('#jenis_kelamin').val(data.jenis_kelamin);
+                        $('#no_hp').val(data.no_hp);
+                        $('#rt').val(data.rt);
+                        $('#rw').val(data.rw);
+                        $('#tps').val(data.tps);
+                        $('#kelurahan').val(data.kelurahan);
+                        $('#id_calon_pemilih').val(data.id_calon_pemilih);
+                        $('#nik').val(data.nik);
+                    }
+                });
+            });
+        });
 
-    $(document).on('click', '#searchResults .list-group-item', function(e) {
-    e.preventDefault();
+    </script>
 
-    let selectedName = $(this).text();
-    $('#searchNama').val(selectedName);
-    $('#searchResults').empty().hide();
 
-    $.ajax({
-    url: "{{ route('get.linjur_detail') }}"
-    , data: {
-    nama: selectedName
-    }
-    , success: function(data) {
-    $('#jenis_kelamin').val(data.jenis_kelamin);
-    $('#no_hp').val(data.no_hp);
-    $('#rt').val(data.rt);
-    $('#rw').val(data.rw);
-    $('#tps').val(data.tps);
-    $('#kelurahan').val(data.kelurahan);
-    $('#id_calon_pemilih').val(data.id_calon_pemilih);
-    $('#nik').val(data.nik);
-    }
-    });
-    });
-    });
-
-    </script> --}}
 
 </x-app-layout>

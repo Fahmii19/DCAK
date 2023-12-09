@@ -135,7 +135,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/input-linjur-nama', [HomeController::class, 'inputLinjurNama'])->name('input-linjur-nama');
     // Route::get('/cari-linjur', [HomeController::class, 'cariLinjur'])->name('cari-linjur');
     Route::get('/search/nama-linjur', [HomeController::class, 'searchNamaLinjur'])->name('search.nama-linjur');
-    Route::get('/get-linjur-detail', [HomeController::class, 'getLinjurDetail'])->name('get.linjur_detail');
+    Route::get('/get-linjur-detail', [HomeController::class, 'getLinjurDetail'])->name('get-linjur-detail');
     Route::post('/form-input-pencarian-linjur', [HomeController::class, 'formInputPencarianLinjur'])->name('form-input-pencarian-linjur');
     Route::get('/edit-linjur/{id}', [HomeController::class, 'editLinjur'])->name('edit-linjur');
     Route::post('/form-edit-linjur/{id}', [HomeController::class, 'formEditLinjur'])->name('form-edit-linjur');
