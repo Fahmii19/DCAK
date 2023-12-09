@@ -629,13 +629,13 @@ class HomeController extends Controller
             })
             ->get();
 
+
         $output = '<div class="list-group">';
 
         if ($results->isEmpty()) {
             $output .= '<div class="list-group-item text-center">Tidak ada data pemilih</div>';
         } else {
             foreach ($results as $result) {
-                dd($result->nama_pemilih);
                 $output .= '<a href="#" class="list-group-item list-group-item-action">' . $result->nama_pemilih . '</a>';
             }
         }

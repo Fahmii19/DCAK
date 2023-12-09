@@ -69,10 +69,12 @@
                             <div class="form-group row position-relative">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nama_linjur">Nama Linjur</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="nama_linjur" class="form-control" id="searchNama" placeholder="Ketik nama untuk mencari...">
+                                    <input type="text" name="nama_linjur" class="form-control" id="searchNama" placeholder="Ketik nama untuk mencari..." disabled>
                                     <div id="searchResults"></div>
                                 </div>
                             </div>
+
+
 
                             {{-- NIK --}}
                             <div class="form-group row">
@@ -137,6 +139,93 @@
 
     <script>
         $(document).ready(function() {
+            let kelurahanDataCache = {}; // Cache untuk menyimpan data berdasarkan kelurahan
+
+            // Fungsi untuk memuat nama-nama berdasarkan kelurahan
+            function loadNamesByKelurahan(kelurahan) {
+                if (kelurahanDataCache[kelurahan]) {
+                    // Gunakan data dari cache jika tersedia
+                    handleDataResponse(kelurahanDataCache[kelurahan]);
+                } else {
+                    // Request AJAX untuk mendapatkan data
+                    $.ajax({
+                        url: "{{ route('search.nama-linjur') }}"
+                        , data: {
+                            kelurahan: kelurahan
+                        }
+                        , success: function(data) {
+                            kelurahanDataCache[kelurahan] = data; // Simpan respons ke cache
+                            handleDataResponse(data);
+                            console.log(data);
+                        }
+                        , error: function() {
+                            alert('Error loading data. Please try again later.');
+                        }
+                    });
+                }
+            }
+
+            // Fungsi untuk menangani respons data
+            function handleDataResponse(data) {
+                if (data.length > 0) {
+                    $('#searchNama').prop('disabled', false);
+                } else {
+                    $('#searchNama').prop('disabled', true);
+                    alert('No names found for selected kelurahan.');
+                }
+            }
+
+            // Event handler ketika kelurahan dipilih
+            $('#kelurahan').change(function() {
+                let selectedKelurahan = $(this).val();
+                $('#searchNama').prop('disabled', true).val(''); // Nonaktifkan dan bersihkan field pencarian
+                $('#searchResults').empty().hide(); // Bersihkan hasil pencarian sebelumnya
+                loadNamesByKelurahan(selectedKelurahan);
+            });
+
+            // Event handler untuk pencarian nama
+            $('#searchNama').on('keyup', function() {
+                let query = $(this).val().trim().toLowerCase();
+                if (!query || query.length < 3) {
+                    $('#searchResults').empty().hide();
+                    return;
+                }
+                let kelurahan = $('#kelurahan').val();
+                let dataHTML = kelurahanDataCache[kelurahan];
+                if (dataHTML) { // Menciptakan elemen jQuery dari string HTML
+                    let $html = $(dataHTML); // Menyembunyikan semua item yang tidak cocok
+                    $html.each(function() {
+                        let $item = $(this);
+                        if ($item.text().toLowerCase().includes(query)) {
+                            $item.show();
+                        } else {
+                            $item.hide();
+                        }
+                    }); // Menampilkan hasil yang sudah difilter
+                    $('#searchResults').html($html).show();
+                } else { // Tampilkan pesan jika tidak ada data
+                    $('#searchResults').html('<div class="list-group-item">No data available</div>').show();
+                }
+            });
+
+
+
+            // Seleksi nama dari hasil pencarian
+            $(document).on('click', '#searchResults .list-group-item', function(e) {
+                e.preventDefault();
+                let selectedName = $(this).text();
+                $('#searchNama').val(selectedName);
+                $('#searchResults').empty().hide();
+            });
+        });
+
+    </script>
+
+
+
+
+    {{-- <script>
+        $(document).ready(function() {
             function resetFields() {
                 $('#jenis_kelamin').val('');
                 $('#no_hp').val('');
@@ -159,41 +248,41 @@
 
                 $.ajax({
                     url: "{{ route('search.nama') }}"
-                    , data: {
-                        query: query
-                    }
-                    , success: function(data) {
-                        $('#searchResults').html(data).show();
-                    }
-                });
-            });
+    , data: {
+    query: query
+    }
+    , success: function(data) {
+    $('#searchResults').html(data).show();
+    }
+    });
+    });
 
-            $(document).on('click', '#searchResults .list-group-item', function(e) {
-                e.preventDefault();
+    $(document).on('click', '#searchResults .list-group-item', function(e) {
+    e.preventDefault();
 
-                let selectedName = $(this).text();
-                $('#searchNama').val(selectedName);
-                $('#searchResults').empty().hide();
+    let selectedName = $(this).text();
+    $('#searchNama').val(selectedName);
+    $('#searchResults').empty().hide();
 
-                $.ajax({
-                    url: "{{ route('get.linjur_detail') }}"
-                    , data: {
-                        nama: selectedName
-                    }
-                    , success: function(data) {
-                        $('#jenis_kelamin').val(data.jenis_kelamin);
-                        $('#no_hp').val(data.no_hp);
-                        $('#rt').val(data.rt);
-                        $('#rw').val(data.rw);
-                        $('#tps').val(data.tps);
-                        $('#kelurahan').val(data.kelurahan);
-                        $('#id_calon_pemilih').val(data.id_calon_pemilih);
-                        $('#nik').val(data.nik);
-                    }
-                });
-            });
-        });
+    $.ajax({
+    url: "{{ route('get.linjur_detail') }}"
+    , data: {
+    nama: selectedName
+    }
+    , success: function(data) {
+    $('#jenis_kelamin').val(data.jenis_kelamin);
+    $('#no_hp').val(data.no_hp);
+    $('#rt').val(data.rt);
+    $('#rw').val(data.rw);
+    $('#tps').val(data.tps);
+    $('#kelurahan').val(data.kelurahan);
+    $('#id_calon_pemilih').val(data.id_calon_pemilih);
+    $('#nik').val(data.nik);
+    }
+    });
+    });
+    });
 
-    </script>
+    </script> --}}
 
 </x-app-layout>
