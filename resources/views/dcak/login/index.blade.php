@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Login DCAK</title>
     <meta charset="UTF-8" />
@@ -12,25 +13,30 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/vendor/bootstrap/css/bootstrap.min.css') }}" />
 
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('asset-login-dcak/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}" />
 
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}" />
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('asset-login-dcak/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}" />
 
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/vendor/animate/animate.css') }}" />
 
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/vendor/css-hamburgers/hamburgers.min.css') }}" />
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('asset-login-dcak/vendor/css-hamburgers/hamburgers.min.css') }}" />
 
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/vendor/animsition/css/animsition.min.css') }}" />
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('asset-login-dcak/vendor/animsition/css/animsition.min.css') }}" />
 
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/vendor/select2/select2.min.css') }}" />
 
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/vendor/daterangepicker/daterangepicker.css') }}" />
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('asset-login-dcak/vendor/daterangepicker/daterangepicker.css') }}" />
 
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('asset-login-dcak/css/util.css') }}" />
@@ -39,6 +45,7 @@
 
     <!--===============================================================================================-->
 </head>
+
 <body style="background-color: #666666">
     <div class="limiter">
         <div class="container-login100">
@@ -69,7 +76,8 @@
 
 
 
-                <div class="login100-more" style="background-image: url('{{ asset('asset-login-dcak/images/bg-01.jpg') }}')"></div>
+                <div class="login100-more"
+                    style="background-image: url('{{ asset('assets_landing/images/bg.jpg') }}')"></div>
 
             </div>
         </div>
@@ -101,4 +109,5 @@
     <script src="{{ asset('asset-login-dcak/js/main.js') }}"></script>
 
 </body>
+
 </html>

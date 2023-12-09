@@ -14,7 +14,6 @@
         #searchResults .list-group-item {
             cursor: pointer;
         }
-
     </style>
 
     <div>
@@ -28,7 +27,7 @@
                                     <h4 class="card-title">Linjur</h4>
                                 </div>
                                 <div class="col-md-6 text-md-end">
-                                    <a href="{{ route('input-linjur') }}">
+                                    <a href="{{ route('linjur') }}">
                                         <button type="button" class="btn btn-primary">Kembali</button>
                                     </a>
                                 </div>
@@ -38,28 +37,34 @@
 
                     <div class="card-body">
                         <p>
-                            <span class="text-danger">*</span> Pastikan isi data dengan benar, karena data yang anda isi akan digunakan untuk keperluan pemilihan.
+                            <span class="text-danger">*</span> Pastikan isi data dengan benar, karena data yang anda isi
+                            akan digunakan untuk keperluan pemilihan.
                         </p>
-                        <form class="form-horizontal" method="post" action="{{ route('form-input-pencarian-linjur') }}">
+                        <form class="form-horizontal" method="post"
+                            action="{{ route('form-input-pencarian-linjur') }}">
                             @csrf
                             <input type="hidden" name="id_calon_pemilih" id="id_calon_pemilih">
 
                             {{-- Nama Koordinator --}}
                             <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="nama_koordinator">Nama Koordinator</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="nama_koordinator">Nama
+                                    Koordinator</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator" readonly value="{{ $nama_koordinator }}">
+                                    <input type="text" class="form-control" id="nama_koordinator"
+                                        name="nama_koordinator" readonly value="{{ $nama_koordinator }}">
                                 </div>
                             </div>
 
                             {{-- Kelurahan --}}
                             <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="kelurahan">Kelurahan</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0"
+                                    for="kelurahan">Kelurahan</label>
                                 <div class="col-sm-9">
-                                    <select class="form-select" aria-label="Pilih Kelurahan" id="kelurahan" name="kelurahan" required>
+                                    <select class="form-select" aria-label="Pilih Kelurahan" id="kelurahan"
+                                        name="kelurahan" required>
                                         <option value="" disabled selected>Pilih Kelurahan</option>
-                                        @foreach($kelurahan as $k)
-                                        <option value="{{ $k->nama_kelurahan }}">{{ $k->nama_kelurahan }}</option>
+                                        @foreach ($kelurahan as $k)
+                                            <option value="{{ $k->nama_kelurahan }}">{{ $k->nama_kelurahan }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -67,9 +72,11 @@
 
                             {{-- Nama LINJUR --}}
                             <div class="form-group row position-relative">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="nama_pemilih">Nama Linjur</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="nama_pemilih">Nama
+                                    Linjur</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="nama_pemilih" class="form-control" id="searchNama" placeholder="Ketik nama untuk mencari..." disabled>
+                                    <input type="text" name="nama_pemilih" class="form-control" id="searchNama"
+                                        placeholder="Ketik nama untuk mencari..." disabled>
                                     <div id="searchResults"></div>
                                 </div>
                             </div>
@@ -78,21 +85,25 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nik">NIK</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="nik" name="nik" placeholder="Masukan NIK">
+                                    <input type="number" class="form-control" id="nik" name="nik"
+                                        placeholder="Masukan NIK">
                                 </div>
                             </div>
 
                             {{-- NO.HP --}}
                             <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="no_hp">NO.HP</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0"
+                                    for="no_hp">NO.HP</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukan Nomor Handphone">
+                                    <input type="number" class="form-control" id="no_hp" name="no_hp"
+                                        placeholder="Masukan Nomor Handphone">
                                 </div>
                             </div>
 
                             {{-- Jenis Kelamin --}}
                             <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="jenis_kelamin">Jenis Kelamin</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="jenis_kelamin">Jenis
+                                    Kelamin</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
                                         <option value="">Pilih Jenis Kelamin</option>
@@ -107,7 +118,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="rt">RT</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="rt" name="rt" placeholder="Masukan RT">
+                                    <input type="number" class="form-control" id="rt" name="rt"
+                                        placeholder="Masukan RT">
                                 </div>
                             </div>
 
@@ -115,7 +127,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="rt">RW</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="rw" name="rw" placeholder="Masukan RW">
+                                    <input type="number" class="form-control" id="rw" name="rw"
+                                        placeholder="Masukan RW">
                                 </div>
                             </div>
 
@@ -123,7 +136,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="tps">TPS</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="tps" name="tps" placeholder="Masukan TPS">
+                                    <input type="number" class="form-control" id="tps" name="tps"
+                                        placeholder="Masukan TPS">
                                 </div>
                             </div>
 
@@ -152,15 +166,15 @@
                 } else {
                     // Request AJAX untuk mendapatkan data
                     $.ajax({
-                        url: "{{ route('search.nama-linjur') }}"
-                        , data: {
+                        url: "{{ route('search.nama-linjur') }}",
+                        data: {
                             kelurahan: kelurahan
-                        }
-                        , success: function(data) {
+                        },
+                        success: function(data) {
                             kelurahanDataCache[kelurahan] = data; // Simpan respons ke cache
                             handleDataResponse(data);
-                        }
-                        , error: function() {
+                        },
+                        error: function() {
                             alert('Error loading data. Please try again later.');
                         }
                     });
@@ -173,7 +187,8 @@
                 var $data = $(data);
 
                 // Mengecek apakah ada data pemilih
-                if ($data.find('.list-group-item').length > 0 && $data.find('.list-group-item').text().trim() !== "Tidak ada data pemilih") {
+                if ($data.find('.list-group-item').length > 0 && $data.find('.list-group-item').text().trim() !==
+                    "Tidak ada data pemilih") {
                     $('#searchNama').prop('disabled', false);
                 } else {
                     $('#searchNama').prop('disabled', true);
@@ -184,7 +199,8 @@
             // Event handler ketika kelurahan dipilih
             $('#kelurahan').change(function() {
                 let selectedKelurahan = $(this).val();
-                $('#searchNama').prop('disabled', true).val(''); // Nonaktifkan dan bersihkan field pencarian
+                $('#searchNama').prop('disabled', true).val(
+                ''); // Nonaktifkan dan bersihkan field pencarian
                 $('#searchResults').empty().hide(); // Bersihkan hasil pencarian sebelumnya
                 loadNamesByKelurahan(selectedKelurahan);
             });
@@ -239,12 +255,12 @@
 
                 // Melakukan AJAX request untuk mendapatkan detail lebih lanjut
                 $.ajax({
-                    url: "{{ route('get-linjur-detail') }}"
-                    , data: {
-                        nama: selectedName
-                        , kelurahan: selectedKelurahan
-                    }
-                    , success: function(data) {
+                    url: "{{ route('get-linjur-detail') }}",
+                    data: {
+                        nama: selectedName,
+                        kelurahan: selectedKelurahan
+                    },
+                    success: function(data) {
                         console.log(data);
                         $('#jenis_kelamin').val(data.jenis_kelamin);
                         $('#no_hp').val(data.no_hp);
@@ -258,7 +274,6 @@
                 });
             });
         });
-
     </script>
 
 
