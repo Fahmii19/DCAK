@@ -49,7 +49,7 @@
             <span class="item-name">Calon Pemilih</span>
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item hidden" style="display: none;">
         <a class="nav-link {{activeRoute(route('pemilih')) || activeRoute(route('input-pemilih')) || activeRoute(route('input-pemilih-nama')) ? 'active' : '' }}" href="{{ route('pemilih') }}">
 
             <i class="icon">
@@ -88,7 +88,7 @@
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item" style="display: none;">
         <a class="nav-link {{activeRoute(route('pemilih')) || activeRoute(route('input-pemilih')) || activeRoute(route('input-pemilih-nama')) ? 'active' : '' }}" href="{{ route('pemilih') }}">
 
             <i class="icon">
@@ -113,7 +113,7 @@
 
 
             </i>
-            <span class="item-name">Linjur</span>
+            <span class="item-name">Daftar Pemilih Tetap</span>
         </a>
     </li>
 
