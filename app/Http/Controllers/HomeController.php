@@ -687,13 +687,14 @@ class HomeController extends Controller
             }
             // If admin and has koordinator, display data based on nama_koordinator and kelurahan
             elseif ($user->level == 'admin' && $user->koordinator) {
+                // dd($user->koordinator);
 
                 // dd($user->koordinator->kelurahan, $user->koordinator->nama_koordinator);
 
                 $Pemilih = Pemilih::where('nama_koordinator', $user->koordinator->nama_koordinator)
-                    ->where('kelurahan', $user->koordinator->kelurahan)
+                    // ->where('kelurahan', $user->koordinator->kelurahan)
+                    ->where('nama_koordinator', $user->koordinator->nama_koordinator)
                     ->select(['id_pemilih', 'id_calon_pemilih', 'nama_koordinator', 'nik', 'nama_pemilih', 'jenis_kelamin', 'no_hp', 'rt', 'rw', 'tps', 'kelurahan']);
-
 
                 // dd($Pemilih);
             }
