@@ -4,7 +4,6 @@
         #showModalPemilih .modal-content {
             color: black;
         }
-
     </style>
 
     <div class="row">
@@ -18,14 +17,15 @@
                             </div>
                             <div class="col-md-6 d-flex justify-content-md-end align-items-center custom-mt">
 
-                                <form action="{{ route('import-pemilih') }}" method="POST" enctype="multipart/form-data" class="d-inline-block me-3">
+                                <form action="{{ route('import-pemilih') }}" method="POST" enctype="multipart/form-data"
+                                    class="d-inline-block me-3">
                                     {{-- @csrf
                                     <input type="file" name="excel_file_pemilih" id="excel_file_pemilih" required onchange="this.form.submit();" style="display:none;">
                                     <button type="button" class="btn btn-primary" id="activateInputPemilih">Import Data Excel</button> --}}
                                 </form>
 
-                                <a href="{{ route('input-pemilih') }}" class="d-inline-block">
-                                    <button type="button" class="btn btn-success">Tambah Data</button>
+                                <a href="{{ route('input-linjur') }}" class="d-inline-block">
+                                    <button type="button" class="btn btn-success">Tambah Data Linjur</button>
                                 </a>
                             </div>
 
@@ -39,7 +39,8 @@
                         Data ini menampilkan pemilih yang telah terdaftar.
                     </p>
                     <div class="table-responsive">
-                        <table id="datatablePemilih" class="table table-striped dt-responsive nowrap" data-toggle="data-table">
+                        <table id="datatablePemilih" class="table table-striped dt-responsive nowrap"
+                            data-toggle="data-table">
 
                             <thead>
                                 <tr>
@@ -100,64 +101,55 @@
             }
 
             $('#datatablePemilih').DataTable({
-                processing: true
-                , destroy: true
-                , responsive: true
-                , serverSide: true
-                , ajax: '{{ route("table-pemilih") }}'
-                , columns: [
+                processing: true,
+                destroy: true,
+                responsive: true,
+                serverSide: true,
+                ajax: '{{ route('table-pemilih') }}',
+                columns: [
 
                     {
-                        data: null
-                        , sortable: false
-                        , searchable: false
-                        , render: function(data, type, row, meta) {
+                        data: null,
+                        sortable: false,
+                        searchable: false,
+                        render: function(data, type, row, meta) {
                             // Mengurutkan dari nomor terakhir
                             let recordsTotal = meta.settings.fnRecordsTotal();
                             return recordsTotal - meta.row;
                         }
-                    }
-                    , {
-                        data: 'nama_koordinator'
-                        , name: 'nama_koordinator'
-                    }
-                    , {
-                        data: 'nik'
-                        , name: 'nik'
-                    }
-                    , {
-                        data: 'nama_pemilih'
-                        , name: 'nama_pemilih'
-                    }
-                    , {
-                        data: 'jenis_kelamin'
-                        , name: 'jenis_kelamin'
-                    }
-                    , {
-                        data: 'no_hp'
-                        , name: 'no_hp'
-                    }
-                    , {
-                        data: 'rt'
-                        , name: 'rt'
-                    }
-                    , {
-                        data: 'rw'
-                        , name: 'rw'
-                    }
-                    , {
-                        data: 'tps'
-                        , name: 'tps'
-                    }
-                    , {
-                        data: 'kelurahan'
-                        , name: 'kelurahan'
+                    }, {
+                        data: 'nama_koordinator',
+                        name: 'nama_koordinator'
+                    }, {
+                        data: 'nik',
+                        name: 'nik'
+                    }, {
+                        data: 'nama_pemilih',
+                        name: 'nama_pemilih'
+                    }, {
+                        data: 'jenis_kelamin',
+                        name: 'jenis_kelamin'
+                    }, {
+                        data: 'no_hp',
+                        name: 'no_hp'
+                    }, {
+                        data: 'rt',
+                        name: 'rt'
+                    }, {
+                        data: 'rw',
+                        name: 'rw'
+                    }, {
+                        data: 'tps',
+                        name: 'tps'
+                    }, {
+                        data: 'kelurahan',
+                        name: 'kelurahan'
                     }
 
                     , {
-                        data: 'id_pemilih'
-                        , name: 'id_pemilih'
-                        , render: function(data, type, row) {
+                        data: 'id_pemilih',
+                        name: 'id_pemilih',
+                        render: function(data, type, row) {
                             return `
                                 <button onclick="editPemilih(${data})" class="btn btn-warning btn-sm">Edit</button>
                                 <button onclick="hapusPemilih(${data})" class="btn btn-danger btn-sm">Hapus</button>
@@ -165,8 +157,9 @@
                         }
                     }
 
-                , ]
-                , order: [0, 'desc']
+                    ,
+                ],
+                order: [0, 'desc']
 
 
             });
@@ -257,26 +250,25 @@
         function hapusPemilih(id) {
             if (confirm("Apakah Anda yakin ingin menghapus pemilih ini?")) {
                 $.ajax({
-                    url: `/delete-pemilih/${id}`
-                    , method: 'DELETE'
-                    , data: {
+                    url: `/delete-pemilih/${id}`,
+                    method: 'DELETE',
+                    data: {
                         _token: '{{ csrf_token() }}'
-                    }
-                    , success: function(response) {
+                    },
+                    success: function(response) {
                         if (response.success) {
                             alert('Data pemilih berhasil dihapus.');
                             $('#datatablePemilih').DataTable().ajax.reload();
                         } else {
                             alert('Gagal menghapus data.');
                         }
-                    }
-                    , error: function() {
+                    },
+                    error: function() {
                         alert('Terjadi kesalahan. Silakan coba lagi.');
                     }
                 });
             }
         }
-
     </script>
 
 
