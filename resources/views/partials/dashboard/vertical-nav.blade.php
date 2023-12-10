@@ -49,7 +49,7 @@
             <span class="item-name">Calon Pemilih</span>
         </a>
     </li>
-    <li class="nav-item hidden" style="display: none;">
+    <li class="nav-item">
         <a class="nav-link {{activeRoute(route('pemilih')) || activeRoute(route('input-pemilih')) || activeRoute(route('input-pemilih-nama')) ? 'active' : '' }}" href="{{ route('pemilih') }}">
 
             <i class="icon">
