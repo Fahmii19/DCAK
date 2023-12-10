@@ -281,3 +281,5 @@
     }
 
 </script>
+
+<script src="{{asset('js/indexedDBSetup.js') }}"></script>

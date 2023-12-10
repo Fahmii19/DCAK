@@ -14,6 +14,7 @@
         #searchResults .list-group-item {
             cursor: pointer;
         }
+
     </style>
 
     <div>
@@ -40,8 +41,7 @@
                             <span class="text-danger">*</span> Pastikan isi data dengan benar, karena data yang anda isi
                             akan digunakan untuk keperluan pemilihan.
                         </p>
-                        <form class="form-horizontal" method="post"
-                            action="{{ route('form-input-pencarian-linjur') }}">
+                        <form class="form-horizontal" method="post" action="{{ route('form-input-pencarian-linjur') }}">
                             @csrf
                             <input type="hidden" name="id_calon_pemilih" id="id_calon_pemilih">
 
@@ -50,21 +50,18 @@
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nama_koordinator">Nama
                                     Koordinator</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="nama_koordinator"
-                                        name="nama_koordinator" readonly value="{{ $nama_koordinator }}">
+                                    <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator" readonly value="{{ $nama_koordinator }}">
                                 </div>
                             </div>
 
                             {{-- Kelurahan --}}
                             <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0"
-                                    for="kelurahan">Kelurahan</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="kelurahan">Kelurahan</label>
                                 <div class="col-sm-9">
-                                    <select class="form-select" aria-label="Pilih Kelurahan" id="kelurahan"
-                                        name="kelurahan" required>
+                                    <select class="form-select" aria-label="Pilih Kelurahan" id="kelurahan" name="kelurahan" required>
                                         <option value="" disabled selected>Pilih Kelurahan</option>
                                         @foreach ($kelurahan as $k)
-                                            <option value="{{ $k->nama_kelurahan }}">{{ $k->nama_kelurahan }}</option>
+                                        <option value="{{ $k->nama_kelurahan }}">{{ $k->nama_kelurahan }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -75,8 +72,7 @@
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nama_pemilih">Nama
                                     Linjur</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="nama_pemilih" class="form-control" id="searchNama"
-                                        placeholder="Ketik nama untuk mencari..." disabled>
+                                    <input type="text" name="nama_pemilih" class="form-control" id="searchNama" placeholder="Ketik nama untuk mencari..." disabled>
                                     <div id="searchResults"></div>
                                 </div>
                             </div>
@@ -85,18 +81,15 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nik">NIK</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="nik" name="nik"
-                                        placeholder="Masukan NIK">
+                                    <input type="number" class="form-control" id="nik" name="nik" placeholder="Masukan NIK">
                                 </div>
                             </div>
 
                             {{-- NO.HP --}}
                             <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0"
-                                    for="no_hp">NO.HP</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0" for="no_hp">NO.HP</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="no_hp" name="no_hp"
-                                        placeholder="Masukan Nomor Handphone">
+                                    <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukan Nomor Handphone">
                                 </div>
                             </div>
 
@@ -118,8 +111,7 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="rt">RT</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="rt" name="rt"
-                                        placeholder="Masukan RT">
+                                    <input type="number" class="form-control" id="rt" name="rt" placeholder="Masukan RT">
                                 </div>
                             </div>
 
@@ -127,8 +119,7 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="rt">RW</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="rw" name="rw"
-                                        placeholder="Masukan RW">
+                                    <input type="number" class="form-control" id="rw" name="rw" placeholder="Masukan RW">
                                 </div>
                             </div>
 
@@ -136,8 +127,7 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="tps">TPS</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="tps" name="tps"
-                                        placeholder="Masukan TPS">
+                                    <input type="number" class="form-control" id="tps" name="tps" placeholder="Masukan TPS">
                                 </div>
                             </div>
 
@@ -154,41 +144,69 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            let kelurahanDataCache = {}; // Cache untuk menyimpan data berdasarkan kelurahan
 
-            // Fungsi untuk memuat nama-nama berdasarkan kelurahan
-            function loadNamesByKelurahan(kelurahan) {
-                if (kelurahanDataCache[kelurahan]) {
-                    // Gunakan data dari cache jika tersedia
-                    handleDataResponse(kelurahanDataCache[kelurahan]);
-                } else {
-                    // Request AJAX untuk mendapatkan data
-                    $.ajax({
-                        url: "{{ route('search.nama-linjur') }}",
-                        data: {
-                            kelurahan: kelurahan
-                        },
-                        success: function(data) {
-                            kelurahanDataCache[kelurahan] = data; // Simpan respons ke cache
-                            handleDataResponse(data);
-                        },
-                        error: function() {
-                            alert('Error loading data. Please try again later.');
-                        }
-                    });
-                }
+    <script>
+        // Fungsi untuk menyimpan data ke IndexedDB
+        function saveToIndexedDB(kelurahan, data) {
+            let transaction = db.transaction(["kelurahanData"], "readwrite");
+            let store = transaction.objectStore("kelurahanData");
+            store.put({
+                kelurahan: kelurahan
+                , data: data
+            });
+        }
+
+        // Fungsi untuk mengambil data dari IndexedDB
+        function getFromIndexedDB(kelurahan, callback) {
+            let transaction = db.transaction(["kelurahanData"]);
+            let store = transaction.objectStore("kelurahanData");
+            let request = store.get(kelurahan);
+
+            request.onerror = function(event) {
+                console.log("Error fetching data from IndexedDB", event.target.errorCode);
+            };
+
+            request.onsuccess = function(event) {
+                callback(event.target.result ? event.target.result.data : null);
+            };
+        }
+
+        $(document).ready(function() {
+            function debounce(func, wait) {
+                let timeout;
+                return function() {
+                    const context = this
+                        , args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(context, args), wait);
+                };
             }
 
-            // Fungsi untuk menangani respons data
-            function handleDataResponse(data) {
-                // Membuat elemen jQuery dari string HTML
-                var $data = $(data);
+            function loadNamesByKelurahan(kelurahan) {
+                getFromIndexedDB(kelurahan, function(data) {
+                    if (data) {
+                        handleDataResponse(data);
+                    } else {
+                        $.ajax({
+                            url: "{{ route('search.nama-linjur') }}"
+                            , data: {
+                                kelurahan: kelurahan
+                            }
+                            , success: function(data) {
+                                saveToIndexedDB(kelurahan, data);
+                                handleDataResponse(data);
+                            }
+                            , error: function() {
+                                alert('Error loading data. Please try again later.');
+                            }
+                        });
+                    }
+                });
+            }
 
-                // Mengecek apakah ada data pemilih
-                if ($data.find('.list-group-item').length > 0 && $data.find('.list-group-item').text().trim() !==
-                    "Tidak ada data pemilih") {
+            function handleDataResponse(data) {
+                var $data = $(data);
+                if ($data.find('.list-group-item').length > 0) {
                     $('#searchNama').prop('disabled', false);
                 } else {
                     $('#searchNama').prop('disabled', true);
@@ -196,78 +214,49 @@
                 }
             }
 
-            // Event handler ketika kelurahan dipilih
             $('#kelurahan').change(function() {
                 let selectedKelurahan = $(this).val();
-                $('#searchNama').prop('disabled', true).val(
-                ''); // Nonaktifkan dan bersihkan field pencarian
-                $('#searchResults').empty().hide(); // Bersihkan hasil pencarian sebelumnya
+                $('#searchNama').prop('disabled', true).val('');
+                $('#searchResults').empty().hide();
                 loadNamesByKelurahan(selectedKelurahan);
             });
 
-            // Event handler untuk pencarian nama
-            $('#searchNama').on('input', function() {
+            $('#searchNama').on('input', debounce(function() {
                 let query = $(this).val().trim().toLowerCase();
-
-                // Validasi minimal 3 huruf
                 if (query.length < 3) {
                     $('#searchResults').empty().hide();
                     return;
                 }
-
                 let kelurahan = $('#kelurahan').val();
-                let dataHTML = kelurahanDataCache[kelurahan];
+                getFromIndexedDB(kelurahan, function(data) {
+                    if (data) {
+                        let $html = $(data);
+                        $html.find('.list-group-item').hide();
+                        $html.find('.list-group-item').filter(function() {
+                            return $(this).text().toLowerCase().includes(query);
+                        }).show();
+                        $('#searchResults').html($html.html()).show();
+                    } else {
+                        $('#searchResults').html('<div class="list-group-item">No data available</div>').show();
+                    }
+                });
+            }, 250));
 
-                if (dataHTML) {
-                    // Menciptakan elemen jQuery dari string HTML
-                    let $html = $(dataHTML);
-
-                    // Menyembunyikan semua item
-                    $html.find('.list-group-item').hide();
-
-                    // Menampilkan item yang cocok dengan query
-                    $html.find('.list-group-item').filter(function() {
-                        return $(this).text().toLowerCase().includes(query);
-                    }).show();
-
-                    // Menampilkan hasil yang sudah difilter
-                    $('#searchResults').html($html.html()).show();
-                } else {
-                    // Tampilkan pesan jika tidak ada data
-                    $('#searchResults').html('<div class="list-group-item">No data available</div>').show();
-                }
-            });
-
-            // Fungsi untuk reset field
-            function resetFields() {
-                $('#jenis_kelamin').val('');
-                $('#no_hp').val('');
-                $('#rt').val('');
-                $('#rw').val('');
-                $('#tps').val('');
-                $('#kelurahan').val('');
-                $('#id_calon_pemilih').val('');
-                $('#nik').val('');
-            }
-
-            // Gabungan event handler untuk pemilihan nama dari hasil pencarian
             $(document).on('click', '#searchResults .list-group-item', function(e) {
                 e.preventDefault();
-
                 let selectedName = $(this).text();
-                let selectedKelurahan = $('#kelurahan').val(); // Mendapatkan nilai kelurahan yang dipilih
-
                 $('#searchNama').val(selectedName);
+                let selectedKelurahan = $('#kelurahan').val();
+
                 $('#searchResults').empty().hide();
 
-                // Melakukan AJAX request untuk mendapatkan detail lebih lanjut
                 $.ajax({
-                    url: "{{ route('get-linjur-detail') }}",
-                    data: {
-                        nama: selectedName,
-                        kelurahan: selectedKelurahan
-                    },
-                    success: function(data) {
+                    url: "{{ route('get-linjur-detail') }}"
+                    , data: {
+                        nama: selectedName
+                        , kelurahan: selectedKelurahan
+                    }
+                    , success: function(data) {
                         console.log(data);
                         $('#jenis_kelamin').val(data.jenis_kelamin);
                         $('#no_hp').val(data.no_hp);
@@ -279,10 +268,13 @@
                         $('#nik').val(data.nik);
                     }
                 });
+
+
+
             });
         });
-    </script>
 
+    </script>
 
 
 

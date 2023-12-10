@@ -113,7 +113,7 @@
 
 
             </i>
-            <span class="item-name">Linjur</span>
+            <span class="item-name">Daftar Pemilih Tetap</span>
         </a>
     </li>
 
