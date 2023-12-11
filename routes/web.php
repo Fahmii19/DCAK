@@ -101,6 +101,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/delete-saksi-tps/{id}', [HomeController::class, 'deleteSaksiTps'])->name('delete-saksi-tps');
     Route::post('/import-saksi-tps', [HomeController::class, 'importExcelSaksiTps'])->name('import-saksi-tps');
 
+    // superadmin
+    Route::get('/total-suara', [HomeController::class, 'totalSuara'])->name('total-suara');
+
+
     // koordinator
     Route::get('/koordinator', [HomeController::class, 'koordinator'])->name('koordinator');
     Route::get('/table-koordinator', [HomeController::class, 'tableKoordinator'])->name('table-koordinator');
