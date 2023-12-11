@@ -30,6 +30,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\WorksheetDrawingExt;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing as WorksheetMemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use Illuminate\Support\Facades\DB;
+
 
 use ZipArchive;
 
@@ -488,6 +490,33 @@ class HomeController extends Controller
     function koordinator(Request $request)
     {
         return view('dcak.koordinator.index');
+    }
+
+    function totalSuara()
+    {
+
+        // array kecamatan dalam kelurahan
+        $kecamatanKelurahanMapping = [
+            'Tapos' => ['SUKATANI', 'SUKAMAJU BARU'],
+            'Cilodong' => ['KALIMULYA', 'JATIMULYA', 'CILANGKAP', 'SUKAMAJU'],
+        ];
+
+        // Mengambil data pemilih dan mengelompokkannya berdasarkan kelurahan
+        $jumlahPemilihPerKelurahan = Pemilih::select('kelurahan', DB::raw('count(*) as total'))
+            ->whereIn('kelurahan', array_merge(...array_values($kecamatanKelurahanMapping)))
+            ->groupBy('kelurahan')
+            ->get()
+            ->keyBy('kelurahan');
+
+        $jumlahPemilihPerKelurahanPerkecamatan = [];
+
+        foreach ($kecamatanKelurahanMapping as $kecamatan => $kelurahans) {
+            foreach ($kelurahans as $kelurahan) {
+                $jumlahPemilihPerKelurahanPerkecamatan[$kecamatan][$kelurahan] = isset($jumlahPemilihPerKelurahan[$kelurahan]) ? $jumlahPemilihPerKelurahan[$kelurahan]->total : 0;
+            }
+        }
+
+        return view('dcak.total-suara.index', ['jumlahPemilihPerKelurahanPerkecamatan' => $jumlahPemilihPerKelurahanPerkecamatan]);
     }
 
     function tableKoordinator()

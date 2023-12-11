@@ -29,7 +29,7 @@ class AuthController extends Controller
             if ($level == 'superadmin') {
                 return redirect()->intended('/dashboard');
             } else if ($level == 'admin') {
-                return redirect()->intended('/pemilih');
+                return redirect()->intended('/linjur');
             }
         }
 
