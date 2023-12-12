@@ -244,9 +244,22 @@
 
             $(document).on('click', '#searchResults .list-group-item', function(e) {
                 e.preventDefault();
-                let selectedName = $(this).text();
+                // let selectedName = $(this).text();
+
+                let fullText = $(this).text();
+
+                // Misalkan format teks: "Nama Pemilih - RT: [nomor RT] - RW: [nomor RW]"
+                let parts = fullText.split(' - ');
+                let selectedName = parts[0];
+
+                console.log(selectedName);
+
+
+
                 $('#searchNama').val(selectedName);
                 let selectedKelurahan = $('#kelurahan').val();
+
+                console.log(selectedName);
 
                 $('#searchResults').empty().hide();
 
