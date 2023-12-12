@@ -251,15 +251,12 @@
                 // Misalkan format teks: "Nama Pemilih - RT: [nomor RT] - RW: [nomor RW]"
                 let parts = fullText.split(' - ');
                 let selectedName = parts[0];
-
-                console.log(selectedName);
-
-
+                let rt = parts[1].split(': ')[1];
+                let rw = parts[2].split(': ')[1];
+                let tps = parts[3].split(': ')[1];
 
                 $('#searchNama').val(selectedName);
                 let selectedKelurahan = $('#kelurahan').val();
-
-                console.log(selectedName);
 
                 $('#searchResults').empty().hide();
 
@@ -268,9 +265,12 @@
                     , data: {
                         nama: selectedName
                         , kelurahan: selectedKelurahan
+                        , rt: rt
+                        , rw: rw
+                        , tps: tps
                     }
                     , success: function(data) {
-                        console.log(data);
+                        // console.log(data);
                         $('#jenis_kelamin').val(data.jenis_kelamin);
                         $('#no_hp').val(data.no_hp);
                         $('#rt').val(data.rt);

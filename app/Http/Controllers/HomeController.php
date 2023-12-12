@@ -621,17 +621,20 @@ class HomeController extends Controller
         return view('dcak.linjur.input', compact('kelurahan', 'koordinator', 'nama_koordinator'));
     }
 
-
     public function getLinjurDetail(Request $request)
     {
-        // Mendapatkan nama dan kelurahan dari request
         $nama = $request->input('nama');
         $kelurahan = $request->input('kelurahan');
+        $rt = $request->input('rt');
+        $rw = $request->input('rw');
+        $tps = $request->input('tps');
 
-        // Melakukan query untuk mencari pemilih berdasarkan nama dan kelurahan
         $pemilih = CalonPemilih::where('nama_pemilih', $nama)
             ->where('kelurahan', $kelurahan)
-            ->first(); // Asumsi bahwa setiap kombinasi nama dan kelurahan unik
+            ->where('rt', $rt)
+            ->where('rw', $rw)
+            ->where('tps', $tps)
+            ->first();
 
         // Jika pemilih ditemukan, kirim data kembali sebagai respons
         if ($pemilih) {
@@ -650,6 +653,7 @@ class HomeController extends Controller
             return response()->json(['error' => 'Pemilih tidak ditemukan'], 404);
         }
     }
+
 
     public function searchNamaLinjur(Request $request)
     {
