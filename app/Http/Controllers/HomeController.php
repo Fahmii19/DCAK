@@ -659,22 +659,22 @@ class HomeController extends Controller
     {
         $query = $request->get('query');
         $kelurahan = $request->get('kelurahan'); // Dapatkan kelurahan dari request
-
+        $excludedIds = $request->get('excludedIds', []); // Pastikan ini selalu diinisialisasi
 
         // Dapatkan semua id_calon_pemilih yang sudah ada di table pemilih
         $existingIds = Pemilih::pluck('id_calon_pemilih')->filter()->toArray();
 
+        // Menggabungkan existingIds dan excludedIds untuk pembatasan
+        $idsToExclude = array_merge($existingIds, $excludedIds);
 
         $results = CalonPemilih::where('nama_pemilih', 'LIKE', "%{$query}%")
-            ->when($kelurahan, function ($q) use ($kelurahan) {
+            ->when($kelurahan, function ($query) use ($kelurahan) {
                 // Jika kelurahan disediakan, tambahkan filter kelurahan ke query
-                return $q->where('kelurahan', $kelurahan);
+                return $query->where('kelurahan', $kelurahan);
             })
-            ->where(function ($query) use ($existingIds) {
-                if (!empty($existingIds)) {
-                    // Jika ada existingIds, eksklusi mereka dari hasil pencarian
-                    $query->whereNotIn('id_calon_pemilih', $existingIds);
-                }
+            ->when(!empty($idsToExclude), function ($query) use ($idsToExclude) {
+                // Hanya menerapkan whereNotIn jika ada ID untuk dikecualikan
+                return $query->whereNotIn('id_calon_pemilih', $idsToExclude);
             })
             ->get();
 
@@ -684,7 +684,13 @@ class HomeController extends Controller
             $output .= '<div class="list-group-item text-center">Tidak ada data pemilih</div>';
         } else {
             foreach ($results as $result) {
-                $output .= '<a href="#" class="list-group-item list-group-item-action">' . $result->nama_pemilih . ' - RT: ' . $result->rt . ' - RW: ' . $result->rw . ' - TPS: ' . $result->tps . ' - Kelurahan: ' . $result->kelurahan . '</a>';
+                $output .= '<a href="#" class="list-group-item list-group-item-action">' .
+                    $result->nama_pemilih .
+                    ' - RT: ' . $result->rt .
+                    ' - RW: ' . $result->rw .
+                    ' - TPS: ' . $result->tps .
+                    ' - Kelurahan: ' . $result->kelurahan .
+                    '</a>';
             }
         }
 

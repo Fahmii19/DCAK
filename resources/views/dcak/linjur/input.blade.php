@@ -144,8 +144,9 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
     <script>
+        let enteredIds = []; // Pindahkan ke scope global
+
         // Fungsi untuk menyimpan data ke IndexedDB
         function saveToIndexedDB(kelurahan, data) {
             let transaction = db.transaction(["kelurahanData"], "readwrite");
@@ -156,7 +157,7 @@
             });
         }
 
-        // Fungsi untuk mengambil data dari IndexedDB
+        // Definisi fungsi getFromIndexedDB
         function getFromIndexedDB(kelurahan, callback) {
             let transaction = db.transaction(["kelurahanData"]);
             let store = transaction.objectStore("kelurahanData");
@@ -167,9 +168,21 @@
             };
 
             request.onsuccess = function(event) {
-                callback(event.target.result ? event.target.result.data : null);
+                let data = event.target.result ? event.target.result.data : null;
+                callback(data ? filterDataExcludeEnteredIds(data, enteredIds) : []);
             };
         }
+
+        // Definisi fungsi filterDataExcludeEnteredIds untuk menghandle string HTML
+        function filterDataExcludeEnteredIds(htmlData, enteredIds) {
+            var $items = $(htmlData).filter('.list-group-item');
+            return $items.filter(function() {
+                var id = $(this).data('id'); // Pastikan elemen HTML memiliki atribut data-id
+                return !enteredIds.includes(id);
+            });
+        }
+
+
 
         $(document).ready(function() {
             function debounce(func, wait) {
@@ -184,13 +197,14 @@
 
             function loadNamesByKelurahan(kelurahan) {
                 getFromIndexedDB(kelurahan, function(data) {
-                    if (data) {
+                    if (data && data.length > 0) {
                         handleDataResponse(data);
                     } else {
                         $.ajax({
                             url: "{{ route('search.nama-linjur') }}"
                             , data: {
                                 kelurahan: kelurahan
+                                , excludedIds: enteredIds
                             }
                             , success: function(data) {
                                 saveToIndexedDB(kelurahan, data);
@@ -208,6 +222,7 @@
                 var $data = $(data);
                 if ($data.find('.list-group-item').length > 0) {
                     $('#searchNama').prop('disabled', false);
+                    $('#searchResults').html($data.html()).show();
                 } else {
                     $('#searchNama').prop('disabled', true);
                     alert('No names found for selected kelurahan.');
@@ -225,30 +240,46 @@
                 let query = $(this).val().trim().toLowerCase();
                 if (query.length < 3) {
                     $('#searchResults').empty().hide();
-                    return;
+                    return; // Jangan lanjutkan jika panjang query kurang dari 3 } let kelurahan=$('#kelurahan').val();
+
+                    getFromIndexedDB(kelurahan, function(data) {
+                        if (data) {
+                            // Filter data berdasarkan query
+                            let filteredData = $(data).filter(function() {
+                                return $(this).text().toLowerCase().includes(query);
+                            });
+                            handleDataResponse(filteredData);
+                        } else {
+                            // AJAX request jika data tidak ditemukan di IndexedDB
+                            $.ajax({
+                                url: "{{ route('search.nama-linjur') }}"
+                                , data: {
+                                    kelurahan: kelurahan
+                                    , excludedIds: enteredIds
+                                }
+                                , success: function(data) {
+                                    let filteredData = $(data).filter(function() {
+                                        return $(this).text().toLowerCase().includes(query);
+                                    });
+                                    saveToIndexedDB(kelurahan, data);
+                                    handleDataResponse(filteredData);
+                                }
+                                , error: function() {
+                                    alert('Error loading data. Please try again later.');
+                                }
+                            });
+                        }
+                    });
+                    loadNamesByKelurahan(kelurahan, query);
                 }
-                let kelurahan = $('#kelurahan').val();
-                getFromIndexedDB(kelurahan, function(data) {
-                    if (data) {
-                        let $html = $(data);
-                        $html.find('.list-group-item').hide();
-                        $html.find('.list-group-item').filter(function() {
-                            return $(this).text().toLowerCase().includes(query);
-                        }).show();
-                        $('#searchResults').html($html.html()).show();
-                    } else {
-                        $('#searchResults').html('<div class="list-group-item">No data available</div>').show();
-                    }
-                });
             }, 250));
+
+
 
             $(document).on('click', '#searchResults .list-group-item', function(e) {
                 e.preventDefault();
-                // let selectedName = $(this).text();
 
                 let fullText = $(this).text();
-
-                // Misalkan format teks: "Nama Pemilih - RT: [nomor RT] - RW: [nomor RW]"
                 let parts = fullText.split(' - ');
                 let selectedName = parts[0];
                 let rt = parts[1].split(': ')[1];
@@ -270,7 +301,6 @@
                         , tps: tps
                     }
                     , success: function(data) {
-                        // console.log(data);
                         $('#jenis_kelamin').val(data.jenis_kelamin);
                         $('#no_hp').val(data.no_hp);
                         $('#rt').val(data.rt);
@@ -281,9 +311,6 @@
                         $('#nik').val(data.nik);
                     }
                 });
-
-
-
             });
         });
 
