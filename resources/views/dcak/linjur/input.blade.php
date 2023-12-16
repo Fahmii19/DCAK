@@ -258,6 +258,12 @@
                 $('#searchNama').val(selectedName);
                 let selectedKelurahan = $('#kelurahan').val();
 
+                // Hapus data yang ada di IndexedDB untuk kelurahan yang dipilih
+                let transaction = db.transaction(["kelurahanData"], "readwrite");
+                let store = transaction.objectStore("kelurahanData");
+                store.delete(selectedKelurahan);
+
+
                 $('#searchResults').empty().hide();
 
                 $.ajax({
