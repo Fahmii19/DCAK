@@ -13,7 +13,7 @@
                     <div class="container p-0">
                         <div class="row">
                             <div class="col-md-6">
-                                <h4 class="card-title">Linjur</h4>
+                                <h4 class="card-title">Daftar Pemilih Tetap</h4>
                             </div>
                             <div class="col-md-6 d-flex justify-content-md-end align-items-center custom-mt">
 
@@ -108,15 +108,15 @@
                 ajax: '{{ route('table-pemilih') }}',
                 columns: [
 
-                {
-            data: 'id_pemilih',
-            name: 'id_pemilih',
-            render: function(data, type, row, meta) {
-    return meta.row + meta.settings._iDisplayStart + 1;
-}
-                }
+                    {
+                        data: 'id_pemilih',
+                        name: 'id_pemilih',
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
 
-                   , {
+                    , {
                         data: 'nama_koordinator',
                         name: 'nama_koordinator'
                     }, {
@@ -247,29 +247,27 @@
         }
 
         function hapusPemilih(idPemilih, idCalonPemilih) {
-    if (confirm("Apakah Anda yakin ingin menghapus pemilih ini?")) {
-        $.ajax({
-            url: `/delete-pemilih/${idPemilih}/${idCalonPemilih}`,
-            method: 'DELETE',
-            data: {
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                if (response.success) {
-                    alert('Data pemilih berhasil dihapus.');
-                    $('#datatablePemilih').DataTable().ajax.reload();
-                } else {
-                    alert('Gagal menghapus data.');
-                }
-            },
-            error: function() {
-                alert('Terjadi kesalahan. Silakan coba lagi.');
+            if (confirm("Apakah Anda yakin ingin menghapus pemilih ini?")) {
+                $.ajax({
+                    url: `/delete-pemilih/${idPemilih}/${idCalonPemilih}`,
+                    method: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Data pemilih berhasil dihapus.');
+                            $('#datatablePemilih').DataTable().ajax.reload();
+                        } else {
+                            alert('Gagal menghapus data.');
+                        }
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan. Silakan coba lagi.');
+                    }
+                });
             }
-        });
-    }
-}
-
-
+        }
     </script>
 
 

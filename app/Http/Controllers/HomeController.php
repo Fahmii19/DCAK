@@ -496,7 +496,7 @@ class HomeController extends Controller
     {
         // array kecamatan dalam kelurahan
         $kecamatanKelurahanMapping = [
-            'Tapos' => ['SUKATANI', 'SUKAMAJU BARU', 'TAPOS', 'CIMPAEUN', 'CILANGKAP', 'LEUWINANGGUNG'],
+            'Tapos' => ['JATIJAJAR', 'SUKATANI', 'SUKAMAJU BARU', 'TAPOS', 'CIMPAEUN', 'CILANGKAP', 'LEUWINANGGUNG'],
             'Cilodong' => ['KALIMULYA', 'JATIMULYA', 'KALIBARU', 'CILODONG', 'SUKAMAJU'],
         ];
 
