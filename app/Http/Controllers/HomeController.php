@@ -938,16 +938,31 @@ class HomeController extends Controller
         return redirect()->route('pemilih')->with('success', 'Data pemilih berhasil diupdate.');
     }
 
-    function deletePemilih($id)
+    public function deletePemilih($idPemilih, $idCalonPemilih)
     {
-        $Pemilih = Pemilih::find($id);
-        if ($Pemilih) {
-            $Pemilih->delete();
-            return response()->json(['success' => true, 'message' => 'Data pemilih berhasil dihapus.']);
-        } else {
+        // Temukan CalonPemilih dengan id_calon_pemilih yang sesuai
+        $calonPemilih = CalonPemilih::find($idCalonPemilih);
+
+        if ($calonPemilih) {
+            // Set status pada CalonPemilih menjadi null
+            $calonPemilih->status = null;
+            $calonPemilih->save();
+        }
+
+        // Temukan Pemilih
+        $pemilih = Pemilih::find($idPemilih);
+
+        if (!$pemilih) {
             return response()->json(['success' => false, 'message' => 'Data pemilih tidak ditemukan.']);
         }
+
+        // Hapus Pemilih
+        $pemilih->delete();
+
+        return response()->json(['success' => true, 'message' => 'Data pemilih berhasil dihapus.']);
     }
+
+
 
     function importExcelPemilih(Request $request)
     {

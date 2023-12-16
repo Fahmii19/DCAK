@@ -128,7 +128,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/form-input-pencarian-pemilih', [HomeController::class, 'formInputPencarianPemilih'])->name('form-input-pencarian-pemilih');
     Route::get('/edit-pemilih/{id}', [HomeController::class, 'editPemilih'])->name('edit-pemilih');
     Route::post('/form-edit-pemilih/{id}', [HomeController::class, 'formEditPemilih'])->name('form-edit-pemilih');
-    Route::delete('/delete-pemilih/{id}', [HomeController::class, 'deletePemilih'])->name('delete-pemilih');
+    Route::delete('/delete-pemilih/{idPemilih}/{idCalonPemilih}', [HomeController::class, 'deletePemilih'])->name('delete-pemilih');
 
     // Linjur
     // linjur

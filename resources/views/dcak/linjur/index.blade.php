@@ -152,7 +152,7 @@
                         render: function(data, type, row) {
                             return `
                                 <button onclick="editPemilih(${data})" class="btn btn-warning btn-sm">Edit</button>
-                                <button onclick="hapusPemilih(${data})" class="btn btn-danger btn-sm">Hapus</button>
+                                <button onclick="hapusPemilih(${data}, ${row.id_calon_pemilih})" class="btn btn-danger btn-sm">Hapus</button>
                             `;
                         }
                     }
@@ -247,28 +247,30 @@
 
         }
 
-        function hapusPemilih(id) {
-            if (confirm("Apakah Anda yakin ingin menghapus pemilih ini?")) {
-                $.ajax({
-                    url: `/delete-pemilih/${id}`,
-                    method: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            alert('Data pemilih berhasil dihapus.');
-                            $('#datatablePemilih').DataTable().ajax.reload();
-                        } else {
-                            alert('Gagal menghapus data.');
-                        }
-                    },
-                    error: function() {
-                        alert('Terjadi kesalahan. Silakan coba lagi.');
-                    }
-                });
+        function hapusPemilih(idPemilih, idCalonPemilih) {
+    if (confirm("Apakah Anda yakin ingin menghapus pemilih ini?")) {
+        $.ajax({
+            url: `/delete-pemilih/${idPemilih}/${idCalonPemilih}`,
+            method: 'DELETE',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Data pemilih berhasil dihapus.');
+                    $('#datatablePemilih').DataTable().ajax.reload();
+                } else {
+                    alert('Gagal menghapus data.');
+                }
+            },
+            error: function() {
+                alert('Terjadi kesalahan. Silakan coba lagi.');
             }
-        }
+        });
+    }
+}
+
+
     </script>
 
 
