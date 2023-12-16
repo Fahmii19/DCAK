@@ -90,17 +90,17 @@
                 , responsive: true
                 , serverSide: true
                 , ajax: '{{ route("table-akun-dcak") }}'
-                , columns: [{
-                        data: null
-                        , sortable: false
-                        , searchable: false
-                        , render: function(data, type, row, meta) {
-                            // Mengurutkan dari nomor terakhir
-                            let recordsTotal = meta.settings.fnRecordsTotal();
-                            return recordsTotal - meta.row;
-                        }
-                    },
+                , columns: [
+                    
+                {
+            data: 'id_users_dcak',
+            name: 'id_users_dcak',
+            render: function(data, type, row, meta) {
+    return meta.row + meta.settings._iDisplayStart + 1;
+}
+                }
 
+                   ,
 
                     {
                         data: 'koordinator.nama_koordinator'

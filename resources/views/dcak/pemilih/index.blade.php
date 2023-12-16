@@ -109,17 +109,17 @@
                 , ajax: '{{ route("table-pemilih") }}'
                 , columns: [
 
+                {
+            data: 'id_pemilih',
+            name: 'id_pemilih',
+            render: function(data, type, row, meta) {
+    return meta.row + meta.settings._iDisplayStart + 1;
+}
+                }
+
+                   ,
+                    
                     {
-                        data: null
-                        , sortable: false
-                        , searchable: false
-                        , render: function(data, type, row, meta) {
-                            // Mengurutkan dari nomor terakhir
-                            let recordsTotal = meta.settings.fnRecordsTotal();
-                            return recordsTotal - meta.row;
-                        }
-                    }
-                    , {
                         data: 'nama_koordinator'
                         , name: 'nama_koordinator'
                     }

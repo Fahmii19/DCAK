@@ -62,16 +62,15 @@
                 , ajax: '{{ route("table-kecamatan") }}'
                 , columns: [
 
-                    {
-                        data: null
-                        , sortable: false
-                        , searchable: false
-                        , render: function(data, type, row, meta) {
-                            // Mengurutkan dari nomor terakhir
-                            let recordsTotal = meta.settings.fnRecordsTotal();
-                            return recordsTotal - meta.row;
-                        }
-                    },
+                {
+            data: 'nama_kecamatan',
+            name: 'nama_kecamatan',
+            render: function(data, type, row, meta) {
+    return meta.row + meta.settings._iDisplayStart + 1;
+}
+                }
+
+                   ,
 
 
                     {

@@ -62,16 +62,15 @@
                 , ajax: '{{ route("table-kelurahan") }}'
                 , columns: [
 
-                    {
-                        data: null
-                        , sortable: false
-                        , searchable: false
-                        , render: function(data, type, row, meta) {
-                            // Mengurutkan dari nomor terakhir
-                            let recordsTotal = meta.settings.fnRecordsTotal();
-                            return recordsTotal - meta.row;
-                        }
-                    },
+                {
+            data: 'nama_kelurahan',
+            name: 'nama_kelurahan',
+            render: function(data, type, row, meta) {
+    return meta.row + meta.settings._iDisplayStart + 1;
+}
+                }
+
+                   ,
 
                     {
                         data: 'nama_kelurahan'

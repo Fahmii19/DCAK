@@ -143,16 +143,16 @@
                 , responsive: true
                 , serverSide: true
                 , ajax: `{{ route('table-saksi-tps') }}`
-                , columns: [{
-                        data: null
-                        , sortable: false
-                        , searchable: false
-                        , render: function(data, type, row, meta) {
-                            // Mengurutkan dari nomor terakhir
-                            let recordsTotal = meta.settings.fnRecordsTotal();
-                            return recordsTotal - meta.row;
-                        }
-                    },
+                , columns: [
+                    {
+            data: 'jumlah_suara',
+            name: 'jumlah_suara',
+            render: function(data, type, row, meta) {
+    return meta.row + meta.settings._iDisplayStart + 1;
+}
+                }
+
+                   ,
 
                     {
                         data: 'nama_saksi'

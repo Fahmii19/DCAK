@@ -89,16 +89,16 @@
                 , responsive: true
                 , serverSide: true
                 , ajax: '{{ route("table-koordinator") }}'
-                , columns: [{
-                        data: null
-                        , sortable: false
-                        , searchable: false
-                        , render: function(data, type, row, meta) {
-                            // Mengurutkan dari nomor terakhir
-                            let recordsTotal = meta.settings.fnRecordsTotal();
-                            return recordsTotal - meta.row;
-                        }
-                    },
+                , columns: [
+                    {
+            data: 'id_koordinator',
+            name: 'id_koordinator',
+            render: function(data, type, row, meta) {
+    return meta.row + meta.settings._iDisplayStart + 1;
+}
+                }
+
+                   ,
 
                     {
                         data: 'nama_koordinator'
