@@ -248,9 +248,9 @@
 
                     $('#searchResults').show();
                 } else {
-                    $('#searchNama').prop('disabled', true);
-                    $('#searchResults').empty().hide();
-                    alert('No names found for the entered keyword.');
+                    // $('#searchNama').prop('disabled', true);
+                    // $('#searchResults').empty().hide();
+                    alert('Nama Calon Pemilih sudah diinputkan');
                 }
             }
 
