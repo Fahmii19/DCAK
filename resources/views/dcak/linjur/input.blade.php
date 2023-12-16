@@ -145,32 +145,27 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        let enteredIds = []; // Pindahkan ke scope global
+        let enteredNames = []; // Penyimpanan nama yang telah diinput
+        let enteredIds = []; // Penyimpanan id yang telah diinput
 
-        // Fungsi untuk menyimpan data ke IndexedDB
-        function saveToIndexedDB(kelurahan, data) {
-            let transaction = db.transaction(["kelurahanData"], "readwrite");
-            let store = transaction.objectStore("kelurahanData");
-            store.put({
+        // Fungsi untuk menyimpan data ke localStorage
+        function saveToLocalStorage(kelurahan, data) {
+            let oldData = JSON.parse(localStorage.getItem(kelurahan)) || [];
+
+            // Gabungkan data lama dengan data baru
+            let combinedData = [...oldData, {
                 kelurahan: kelurahan
                 , data: data
-            });
+            }];
+
+            // Simpan data ke localStorage
+            localStorage.setItem(kelurahan, JSON.stringify(combinedData));
         }
 
-        // Definisi fungsi getFromIndexedDB
-        function getFromIndexedDB(kelurahan, callback) {
-            let transaction = db.transaction(["kelurahanData"]);
-            let store = transaction.objectStore("kelurahanData");
-            let request = store.get(kelurahan);
-
-            request.onerror = function(event) {
-                console.log("Error fetching data from IndexedDB", event.target.errorCode);
-            };
-
-            request.onsuccess = function(event) {
-                let data = event.target.result ? event.target.result.data : null;
-                callback(data);
-            };
+        // Definisi fungsi getFromLocalStorage
+        function getFromLocalStorage(kelurahan, callback) {
+            let data = JSON.parse(localStorage.getItem(kelurahan));
+            callback(data ? data[data.length - 1].data : null);
         }
 
         // Definisi fungsi filterDataExcludeEnteredIds untuk menghandle string HTML
@@ -199,11 +194,17 @@
                     return;
                 }
 
-                getFromIndexedDB(kelurahan, function(data) {
+                getFromLocalStorage(kelurahan, function(data) {
                     if (data) {
-                        let filteredData = $(data).filter(function() {
-                            return $(this).text().toLowerCase().includes(query);
+                        let $data = $(data);
+                        let $items = $data.find('.list-group-item');
+
+                        let filteredData = $items.filter(function() {
+                            let itemText = $(this).text();
+                            return itemText.toLowerCase().includes(query) && !enteredNames.includes(itemText);
                         });
+
+
                         handleDataResponse(filteredData);
                     } else {
                         $.ajax({
@@ -214,9 +215,9 @@
                                 , excludedIds: enteredIds
                             }
                             , success: function(data) {
-                                saveToIndexedDB(kelurahan, data);
-                                let filteredData = $(data).filter(function() {
-                                    return $(this).text().toLowerCase().includes(query);
+                                saveToLocalStorage(kelurahan, data);
+                                let filteredData = data.filter(function(item) {
+                                    return item.name.toLowerCase().includes(query) && !enteredNames.includes(item.name);
                                 });
                                 handleDataResponse(filteredData);
                             }
@@ -226,6 +227,8 @@
                         });
                     }
                 });
+
+                // ... (Kode lainnya tetap sama)
             }
 
             function handleDataResponse(filteredData) {
@@ -277,6 +280,9 @@
                 $('#searchNama').val(selectedName);
                 let selectedKelurahan = $('#kelurahan').val();
 
+                // Menyimpan nama yang telah diinput
+                enteredNames.push(selectedName);
+
                 $('#searchResults').empty().hide();
 
                 $.ajax({
@@ -303,6 +309,15 @@
         });
 
     </script>
+
+
+
+
+
+
+
+
+
 
 
 
