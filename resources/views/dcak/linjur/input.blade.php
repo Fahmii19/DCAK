@@ -169,7 +169,7 @@
 
             request.onsuccess = function(event) {
                 let data = event.target.result ? event.target.result.data : null;
-                callback(data ? filterDataExcludeEnteredIds(data, enteredIds) : []);
+                callback(data);
             };
         }
 
@@ -200,17 +200,17 @@
                 }
 
                 getFromIndexedDB(kelurahan, function(data) {
-                    if (data && data.length > 0) {
+                    if (data) {
                         let filteredData = $(data).filter(function() {
                             return $(this).text().toLowerCase().includes(query);
                         });
                         handleDataResponse(filteredData);
                     } else {
-
                         $.ajax({
                             url: "{{ route('search.nama-linjur') }}"
                             , data: {
                                 kelurahan: kelurahan
+                                , query: query
                                 , excludedIds: enteredIds
                             }
                             , success: function(data) {
@@ -223,7 +223,6 @@
                             , error: function() {
                                 alert('Error loading data. Please try again later.');
                             }
-
                         });
                     }
                 });
@@ -246,20 +245,7 @@
                 } else {
                     $('#searchNama').prop('disabled', true);
                     $('#searchResults').empty().hide();
-                    alert('No names found for selected kelurahan.');
-                }
-            }
-
-
-
-            function handleDataResponse(data) {
-                var $data = $(data);
-                if ($data.find('.list-group-item').length > 0) {
-                    $('#searchNama').prop('disabled', false);
-                    $('#searchResults').html($data.html()).show();
-                } else {
-                    $('#searchNama').prop('disabled', true);
-                    alert('No names found for selected kelurahan.');
+                    alert('No names found for the entered keyword.');
                 }
             }
 
@@ -276,44 +262,7 @@
                 if (kelurahan) {
                     loadNamesByKelurahan(kelurahan, query);
                 }
-
-
-                if (query.length < 3) {
-                    $('#searchResults').empty().hide();
-                    return; // Jangan lanjutkan jika panjang query kurang dari 3 } let kelurahan=$('#kelurahan').val();
-
-                    getFromIndexedDB(kelurahan, function(data) {
-                        if (data) {
-                            // Filter data berdasarkan query
-                            let filteredData = $(data).filter(function() {
-                                return $(this).text().toLowerCase().includes(query);
-                            });
-                            handleDataResponse(filteredData);
-                        } else {
-                            // AJAX request jika data tidak ditemukan di IndexedDB
-                            $.ajax({
-                                url: "{{ route('search.nama-linjur') }}"
-                                , data: {
-                                    kelurahan: kelurahan
-                                    , excludedIds: enteredIds
-                                }
-                                , success: function(data) {
-                                    let filteredData = $(data).filter(function() {
-                                        return $(this).text().toLowerCase().includes(query);
-                                    });
-                                    saveToIndexedDB(kelurahan, data);
-                                    handleDataResponse(filteredData);
-                                }
-                                , error: function() {
-                                    alert('Error loading data. Please try again later.');
-                                }
-                            });
-                        }
-                    });
-                }
             }, 250));
-
-
 
             $(document).on('click', '#searchResults .list-group-item', function(e) {
                 e.preventDefault();
@@ -354,4 +303,8 @@
         });
 
     </script>
+
+
+
+
 </x-app-layout>
