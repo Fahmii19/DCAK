@@ -494,7 +494,6 @@ class HomeController extends Controller
 
     function totalSuara()
     {
-
         // array kecamatan dalam kelurahan
         $kecamatanKelurahanMapping = [
             'Tapos' => ['SUKATANI', 'SUKAMAJU BARU', 'TAPOS', 'CIMPAEUN', 'CILANGKAP', 'LEUWINANGGUNG'],
@@ -509,14 +508,25 @@ class HomeController extends Controller
             ->keyBy('kelurahan');
 
         $jumlahPemilihPerKelurahanPerkecamatan = [];
+        $jumlahTotalPerKecamatan = [];
 
         foreach ($kecamatanKelurahanMapping as $kecamatan => $kelurahans) {
+            $totalPerKecamatan = 0;
+
             foreach ($kelurahans as $kelurahan) {
-                $jumlahPemilihPerKelurahanPerkecamatan[$kecamatan][$kelurahan] = isset($jumlahPemilihPerKelurahan[$kelurahan]) ? $jumlahPemilihPerKelurahan[$kelurahan]->total : 0;
+                $jumlahPemilih = isset($jumlahPemilihPerKelurahan[$kelurahan]) ? $jumlahPemilihPerKelurahan[$kelurahan]->total : 0;
+                $jumlahPemilihPerKelurahanPerkecamatan[$kecamatan][$kelurahan] = $jumlahPemilih;
+
+                $totalPerKecamatan += $jumlahPemilih;
             }
+
+            $jumlahTotalPerKecamatan[$kecamatan] = $totalPerKecamatan;
         }
 
-        return view('dcak.total-suara.index', ['jumlahPemilihPerKelurahanPerkecamatan' => $jumlahPemilihPerKelurahanPerkecamatan]);
+        return view('dcak.total-suara.index', [
+            'jumlahPemilihPerKelurahanPerkecamatan' => $jumlahPemilihPerKelurahanPerkecamatan,
+            'jumlahTotalPerKecamatan' => $jumlahTotalPerKecamatan
+        ]);
     }
 
     function tableKoordinator()
