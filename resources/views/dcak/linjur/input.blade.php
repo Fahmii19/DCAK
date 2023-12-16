@@ -216,9 +216,23 @@
                             }
                             , success: function(data) {
                                 saveToLocalStorage(kelurahan, data);
-                                let filteredData = data.filter(function(item) {
-                                    return item.name.toLowerCase().includes(query) && !enteredNames.includes(item.name);
+
+                                // Ubah data dari string HTML menjadi elemen jQuery
+                                let $data = $(data);
+
+                                // Cari elemen-elemen dengan class .list-group-item
+                                let $items = $data.find('.list-group-item');
+
+                                // Ambil teks dari elemen-elemen tersebut dan simpan dalam bentuk array
+                                let names = $items.map(function() {
+                                    return $(this).text();
+                                }).get();
+
+                                // Filter data berdasarkan query
+                                let filteredData = names.filter(function(item) {
+                                    return item.toLowerCase().includes(query) && !enteredNames.includes(item);
                                 });
+
                                 handleDataResponse(filteredData);
                             }
                             , error: function() {
@@ -228,7 +242,6 @@
                     }
                 });
 
-                // ... (Kode lainnya tetap sama)
             }
 
             function handleDataResponse(filteredData) {
