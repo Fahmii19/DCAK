@@ -182,8 +182,6 @@
             });
         }
 
-
-
         $(document).ready(function() {
             function debounce(func, wait) {
                 let timeout;
@@ -195,11 +193,20 @@
                 };
             }
 
-            function loadNamesByKelurahan(kelurahan) {
+            function loadNamesByKelurahan(kelurahan, query) {
+                if (query.length < 3) {
+                    $('#searchResults').empty().hide();
+                    return;
+                }
+
                 getFromIndexedDB(kelurahan, function(data) {
                     if (data && data.length > 0) {
-                        handleDataResponse(data);
+                        let filteredData = $(data).filter(function() {
+                            return $(this).text().toLowerCase().includes(query);
+                        });
+                        handleDataResponse(filteredData);
                     } else {
+
                         $.ajax({
                             url: "{{ route('search.nama-linjur') }}"
                             , data: {
@@ -208,15 +215,42 @@
                             }
                             , success: function(data) {
                                 saveToIndexedDB(kelurahan, data);
-                                handleDataResponse(data);
+                                let filteredData = $(data).filter(function() {
+                                    return $(this).text().toLowerCase().includes(query);
+                                });
+                                handleDataResponse(filteredData);
                             }
                             , error: function() {
                                 alert('Error loading data. Please try again later.');
                             }
+
                         });
                     }
                 });
             }
+
+            function handleDataResponse(filteredData) {
+                var $data = $(filteredData);
+                if ($data.length > 0) {
+                    $('#searchNama').prop('disabled', false);
+
+                    // Mengosongkan container hasil sebelumnya
+                    $('#searchResults').empty();
+
+                    // Menambahkan setiap item yang difilter ke dalam container hasil
+                    $data.each(function() {
+                        $('#searchResults').append($(this).clone()); // Menambahkan item ke dalam hasil pencarian
+                    });
+
+                    $('#searchResults').show();
+                } else {
+                    $('#searchNama').prop('disabled', true);
+                    $('#searchResults').empty().hide();
+                    alert('No names found for selected kelurahan.');
+                }
+            }
+
+
 
             function handleDataResponse(data) {
                 var $data = $(data);
@@ -231,13 +265,19 @@
 
             $('#kelurahan').change(function() {
                 let selectedKelurahan = $(this).val();
-                $('#searchNama').prop('disabled', true).val('');
+                $('#searchNama').prop('disabled', selectedKelurahan ? false : true).val('');
                 $('#searchResults').empty().hide();
-                loadNamesByKelurahan(selectedKelurahan);
             });
 
             $('#searchNama').on('input', debounce(function() {
                 let query = $(this).val().trim().toLowerCase();
+                let kelurahan = $('#kelurahan').val();
+
+                if (kelurahan) {
+                    loadNamesByKelurahan(kelurahan, query);
+                }
+
+
                 if (query.length < 3) {
                     $('#searchResults').empty().hide();
                     return; // Jangan lanjutkan jika panjang query kurang dari 3 } let kelurahan=$('#kelurahan').val();
@@ -270,7 +310,6 @@
                             });
                         }
                     });
-                    loadNamesByKelurahan(kelurahan, query);
                 }
             }, 250));
 
@@ -315,10 +354,4 @@
         });
 
     </script>
-
-
-
-
-
-
 </x-app-layout>
