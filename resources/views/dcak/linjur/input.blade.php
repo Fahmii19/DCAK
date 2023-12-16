@@ -148,14 +148,14 @@
         let enteredNames = []; // Penyimpanan nama yang telah diinput
         let enteredIds = []; // Penyimpanan id yang telah diinput
 
-        // Fungsi untuk menyimpan data ke localStorage
-        function saveToLocalStorage(kelurahan, data) {
-            localStorage.setItem(kelurahan, JSON.stringify(data));
+        // Fungsi untuk menyimpan data ke sessionStorage
+        function saveToSessionStorage(kelurahan, data) {
+            sessionStorage.setItem(kelurahan, JSON.stringify(data));
         }
 
-        // Fungsi untuk mengambil data dari localStorage
-        function getFromLocalStorage(kelurahan) {
-            return JSON.parse(localStorage.getItem(kelurahan)) || [];
+        // Fungsi untuk mengambil data dari sessionStorage
+        function getFromSessionStorage(kelurahan) {
+            return JSON.parse(sessionStorage.getItem(kelurahan)) || [];
         }
 
         // Definisi fungsi filterDataExcludeEnteredNames untuk menghilangkan nama yang sudah diinput
@@ -185,7 +185,8 @@
                             kelurahan: kelurahan
                         }
                         , success: function(data) {
-                            saveToLocalStorage(kelurahan, data);
+                            saveToSessionStorage(kelurahan, data);
+
 
                             if (data.length > 0) {
                                 $('#searchNama').prop('disabled', false); // Meng-enable input jika data ada
@@ -208,7 +209,8 @@
                 let kelurahan = $('#kelurahan').val();
                 if (kelurahan && query.length >= 3) {
 
-                    let data = getFromLocalStorage(kelurahan);
+                    let data = getFromSessionStorage(kelurahan);
+
                     let filteredData = filterDataExcludeEnteredNames(data);
 
                     let searchResults = filteredData.filter(item => item.nama_pemilih.toLowerCase().includes(query));
