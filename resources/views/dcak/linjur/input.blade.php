@@ -144,23 +144,31 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
     <script>
-        let enteredNames = []; // Penyimpanan nama yang telah diinput
-        let enteredIds = []; // Penyimpanan id yang telah diinput
-
-        // Fungsi untuk menyimpan data ke sessionStorage
-        function saveToSessionStorage(kelurahan, data) {
-            sessionStorage.setItem(kelurahan, JSON.stringify(data));
+        // Fungsi untuk menyimpan data ke IndexedDB
+        function saveToIndexedDB(kelurahan, data) {
+            let transaction = db.transaction(["kelurahanData"], "readwrite");
+            let store = transaction.objectStore("kelurahanData");
+            store.put({
+                kelurahan: kelurahan
+                , data: data
+            });
         }
 
-        // Fungsi untuk mengambil data dari sessionStorage
-        function getFromSessionStorage(kelurahan) {
-            return JSON.parse(sessionStorage.getItem(kelurahan)) || [];
-        }
+        // Fungsi untuk mengambil data dari IndexedDB
+        function getFromIndexedDB(kelurahan, callback) {
+            let transaction = db.transaction(["kelurahanData"]);
+            let store = transaction.objectStore("kelurahanData");
+            let request = store.get(kelurahan);
 
-        // Definisi fungsi filterDataExcludeEnteredNames untuk menghilangkan nama yang sudah diinput
-        function filterDataExcludeEnteredNames(data) {
-            return data.filter(item => !enteredNames.includes(item));
+            request.onerror = function(event) {
+                console.log("Error fetching data from IndexedDB", event.target.errorCode);
+            };
+
+            request.onsuccess = function(event) {
+                callback(event.target.result ? event.target.result.data : null);
+            };
         }
 
         $(document).ready(function() {
@@ -174,92 +182,73 @@
                 };
             }
 
-            $('#kelurahan').change(function() {
-                let kelurahan = $(this).val();
-                $('#searchNama').prop('disabled', true); // Men-disable input saat kelurahan sedang dipilih
-
-                if (kelurahan) {
-                    $.ajax({
-                        url: "{{ route('get-all-data-by-kelurahan') }}"
-                        , data: {
-                            kelurahan: kelurahan
-                        }
-                        , success: function(data) {
-                            saveToSessionStorage(kelurahan, data);
-
-
-                            if (data.length > 0) {
-                                $('#searchNama').prop('disabled', false); // Meng-enable input jika data ada
-                            } else {
-                                alert('No data found for the selected kelurahan.');
+            function loadNamesByKelurahan(kelurahan) {
+                getFromIndexedDB(kelurahan, function(data) {
+                    if (data) {
+                        handleDataResponse(data);
+                    } else {
+                        $.ajax({
+                            url: "{{ route('search.nama-linjur') }}"
+                            , data: {
+                                kelurahan: kelurahan
                             }
-                        }
-                        , error: function() {
-                            alert('Error loading data. Please try again later.');
-                        }
-                    });
-                } else {
-                    $('#searchNama').prop('disabled', true); // Men-disable input jika tidak ada kelurahan yang dipilih
-                }
-            });
+                            , success: function(data) {
+                                saveToIndexedDB(kelurahan, data);
+                                handleDataResponse(data);
+                            }
+                            , error: function() {
+                                alert('Error loading data. Please try again later.');
+                            }
+                        });
+                    }
+                });
+            }
 
-
-            $('#searchNama').on('input', debounce(function() {
-                let query = $(this).val().trim().toLowerCase();
-                let kelurahan = $('#kelurahan').val();
-                if (kelurahan && query.length >= 3) {
-
-                    let data = getFromSessionStorage(kelurahan);
-
-                    let filteredData = filterDataExcludeEnteredNames(data);
-
-                    let searchResults = filteredData.filter(item => item.nama_pemilih.toLowerCase().includes(query));
-                    handleDataResponse(searchResults);
-                } else {
-                    $('#searchResults').empty().hide();
-                }
-            }, 250));
-
-
-            function handleDataResponse(filteredData) {
-                // console.log(filteredData);
-                var $data = $(filteredData);
-                if ($data.length > 0) {
+            function handleDataResponse(data) {
+                var $data = $(data);
+                if ($data.find('.list-group-item').length > 0) {
                     $('#searchNama').prop('disabled', false);
-                    $('#searchResults').empty();
-
-                    $data.each(function(index, item) {
-                        let output = '<div class="list-group">';
-
-                        if (!item || Object.keys(item).length === 0) {
-                            output += '<div class="list-group-item text-center">Tidak ada data pemilih</div>';
-                        } else {
-                            output += '<a href="#" class="list-group-item list-group-item-action">' +
-                                item.nama_pemilih +
-                                ' - RT: ' + item.rt +
-                                ' - RW: ' + item.rw +
-                                ' - TPS: ' + item.tps +
-                                ' - Kelurahan: ' + item.kelurahan +
-                                '</a>';
-                        }
-
-                        output += '</div>';
-                        $('#searchResults').append(output);
-                    });
-
-
-                    $('#searchResults').show();
                 } else {
-                    // $('#searchNama').prop('disabled', true);
-                    // $('#searchResults').empty().hide();
-                    alert('Nama Calon Pemilih sudah diinputkan');
+                    $('#searchNama').prop('disabled', true);
+                    alert('No names found for selected kelurahan.');
                 }
             }
 
+            $('#kelurahan').change(function() {
+                let selectedKelurahan = $(this).val();
+                $('#searchNama').prop('disabled', true).val('');
+                $('#searchResults').empty().hide();
+                loadNamesByKelurahan(selectedKelurahan);
+            });
+
+            $('#searchNama').on('input', debounce(function() {
+                let query = $(this).val().trim().toLowerCase();
+                if (query.length < 3) {
+                    $('#searchResults').empty().hide();
+                    return;
+                }
+                let kelurahan = $('#kelurahan').val();
+                getFromIndexedDB(kelurahan, function(data) {
+                    if (data) {
+                        let $html = $(data);
+                        $html.find('.list-group-item').hide();
+                        $html.find('.list-group-item').filter(function() {
+                            return $(this).text().toLowerCase().includes(query);
+                        }).show();
+                        $('#searchResults').html($html.html()).show();
+                    } else {
+                        $('#searchResults').html('<div class="list-group-item">No data available</div>').show();
+                    }
+                });
+            }, 250));
+
             $(document).on('click', '#searchResults .list-group-item', function(e) {
                 e.preventDefault();
+                // let selectedName = $(this).text();
 
                 let fullText = $(this).text();
+
+                // Misalkan format teks: "Nama Pemilih - RT: [nomor RT] - RW: [nomor RW]"
                 let parts = fullText.split(' - ');
                 let selectedName = parts[0];
                 let rt = parts[1].split(': ')[1];
@@ -268,7 +257,7 @@
 
                 $('#searchNama').val(selectedName);
                 let selectedKelurahan = $('#kelurahan').val();
-                enteredNames.push(selectedName);
+
                 $('#searchResults').empty().hide();
 
                 $.ajax({
@@ -281,6 +270,7 @@
                         , tps: tps
                     }
                     , success: function(data) {
+                        // console.log(data);
                         $('#jenis_kelamin').val(data.jenis_kelamin);
                         $('#no_hp').val(data.no_hp);
                         $('#rt').val(data.rt);
@@ -291,40 +281,13 @@
                         $('#nik').val(data.nik);
                     }
                 });
+
+
+
             });
-
-            // Fungsi untuk reset localstorage dan variabel enteredNames
-            $('#resetButton').click(function() {
-                let kelurahan = $('#kelurahan').val();
-                localStorage.removeItem(kelurahan);
-                enteredNames = [];
-                $('#searchResults, #searchNama').empty().hide();
-            });
-            //
-
-            // Fungsi untuk reset localstorage dan variabel enteredNames saat halaman dimuat ulang
-            window.addEventListener('beforeunload', function() {
-                let kelurahan = $('#kelurahan').val();
-                localStorage.removeItem(kelurahan);
-                enteredNames = [];
-            });
-
-
-            //
         });
 
     </script>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
