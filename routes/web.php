@@ -144,6 +144,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/edit-linjur/{id}', [HomeController::class, 'editLinjur'])->name('edit-linjur');
     // Route::post('/form-edit-linjur/{id}', [HomeController::class, 'formEditLinjur'])->name('form-edit-linjur');
     // Route::delete('/delete-linjur/{id}', [HomeController::class, 'deleteLinjur'])->name('delete-linjur');
+    // Perbaiki route seperti ini
+    Route::get('/get-all-data-by-kelurahan', [HomeController::class, 'getAllDataByKelurahan'])->name('get-all-data-by-kelurahan');
+
 
 
     // Route::post('/import-calon-pemilih', [HomeController::class, 'importExcelCalonPemilih'])->name('import-calon-pemilih');

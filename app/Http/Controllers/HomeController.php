@@ -699,7 +699,16 @@ class HomeController extends Controller
         return $output;
     }
 
+    public function getAllDataByKelurahan(Request $request)
+    {
+        $kelurahan = $request->get('kelurahan');
 
+        // Pada bagian ini, sesuaikan query Anda untuk mengambil data berdasarkan kelurahan
+        // Misalnya, menggunakan Eloquent model yang telah Anda definisikan
+        $data = CalonPemilih::where('kelurahan', $kelurahan)->get();
+
+        return response()->json($data);
+    }
 
 
 

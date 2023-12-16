@@ -150,31 +150,17 @@
 
         // Fungsi untuk menyimpan data ke localStorage
         function saveToLocalStorage(kelurahan, data) {
-            let oldData = JSON.parse(localStorage.getItem(kelurahan)) || [];
-
-            // Gabungkan data lama dengan data baru
-            let combinedData = [...oldData, {
-                kelurahan: kelurahan
-                , data: data
-            }];
-
-            // Simpan data ke localStorage
-            localStorage.setItem(kelurahan, JSON.stringify(combinedData));
+            localStorage.setItem(kelurahan, JSON.stringify(data));
         }
 
-        // Definisi fungsi getFromLocalStorage
-        function getFromLocalStorage(kelurahan, callback) {
-            let data = JSON.parse(localStorage.getItem(kelurahan));
-            callback(data ? data[data.length - 1].data : null);
+        // Fungsi untuk mengambil data dari localStorage
+        function getFromLocalStorage(kelurahan) {
+            return JSON.parse(localStorage.getItem(kelurahan)) || [];
         }
 
-        // Definisi fungsi filterDataExcludeEnteredIds untuk menghandle string HTML
-        function filterDataExcludeEnteredIds(htmlData, enteredIds) {
-            var $items = $(htmlData).filter('.list-group-item');
-            return $items.filter(function() {
-                var id = $(this).data('id'); // Pastikan elemen HTML memiliki atribut data-id
-                return !enteredIds.includes(id);
-            });
+        // Definisi fungsi filterDataExcludeEnteredNames untuk menghilangkan nama yang sudah diinput
+        function filterDataExcludeEnteredNames(data) {
+            return data.filter(item => !enteredNames.includes(item));
         }
 
         $(document).ready(function() {
@@ -188,74 +174,77 @@
                 };
             }
 
-            function loadNamesByKelurahan(kelurahan, query) {
-                if (query.length < 3) {
-                    $('#searchResults').empty().hide();
-                    return;
+            $('#kelurahan').change(function() {
+                let kelurahan = $(this).val();
+                $('#searchNama').prop('disabled', true); // Men-disable input saat kelurahan sedang dipilih
+
+                if (kelurahan) {
+                    $.ajax({
+                        url: "{{ route('get-all-data-by-kelurahan') }}"
+                        , data: {
+                            kelurahan: kelurahan
+                        }
+                        , success: function(data) {
+                            saveToLocalStorage(kelurahan, data);
+
+                            if (data.length > 0) {
+                                $('#searchNama').prop('disabled', false); // Meng-enable input jika data ada
+                            } else {
+                                alert('No data found for the selected kelurahan.');
+                            }
+                        }
+                        , error: function() {
+                            alert('Error loading data. Please try again later.');
+                        }
+                    });
+                } else {
+                    $('#searchNama').prop('disabled', true); // Men-disable input jika tidak ada kelurahan yang dipilih
                 }
-
-                getFromLocalStorage(kelurahan, function(data) {
-                    if (data) {
-                        let $data = $(data);
-                        let $items = $data.find('.list-group-item');
-
-                        let filteredData = $items.filter(function() {
-                            let itemText = $(this).text();
-                            return itemText.toLowerCase().includes(query) && !enteredNames.includes(itemText);
-                        });
+            });
 
 
-                        handleDataResponse(filteredData);
-                    } else {
-                        $.ajax({
-                            url: "{{ route('search.nama-linjur') }}"
-                            , data: {
-                                kelurahan: kelurahan
-                                , query: query
-                                , excludedIds: enteredIds
-                            }
-                            , success: function(data) {
-                                saveToLocalStorage(kelurahan, data);
+            $('#searchNama').on('input', debounce(function() {
+                let query = $(this).val().trim().toLowerCase();
+                let kelurahan = $('#kelurahan').val();
+                if (kelurahan && query.length >= 3) {
 
-                                // Ubah data dari string HTML menjadi elemen jQuery
-                                let $data = $(data);
+                    let data = getFromLocalStorage(kelurahan);
+                    let filteredData = filterDataExcludeEnteredNames(data);
 
-                                // Cari elemen-elemen dengan class .list-group-item
-                                let $items = $data.find('.list-group-item');
+                    let searchResults = filteredData.filter(item => item.nama_pemilih.toLowerCase().includes(query));
+                    handleDataResponse(searchResults);
+                } else {
+                    $('#searchResults').empty().hide();
+                }
+            }, 250));
 
-                                // Ambil teks dari elemen-elemen tersebut dan simpan dalam bentuk array
-                                let names = $items.map(function() {
-                                    return $(this).text();
-                                }).get();
-
-                                // Filter data berdasarkan query
-                                let filteredData = names.filter(function(item) {
-                                    return item.toLowerCase().includes(query) && !enteredNames.includes(item);
-                                });
-
-                                handleDataResponse(filteredData);
-                            }
-                            , error: function() {
-                                alert('Error loading data. Please try again later.');
-                            }
-                        });
-                    }
-                });
-
-            }
 
             function handleDataResponse(filteredData) {
+                // console.log(filteredData);
                 var $data = $(filteredData);
                 if ($data.length > 0) {
                     $('#searchNama').prop('disabled', false);
-
-                    // Mengosongkan container hasil sebelumnya
                     $('#searchResults').empty();
 
-                    // Menambahkan setiap item yang difilter ke dalam container hasil
-                    $data.each(function() {
-                        $('#searchResults').append($(this).clone()); // Menambahkan item ke dalam hasil pencarian
+                    $data.each(function(index, item) {
+                        let output = '<div class="list-group">';
+
+                        if (!item || Object.keys(item).length === 0) {
+                            output += '<div class="list-group-item text-center">Tidak ada data pemilih</div>';
+                        } else {
+                            output += '<a href="#" class="list-group-item list-group-item-action">' +
+                                item.nama_pemilih +
+                                ' - RT: ' + item.rt +
+                                ' - RW: ' + item.rw +
+                                ' - TPS: ' + item.tps +
+                                ' - Kelurahan: ' + item.kelurahan +
+                                '</a>';
+                        }
+
+                        output += '</div>';
+                        $('#searchResults').append(output);
                     });
+
 
                     $('#searchResults').show();
                 } else {
@@ -264,21 +253,6 @@
                     alert('No names found for the entered keyword.');
                 }
             }
-
-            $('#kelurahan').change(function() {
-                let selectedKelurahan = $(this).val();
-                $('#searchNama').prop('disabled', selectedKelurahan ? false : true).val('');
-                $('#searchResults').empty().hide();
-            });
-
-            $('#searchNama').on('input', debounce(function() {
-                let query = $(this).val().trim().toLowerCase();
-                let kelurahan = $('#kelurahan').val();
-
-                if (kelurahan) {
-                    loadNamesByKelurahan(kelurahan, query);
-                }
-            }, 250));
 
             $(document).on('click', '#searchResults .list-group-item', function(e) {
                 e.preventDefault();
@@ -292,10 +266,7 @@
 
                 $('#searchNama').val(selectedName);
                 let selectedKelurahan = $('#kelurahan').val();
-
-                // Menyimpan nama yang telah diinput
                 enteredNames.push(selectedName);
-
                 $('#searchResults').empty().hide();
 
                 $.ajax({
@@ -319,9 +290,21 @@
                     }
                 });
             });
+
+            // Fungsi untuk reset localstorage dan variabel enteredNames
+            $('#resetButton').click(function() {
+                let kelurahan = $('#kelurahan').val();
+                localStorage.removeItem(kelurahan);
+                enteredNames = [];
+                $('#searchResults, #searchNama').empty().hide();
+            });
         });
 
     </script>
+
+
+
+
 
 
 
