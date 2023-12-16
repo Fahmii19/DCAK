@@ -298,6 +298,17 @@
                 enteredNames = [];
                 $('#searchResults, #searchNama').empty().hide();
             });
+            //
+
+            // Fungsi untuk reset localstorage dan variabel enteredNames saat halaman dimuat ulang
+            window.addEventListener('beforeunload', function() {
+                let kelurahan = $('#kelurahan').val();
+                localStorage.removeItem(kelurahan);
+                enteredNames = [];
+            });
+
+
+            //
         });
 
     </script>
