@@ -702,13 +702,19 @@ class HomeController extends Controller
     public function getAllDataByKelurahan(Request $request)
     {
         $kelurahan = $request->get('kelurahan');
+        $status = "terpilih";
 
-        // Pada bagian ini, sesuaikan query Anda untuk mengambil data berdasarkan kelurahan
-        // Misalnya, menggunakan Eloquent model yang telah Anda definisikan
-        $data = CalonPemilih::where('kelurahan', $kelurahan)->get();
+        $data = CalonPemilih::where('kelurahan', $kelurahan)
+            ->where(function ($query) use ($status) {
+                $query->where('status', '!=', $status)
+                    ->orWhereNull('status');
+            })
+            ->get();
 
         return response()->json($data);
     }
+
+
 
 
 
@@ -859,6 +865,14 @@ class HomeController extends Controller
             $Pemilih->tps = $request->tps;
             $Pemilih->kelurahan = $request->kelurahan;
             $Pemilih->save();
+
+            // UPDATE CALON PEMILIH
+            $calonPemilih = CalonPemilih::find($request->id_calon_pemilih);
+            if ($calonPemilih) {
+                // statusnya
+                $calonPemilih->status = 'terpilih';
+                $calonPemilih->save();
+            }
 
             return redirect()->route('linjur')->with('success', 'Data Calon berhasil disimpan.');
         } catch (\Exception $e) {
