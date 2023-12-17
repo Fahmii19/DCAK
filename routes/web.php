@@ -146,6 +146,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::delete('/delete-linjur/{id}', [HomeController::class, 'deleteLinjur'])->name('delete-linjur');
     // Perbaiki route seperti ini
     Route::get('/get-all-data-by-kelurahan', [HomeController::class, 'getAllDataByKelurahan'])->name('get-all-data-by-kelurahan');
+    Route::get('/get-chart-data', [HomeController::class, 'getChartData'])->name('get-chart-data');
 
 
 

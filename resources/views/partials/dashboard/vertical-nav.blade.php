@@ -114,6 +114,10 @@
         </a>
     </li>
 
+    @endif
+
+
+    @if(in_array('superadmin', $userRoles->toArray()) || in_array('admin', $userRoles->toArray()))
     <li class="nav-item">
         <a class="nav-link {{activeRoute(route('linjur')) || activeRoute(route('input-linjur')) || activeRoute(route('input-linjur-nama')) ? 'active' : '' }}" href="{{ route('linjur') }}">
 
@@ -128,9 +132,9 @@
             <span class="item-name">Daftar Pemilih Tetap</span>
         </a>
     </li>
-
-
     @endif
+
+
 
 
     @if($userRoles->toArray() && in_array('superadmin', $userRoles->toArray()))

@@ -21,6 +21,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 
 <style>
     th.hide-search input {

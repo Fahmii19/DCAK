@@ -65,6 +65,51 @@ class HomeController extends Controller
         return view('user-dcak.inputan');
     }
 
+    public function getChartData(Request $request)
+    {
+        // array kecamatan dalam kelurahan
+        $kecamatanKelurahanMapping = [
+            'Tapos' => ['JATIJAJAR', 'SUKATANI', 'SUKAMAJU BARU', 'TAPOS', 'CIMPAEUN', 'CILANGKAP', 'LEUWINANGGUNG'],
+            'Cilodong' => ['KALIMULYA', 'JATIMULYA', 'KALIBARU', 'CILODONG', 'SUKAMAJU'],
+        ];
+
+        // Mendefinisikan array dengan 20 warna yang berbeda
+        $colors = [
+            '#FF5733', '#33FF57', '#3366FF', '#FF33A1', '#FF5733', '#33FF57', '#3366FF',
+            '#FF5733', '#33FF57', '#3366FF', '#FF33A1', '#FF5733', '#33FF57', '#3366FF',
+            '#FF5733', '#33FF57', '#3366FF', '#FF33A1', '#FF5733', '#33FF57',
+        ];
+
+
+        // Mengambil data pemilih dan mengelompokkannya berdasarkan kelurahan
+        $jumlahPemilihPerKelurahan = Pemilih::select('kelurahan', DB::raw('count(*) as total'))
+            ->whereIn('kelurahan', array_merge(...array_values($kecamatanKelurahanMapping)))
+            ->groupBy('kelurahan')
+            ->get()
+            ->pluck('total', 'kelurahan') // Mengambil total dan kelurahan sebagai key
+            ->toArray();
+
+        // Menyusun data untuk chart
+        $data = [
+            'labels' => array_keys($jumlahPemilihPerKelurahan), // Label kelurahan
+            'datasets' => [
+                [
+                    'data' => array_values($jumlahPemilihPerKelurahan), // Jumlah pemilih
+                    'backgroundColor' => [
+                        'red', 'green', 'blue', 'orange', 'purple',
+                        'pink', 'yellow', 'cyan', 'magenta', 'lime',
+                        'teal', 'indigo', 'brown', 'gray', 'violet',
+                        'lavender', 'maroon', 'gold', 'silver'
+                    ],
+                    // Warna bagian-bagian chart
+                ],
+            ],
+        ];
+
+        return response()->json($data);
+    }
+
+
     // login
 
     public function getAllUsers()
