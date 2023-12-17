@@ -222,20 +222,37 @@
             });
 
             $('#searchNama').on('input', debounce(function() {
-                let query = $(this).val().trim().toLowerCase();
-                if (query.length < 3) {
+                let fullQuery = $(this).val().trim().toLowerCase();
+                let queryParts = fullQuery.split(' '); // Memisahkan input berdasarkan spasi
+                let queryName = queryParts[0] || ''; // Nama adalah bagian pertama dari input
+                let queryRW = queryParts.length > 1 ? queryParts.slice(1).join(' ') : ''; // Gabungkan sisa bagiannya sebagai RW
+
+                if (queryName.length < 3 && queryRW.length === 0) {
                     $('#searchResults').empty().hide();
                     return;
                 }
                 let kelurahan = $('#kelurahan').val();
                 getFromIndexedDB(kelurahan, function(data) {
                     if (data) {
-                        let $html = $(data);
-                        $html.find('.list-group-item').hide();
-                        $html.find('.list-group-item').filter(function() {
-                            return $(this).text().toLowerCase().includes(query);
-                        }).show();
-                        $('#searchResults').html($html.html()).show();
+                        let filteredData = $(data).find('.list-group-item').filter(function() {
+                            let text = $(this).text().toLowerCase();
+                            let parts = text.split(' - '); // Pisahkan berdasarkan separator
+                            let name = parts[0];
+                            let rwPart = parts.find(part => part.trim().startsWith('rw: ')); // Temukan bagian yang dimulai dengan "rw: "
+
+                            // Pastikan rwPart tidak undefined sebelum melakukan split
+                            let rw = rwPart ? rwPart.split(': ')[1] : '';
+
+                            let matchesName = name.includes(queryName);
+                            let matchesRW = queryRW ? rw.includes(queryRW) : true;
+                            return matchesName && matchesRW;
+                        });
+
+                        if (filteredData.length > 0) {
+                            $('#searchResults').html(filteredData).show();
+                        } else {
+                            $('#searchResults').html('<div class="list-group-item">No matching data found</div>').show();
+                        }
                     } else {
                         $('#searchResults').html('<div class="list-group-item">No data available</div>').show();
                     }
@@ -244,7 +261,6 @@
 
             $(document).on('click', '#searchResults .list-group-item', function(e) {
                 e.preventDefault();
-                // let selectedName = $(this).text();
 
                 let fullText = $(this).text();
 
@@ -252,7 +268,7 @@
                 let parts = fullText.split(' - ');
                 let selectedName = parts[0];
                 let rt = parts[1].split(': ')[1];
-                let rw = parts[2].split(': ')[1];
+                let rw = parts.find(part => part.trim().startsWith('rw: ')).split(': ')[1];
                 let tps = parts[3].split(': ')[1];
 
                 $('#searchNama').val(selectedName);
@@ -262,7 +278,6 @@
                 let transaction = db.transaction(["kelurahanData"], "readwrite");
                 let store = transaction.objectStore("kelurahanData");
                 store.delete(selectedKelurahan);
-
 
                 $('#searchResults').empty().hide();
 
@@ -276,24 +291,22 @@
                         , tps: tps
                     }
                     , success: function(data) {
-                        // console.log(data);
                         $('#jenis_kelamin').val(data.jenis_kelamin);
                         $('#no_hp').val(data.no_hp);
-                        $('#rt').val(data.rt);
-                        $('#rw').val(data.rw);
+                        $('#rt').val(rt); // Menggunakan rt yang diambil dari split sebelumnya
+                        $('#rw').val(rw); // Menggunakan rw yang diambil dari split sebelumnya
                         $('#tps').val(data.tps);
                         $('#kelurahan').val(data.kelurahan);
                         $('#id_calon_pemilih').val(data.id_calon_pemilih);
                         $('#nik').val(data.nik);
                     }
                 });
-
-
-
             });
         });
 
     </script>
+
+
 
 
 
