@@ -40,6 +40,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Koordinator</th>
+                                    <th>Total Input</th>
                                     <th>Jumlah Surat Dukungan</th>
                                     <th>Kelurahan</th>
                                     <th>Kecamatan</th>
@@ -89,21 +90,22 @@
                 , responsive: true
                 , serverSide: true
                 , ajax: '{{ route("table-koordinator") }}'
-                , columns: [
-                    {
-            data: 'id_koordinator',
-            name: 'id_koordinator',
-            render: function(data, type, row, meta) {
-    return meta.row + meta.settings._iDisplayStart + 1;
-}
-                }
-
-                   ,
-
-                    {
+                , columns: [{
+                        data: 'id_koordinator'
+                        , name: 'id_koordinator'
+                        , render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    }
+                    , {
                         data: 'nama_koordinator'
                         , name: 'nama_koordinator'
                     }
+                    , {
+                        data: 'jumlah_pemilih'
+                        , name: 'jumlah_pemilih'
+                    }
+
                     , {
                         data: 'jumlah_surat_dukungan'
                         , name: 'jumlah_surat_dukungan'

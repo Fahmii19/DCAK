@@ -576,7 +576,25 @@ class HomeController extends Controller
 
     function tableKoordinator()
     {
-        $koordinator = Koordinator::select(['id_koordinator', 'username', 'password', 'nama_koordinator', 'jumlah_surat_dukungan', 'kelurahan', 'kecamatan']);
+        // Membuat subquery untuk menghitung jumlah pemilih
+        $subQuery = Pemilih::selectRaw('nama_koordinator, COUNT(*) as jumlah_pemilih')
+            ->groupBy('nama_koordinator');
+
+        // Query utama dengan join ke subquery
+        $koordinator = Koordinator::leftJoinSub($subQuery, 'pemilih_count', function ($join) {
+            $join->on('koordinator.nama_koordinator', '=', 'pemilih_count.nama_koordinator');
+        })
+            ->select([
+                'koordinator.id_koordinator',
+                'koordinator.username',
+                'koordinator.password',
+                'koordinator.nama_koordinator',
+                'koordinator.jumlah_surat_dukungan',
+                'koordinator.kelurahan',
+                'koordinator.kecamatan',
+                \DB::raw('coalesce(pemilih_count.jumlah_pemilih, 0) as jumlah_pemilih') // Menetapkan default 0 jika tidak ada pemilih
+            ]);
+
         return DataTables::of($koordinator)->make(true);
     }
 
