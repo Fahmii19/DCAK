@@ -14,7 +14,6 @@
         #searchResults .list-group-item {
             cursor: pointer;
         }
-
     </style>
 
     <div>
@@ -25,7 +24,7 @@
                         <div class="container p-0">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4 class="card-title">Linjur</h4>
+                                    <h4 class="card-title">Pemilih</h4>
                                 </div>
                                 <div class="col-md-6 text-md-end">
                                     <a href="{{ route('linjur') }}">
@@ -41,7 +40,8 @@
                             <span class="text-danger">*</span> Pastikan isi data dengan benar, karena data yang anda isi
                             akan digunakan untuk keperluan pemilihan.
                         </p>
-                        <form class="form-horizontal" method="post" action="{{ route('form-input-pencarian-linjur') }}">
+                        <form class="form-horizontal" method="post"
+                            action="{{ route('form-input-pencarian-linjur') }}">
                             @csrf
                             <input type="hidden" name="id_calon_pemilih" id="id_calon_pemilih">
 
@@ -50,18 +50,21 @@
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nama_koordinator">Nama
                                     Koordinator</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="nama_koordinator" name="nama_koordinator" readonly value="{{ $nama_koordinator }}">
+                                    <input type="text" class="form-control" id="nama_koordinator"
+                                        name="nama_koordinator" readonly value="{{ $nama_koordinator }}">
                                 </div>
                             </div>
 
                             {{-- Kelurahan --}}
                             <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="kelurahan">Kelurahan</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0"
+                                    for="kelurahan">Kelurahan</label>
                                 <div class="col-sm-9">
-                                    <select class="form-select" aria-label="Pilih Kelurahan" id="kelurahan" name="kelurahan" required>
+                                    <select class="form-select" aria-label="Pilih Kelurahan" id="kelurahan"
+                                        name="kelurahan" required>
                                         <option value="" disabled selected>Pilih Kelurahan</option>
                                         @foreach ($kelurahan as $k)
-                                        <option value="{{ $k->nama_kelurahan }}">{{ $k->nama_kelurahan }}</option>
+                                            <option value="{{ $k->nama_kelurahan }}">{{ $k->nama_kelurahan }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -70,9 +73,10 @@
                             {{-- Nama LINJUR --}}
                             <div class="form-group row position-relative">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nama_pemilih">Nama
-                                    Linjur</label>
+                                    Pemilih</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="nama_pemilih" class="form-control" id="searchNama" placeholder="Ketik nama untuk mencari..." disabled>
+                                    <input type="text" name="nama_pemilih" class="form-control" id="searchNama"
+                                        placeholder="Ketik nama untuk mencari..." disabled>
                                     <div id="searchResults"></div>
                                 </div>
                             </div>
@@ -81,15 +85,18 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="nik">NIK</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="nik" name="nik" placeholder="Masukan NIK">
+                                    <input type="number" class="form-control" id="nik" name="nik"
+                                        placeholder="Masukan NIK">
                                 </div>
                             </div>
 
                             {{-- NO.HP --}}
                             <div class="form-group row">
-                                <label class="control-label col-sm-3 align-self-center mb-0" for="no_hp">NO.HP</label>
+                                <label class="control-label col-sm-3 align-self-center mb-0"
+                                    for="no_hp">NO.HP</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukan Nomor Handphone">
+                                    <input type="number" class="form-control" id="no_hp" name="no_hp"
+                                        placeholder="Masukan Nomor Handphone">
                                 </div>
                             </div>
 
@@ -111,7 +118,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="rt">RT</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="rt" name="rt" placeholder="Masukan RT">
+                                    <input type="number" class="form-control" id="rt" name="rt"
+                                        placeholder="Masukan RT">
                                 </div>
                             </div>
 
@@ -119,7 +127,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="rt">RW</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="rw" name="rw" placeholder="Masukan RW">
+                                    <input type="number" class="form-control" id="rw" name="rw"
+                                        placeholder="Masukan RW">
                                 </div>
                             </div>
 
@@ -127,7 +136,8 @@
                             <div class="form-group row">
                                 <label class="control-label col-sm-3 align-self-center mb-0" for="tps">TPS</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="tps" name="tps" placeholder="Masukan TPS">
+                                    <input type="number" class="form-control" id="tps" name="tps"
+                                        placeholder="Masukan TPS">
                                 </div>
                             </div>
 
@@ -151,8 +161,8 @@
             let transaction = db.transaction(["kelurahanData"], "readwrite");
             let store = transaction.objectStore("kelurahanData");
             store.put({
-                kelurahan: kelurahan
-                , data: data
+                kelurahan: kelurahan,
+                data: data
             });
         }
 
@@ -175,8 +185,8 @@
             function debounce(func, wait) {
                 let timeout;
                 return function() {
-                    const context = this
-                        , args = arguments;
+                    const context = this,
+                        args = arguments;
                     clearTimeout(timeout);
                     timeout = setTimeout(() => func.apply(context, args), wait);
                 };
@@ -188,15 +198,15 @@
                         handleDataResponse(data);
                     } else {
                         $.ajax({
-                            url: "{{ route('search.nama-linjur') }}"
-                            , data: {
+                            url: "{{ route('search.nama-linjur') }}",
+                            data: {
                                 kelurahan: kelurahan
-                            }
-                            , success: function(data) {
+                            },
+                            success: function(data) {
                                 saveToIndexedDB(kelurahan, data);
                                 handleDataResponse(data);
-                            }
-                            , error: function() {
+                            },
+                            error: function() {
                                 alert('Error loading data. Please try again later.');
                             }
                         });
@@ -223,56 +233,61 @@
 
             $('#searchNama').on('input', debounce(function() {
                 let fullQuery = $(this).val().trim().toLowerCase();
-                let queryParts = fullQuery.split(' '); // Memisahkan input berdasarkan spasi
-                let queryName = queryParts[0] || ''; // Nama adalah bagian pertama dari input
-                let queryRW = queryParts.length > 1 ? queryParts.slice(1).join(' ') : ''; // Gabungkan sisa bagiannya sebagai RW
+                let queryParts = fullQuery.split(','); // Pisahkan input berdasarkan koma
+                let queryName = queryParts[0].trim();
+                let queryRW = queryParts.length > 1 ? queryParts[1].trim() : '';
 
-                if (queryName.length < 3 && queryRW.length === 0) {
+                if (queryName.length < 3) {
                     $('#searchResults').empty().hide();
                     return;
                 }
+
                 let kelurahan = $('#kelurahan').val();
                 getFromIndexedDB(kelurahan, function(data) {
                     if (data) {
                         let filteredData = $(data).find('.list-group-item').filter(function() {
                             let text = $(this).text().toLowerCase();
-                            let parts = text.split(' - '); // Pisahkan berdasarkan separator
+                            let parts = text.split(' - ');
                             let name = parts[0];
-                            let rwPart = parts.find(part => part.trim().startsWith('rw: ')); // Temukan bagian yang dimulai dengan "rw: "
-
-                            // Pastikan rwPart tidak undefined sebelum melakukan split
-                            let rw = rwPart ? rwPart.split(': ')[1] : '';
+                            let rwPart = parts.find(part => part.trim().startsWith(
+                                'rw: '));
+                            let rw = rwPart ? rwPart.split(': ')[1].trim() : '';
 
                             let matchesName = name.includes(queryName);
-                            let matchesRW = queryRW ? rw.includes(queryRW) : true;
+                            let matchesRW = queryRW.length === 0 || (rw && rw.includes(
+                                queryRW));
                             return matchesName && matchesRW;
                         });
 
                         if (filteredData.length > 0) {
                             $('#searchResults').html(filteredData).show();
                         } else {
-                            $('#searchResults').html('<div class="list-group-item">No matching data found</div>').show();
+                            $('#searchResults').html(
+                                    '<div class="list-group-item">No matching data found</div>')
+                                .show();
                         }
                     } else {
-                        $('#searchResults').html('<div class="list-group-item">No data available</div>').show();
+                        $('#searchResults').html(
+                            '<div class="list-group-item">No data available</div>').show();
                     }
                 });
             }, 250));
+
+
+
 
             $(document).on('click', '#searchResults .list-group-item', function(e) {
                 e.preventDefault();
 
                 let fullText = $(this).text();
-
-                // Misalkan format teks: "Nama Pemilih - RT: [nomor RT] - RW: [nomor RW]"
                 let parts = fullText.split(' - ');
                 let selectedName = parts[0];
-                let rt = parts[1].split(': ')[1];
-                let rw = parts.find(part => part.trim().startsWith('rw: ')).split(': ')[1];
-                let tps = parts[3].split(': ')[1];
+                let rt = parts.length > 1 ? parts[1].split(': ')[1] : '';
+                let rw = parts.length > 2 ? parts[2].split(': ')[1] : '';
+                let tps = parts.length > 3 ? parts[3].split(': ')[1] : '';
+                let selectedKelurahan = $('#kelurahan').val();
 
                 $('#searchNama').val(selectedName);
-                let selectedKelurahan = $('#kelurahan').val();
 
                 // Hapus data yang ada di IndexedDB untuk kelurahan yang dipilih
                 let transaction = db.transaction(["kelurahanData"], "readwrite");
@@ -282,20 +297,20 @@
                 $('#searchResults').empty().hide();
 
                 $.ajax({
-                    url: "{{ route('get-linjur-detail') }}"
-                    , data: {
-                        nama: selectedName
-                        , kelurahan: selectedKelurahan
-                        , rt: rt
-                        , rw: rw
-                        , tps: tps
-                    }
-                    , success: function(data) {
+                    url: "{{ route('get-linjur-detail') }}",
+                    data: {
+                        nama: selectedName,
+                        kelurahan: selectedKelurahan,
+                        rt: rt,
+                        rw: rw,
+                        tps: tps
+                    },
+                    success: function(data) {
                         $('#jenis_kelamin').val(data.jenis_kelamin);
                         $('#no_hp').val(data.no_hp);
-                        $('#rt').val(rt); // Menggunakan rt yang diambil dari split sebelumnya
-                        $('#rw').val(rw); // Menggunakan rw yang diambil dari split sebelumnya
-                        $('#tps').val(data.tps);
+                        $('#rt').val(rt);
+                        $('#rw').val(rw);
+                        $('#tps').val(tps);
                         $('#kelurahan').val(data.kelurahan);
                         $('#id_calon_pemilih').val(data.id_calon_pemilih);
                         $('#nik').val(data.nik);
@@ -303,8 +318,8 @@
                 });
             });
         });
-
     </script>
+
 
 
 

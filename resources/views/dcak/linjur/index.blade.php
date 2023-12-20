@@ -25,7 +25,7 @@
                                 </form>
 
                                 <a href="{{ route('input-linjur') }}" class="d-inline-block">
-                                    <button type="button" class="btn btn-success">Tambah Data Linjur</button>
+                                    <button type="button" class="btn btn-success">Tambah Data pemilih</button>
                                 </a>
                             </div>
 
