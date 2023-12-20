@@ -592,7 +592,7 @@ class HomeController extends Controller
                 'koordinator.jumlah_surat_dukungan',
                 'koordinator.kelurahan',
                 'koordinator.kecamatan',
-                \DB::raw('coalesce(pemilih_count.jumlah_pemilih, 0) as jumlah_pemilih') // Menetapkan default 0 jika tidak ada pemilih
+                DB::raw('coalesce(pemilih_count.jumlah_pemilih, 0) as jumlah_pemilih') // Menetapkan default 0 jika tidak ada pemilih
             ]);
 
         return DataTables::of($koordinator)->make(true);
