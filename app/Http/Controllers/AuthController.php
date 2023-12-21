@@ -60,7 +60,7 @@ class AuthController extends Controller
     public function logoutAdmin()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/');
     }
 
     public function login(Request $request)
