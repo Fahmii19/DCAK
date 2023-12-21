@@ -66,7 +66,8 @@
                 <div class="card-body">
                     <div class="d-grid gap col-md-12 col-lg-12">
 
-                        <div style="height: 60vh; width:60vw;">
+                        <div style="width: 100%;max-width: 800px;margin: auto;">
+
                             <canvas id="doughnutChart"></canvas>
                         </div>
 
@@ -104,6 +105,11 @@
                         doughnutChart = new Chart(ctx, {
                             type: 'doughnut'
                             , data: data
+                            , options: {
+                                responsive: true
+                                , maintainAspectRatio: false
+                            , }
+
                             // Anda dapat menambahkan opsi di sini jika diperlukan
                         });
                     })
