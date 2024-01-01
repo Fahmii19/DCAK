@@ -125,6 +125,9 @@
                             return `
                             <button onclick="editKoordinator(${data})" class="btn btn-warning btn-sm">Edit</button>
                             <button onclick="hapusKoordinator(${data})" class="btn btn-danger btn-sm">Hapus</button>
+                            <a href="detail-koordinator/${data}" class="btn btn-secondary btn-sm">Detail</a>
+
+
                         `;
                         }
                     }

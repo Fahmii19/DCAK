@@ -115,6 +115,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/form-edit-koordinator/{id}', [HomeController::class, 'formEditKoordinator'])->name('form-edit-koordinator');
     // Delete Koordinator
     Route::delete('/delete-koordinator/{id}', [HomeController::class, 'deleteKoordinator'])->name('delete-koordinator');
+    // Detail Koordinator
+    Route::get('/detail-koordinator/{id}', [HomeController::class, 'detailKoordinator'])->name('detail-koordinator');
+    // ekspor pdf koordinator
+    Route::get('/ekspor-pdf-koordinator/{id}', [HomeController::class, 'eksporPdfKoordinator'])->name('ekspor-pdf-koordinator');
 
     // pemilih
     Route::get('/pemilih', [HomeController::class, 'pemilih'])->name('pemilih');

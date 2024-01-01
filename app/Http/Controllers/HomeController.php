@@ -32,6 +32,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing as WorksheetMemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use Illuminate\Support\Facades\DB;
 
+use Barryvdh\DomPDF\Facade as PDF;
+
 
 use ZipArchive;
 
@@ -650,6 +652,33 @@ class HomeController extends Controller
         } else {
             return response()->json(['success' => false, 'message' => 'Data koordinator tidak ditemukan.']);
         }
+    }
+
+    // Detail Koordinator
+    public function detailKoordinator(Request $request, $id)
+    {
+        // Fetch the Koordinator by ID
+        $koordinator = Koordinator::find($id);
+
+        if (!$koordinator) {
+            // Handle the case when Koordinator with the provided ID is not found
+            abort(404, 'Koordinator not found');
+        }
+
+        $pemilihRecords = Pemilih::where('nama_koordinator', $koordinator->nama_koordinator)->get();
+
+
+        // Pass both $koordinator and $pemilihRecords to the view
+        return view('dcak.koordinator.detail', compact('koordinator', 'pemilihRecords'));
+    }
+
+    public function eksporPdfKoordinator($id)
+    {
+        $koordinator = Koordinator::find($id);
+        $pemilihRecords = Pemilih::where('nama_koordinator', $koordinator->nama_koordinator)->get();
+
+        $pdf = PDF::loadView('dcak.koordinator.pdf', compact('koordinator', 'pemilihRecords'));
+        return $pdf->download('nama_file.pdf');
     }
 
     // Function Linjur
