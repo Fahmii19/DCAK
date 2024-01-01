@@ -678,7 +678,8 @@ class HomeController extends Controller
         $pemilihRecords = Pemilih::where('nama_koordinator', $koordinator->nama_koordinator)->get();
 
         $pdf = PDF::loadView('dcak.koordinator.pdf', compact('koordinator', 'pemilihRecords'));
-        return $pdf->download('nama_file.pdf');
+        $fileNameExport = 'Koordinator-' . $koordinator->nama_koordinator . '-' . $koordinator->kelurahan . '.pdf';
+        return $pdf->download($fileNameExport);
     }
 
     // Function Linjur
