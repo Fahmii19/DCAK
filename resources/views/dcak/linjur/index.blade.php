@@ -193,8 +193,8 @@
                             <label>Jenis Kelamin</label>
                             <select class="form-select" aria-label="Default select example" name="jenis_kelamin" id="jenis_kelamin" required>
                                 <option selected>Pilih Jenis Kelamin</option>
-                                <option value="Pria">Pria</option>
-                                <option value="Wanita">Wanita</option>
+                                <option value="Pria">L</option>
+                                <option value="Wanita">P</option>
                             </select>
                         </div>
 
