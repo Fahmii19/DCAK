@@ -36,7 +36,7 @@
 
                     {{-- --}}
                     <div class="table-responsive">
-                        <table id="datatableKoordinator" class="table table-striped dt-responsive nowrap" data-toggle="data-table">
+                        <table class="table table-striped dt-responsive nowrap" data-toggle="data-table">
                             <thead>
                                 <tr>
                                     <th>No</th>
