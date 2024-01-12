@@ -761,26 +761,29 @@ class HomeController extends Controller
 
     public function searchNamaLinjur(Request $request)
     {
-        $query = $request->get('query');
-        $kelurahan = $request->get('kelurahan'); // Dapatkan kelurahan dari request
-        $excludedIds = $request->get('excludedIds', []); // Pastikan ini selalu diinisialisasi
 
-        // Dapatkan semua id_calon_pemilih yang sudah ada di table pemilih
-        $existingIds = Pemilih::pluck('id_calon_pemilih')->filter()->toArray();
 
-        // Menggabungkan existingIds dan excludedIds untuk pembatasan
-        $idsToExclude = array_merge($existingIds, $excludedIds);
+        $query = $request->get('query'); // Dapatkan query sebagai string
+        $kelurahan = $request->get('kelurahan');
 
-        $results = CalonPemilih::where('nama_pemilih', 'LIKE', "%{$query}%")
-            ->when($kelurahan, function ($query) use ($kelurahan) {
-                // Jika kelurahan disediakan, tambahkan filter kelurahan ke query
-                return $query->where('kelurahan', $kelurahan);
+        // Gabungan tabel calon_pemilih dan pemilih
+        $results = CalonPemilih::query()
+            ->leftJoin('pemilih', 'calon_pemilih.nama_pemilih', '=', 'pemilih.nama_pemilih')
+            ->select('calon_pemilih.*', 'pemilih.nama_koordinator') // Pilih kolom yang dibutuhkan
+            ->where(function ($query) use ($request) {
+                $searchQuery = $request->get('query'); // Gunakan nilai query dari request
+                $query->where('calon_pemilih.nama_pemilih', 'LIKE', "%{$searchQuery}%")
+                    ->orWhere('pemilih.nama_pemilih', 'LIKE', "%{$searchQuery}%");
             })
-            ->when(!empty($idsToExclude), function ($query) use ($idsToExclude) {
-                // Hanya menerapkan whereNotIn jika ada ID untuk dikecualikan
-                return $query->whereNotIn('id_calon_pemilih', $idsToExclude);
+            ->when($kelurahan, function ($query) use ($kelurahan) {
+                return $query->where(function ($query) use ($kelurahan) {
+                    $query->where('calon_pemilih.kelurahan', $kelurahan)
+                        ->orWhere('pemilih.kelurahan', $kelurahan);
+                });
             })
             ->get();
+
+        // dd($results);
 
         $output = '<div class="list-group">';
 
@@ -788,12 +791,18 @@ class HomeController extends Controller
             $output .= '<div class="list-group-item text-center">Tidak ada data pemilih</div>';
         } else {
             foreach ($results as $result) {
+
+                $namaKoordinator = $result->nama_koordinator;
+                $koordinatorClass = $namaKoordinator ? 'badge bg-success' : 'badge bg-danger';
+                $namaKoordinator = $namaKoordinator ?: 'Tidak ada';
+
                 $output .= '<a href="#" class="list-group-item list-group-item-action">' .
                     $result->nama_pemilih .
                     ' - RT: ' . $result->rt .
                     ' - RW: ' . $result->rw .
                     ' - TPS: ' . $result->tps .
                     ' - Kelurahan: ' . $result->kelurahan .
+                    ' - <span class="' . $koordinatorClass . '">Nama Koordinator: ' . $namaKoordinator . '</span>' .
                     '</a>';
             }
         }
