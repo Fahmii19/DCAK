@@ -31,7 +31,7 @@
                     <p class="mt-2">Nama Koordinator: {{ $koordinator->nama_koordinator }}</p>
                     <p>Kelurahan: {{ $koordinator->kelurahan }}</p>
                     <p>Kecamatan: {{ $koordinator->kecamatan }}</p>
-                    <p>Jumlah Surat Dukungan: {{ $koordinator->jumlah_surat_dukungan }}</p>
+                    {{-- <p>Jumlah Surat Dukungan: {{ $koordinator->jumlah_surat_dukungan }}</p> --}}
                     <p>Total Input: {{ $pemilihRecords->count() }}</p>
 
 
@@ -41,22 +41,29 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Koordinator</th>
-                                    <th>Kelurahan</th>
-                                    <th>Kecamatan</th>
+                                    <th>NIK</th>
+                                    <th>Nama Pemilih</th>
+                                    <th>Gender</th>
+                                    <th>NO HP</th>
                                     <th>RW</th>
                                     <th>RT</th>
+                                    <th>Kelurahan</th>
+                                    <th>TPS</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($pemilihRecords as $key => $pemilih)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td>{{ $pemilih->nik }}</td>
                                         <td>{{ $pemilih->nama_pemilih }}</td>
-                                        <td>{{ $pemilih->kelurahan }}</td>
-                                        <td>{{ $pemilih->kecamatan }}</td>
+                                        <td>{{ $pemilih->jenis_kelamin }}</td>
+                                        <td>{{ $pemilih->no_hp }}</td>
                                         <td>{{ $pemilih->rw }}</td>
                                         <td>{{ $pemilih->rt }}</td>
+                                        <td>{{ $pemilih->tps }}</td>
+                                        <td>{{ $pemilih->kelurahan }}</td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
